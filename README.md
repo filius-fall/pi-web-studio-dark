@@ -81,9 +81,9 @@ The complete desktop layout: sidebar, conversation, completed work, and composer
 One dropdown keeps completed activity out of the way. Open it to inspect progress
 updates, thinking, and tool calls while the final answer remains visible.
 
-![Completed work collapsed](docs/screenshots/work-done-collapsed.png)
+![Completed work collapsed](docs/screenshots/completed-work-sidebar-collapsed.png)
 
-![Completed work expanded](docs/screenshots/work-done-expanded.png)
+![Completed work expanded](docs/screenshots/completed-work-sidebar-expanded.png)
 
 ### Tool details and thinking
 
