@@ -11,7 +11,18 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Compact navigation rows; Projects and Workspaces size to content, Sessions fills the remaining space.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
-- Thin scrollbars, readable metadata, responsive padding, reduced-motion support.
+- Blue tool-call spinners, gentle entry and details animations, with reduced-motion support.
+- Thin scrollbars, readable metadata, and responsive padding.
+
+## Screenshots
+
+Screenshots use sample projects and conversation content.
+
+![Desktop chat with compact tool calls](docs/screenshots/desktop.png)
+
+Expanded tool command and output:
+
+![Expanded tool details](docs/screenshots/tool-details.png)
 
 ## Install
 

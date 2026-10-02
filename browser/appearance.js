@@ -49,6 +49,10 @@ export function appearanceCss(s) {
     ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon, ${s} .tool-card.running .status-label { color: #00bff3; }
     ${s} .tool-card.success .status-icon { color: #34d399; }
     ${s} .tool-card.error .status-icon, ${s} .tool-card.error .status-label { color: var(--pi-danger); }
+    ${s} .tool-card { animation: studio-tool-enter 160ms ease-out both; }
+    ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon { display: inline-block; width: 11px; height: 11px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; border-radius: 50%; font-size: 0; animation: studio-tool-spin 900ms linear infinite; }
+    ${s} .text-body[open] .detail-target, ${s} .text-body[open] .detail-result, ${s} .diff-details[open] .diff { animation: studio-details-enter 180ms ease-out both; }
+    ${s} .activity-dock.active .dot { animation: studio-working-pulse 1400ms ease-in-out infinite; }
     ${s} .text-body, ${s} .diff-details { border-top: 0; padding-top: 2px; }
     ${s} .text-body > summary, ${s} .diff-details > summary { color: #929298; font-size: 12px; }
     ${s} .msg.event-group > summary { color: #929298; padding: 6px 0; }
@@ -90,8 +94,13 @@ export function appearanceCss(s) {
       ${s} textarea, ${s} .markdown-editor .cm-editor { font-size: 16px; }
       ${s} .action-main { padding-top: 10px; padding-bottom: 10px; }
     }
+    @keyframes studio-tool-spin { to { transform: rotate(360deg); } }
+    @keyframes studio-tool-enter { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes studio-details-enter { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes studio-working-pulse { 0%, 100% { opacity: .45; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) {
       ${s} button { transition: none; }
+      ${s} .tool-card, ${s} .status-icon, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot { animation: none !important; }
     }
   `;
 }
