@@ -5,9 +5,16 @@ Dark appearance and compact layout for Pi Web v1.202610.0.
 A local browser plugin for [Pi Web](https://pi-web.dev). It changes presentation and
 layout while preserving Pi Web's agent, sessions, and provider configuration.
 
+An independent community plugin, not an official Pi Web or model-provider
+product. A free, open-source hobby project. Anyone can install, modify, and
+redistribute it under the included licenses.
+
 ## Quick install
 
 With Pi Web already installed, run this on the machine serving its browser UI:
+
+You need Git and the Node.js version required by your existing Pi Web install.
+The quick command below is for a POSIX shell, such as Linux, macOS, or WSL.
 
 ```sh
 git clone https://github.com/filius-fall/pi-web-studio-dark.git "$HOME/pi-web-studio-dark" && node "$HOME/pi-web-studio-dark/scripts/install.mjs"
@@ -136,6 +143,21 @@ Studio Dark. Theme choice and panel preference are browser-local.
 Install on each gateway whose URL you use directly. Theme selection is saved
 per browser and gateway URL; select it once on your phone too.
 
+### Troubleshooting
+
+- **The theme is missing:** run the installer on the machine serving the URL
+  you opened, confirm its data directory, and reload the page. Select Studio
+  Dark using Actions; merely installing it does not change other browsers.
+- **The clone folder already exists:** use the update commands below rather
+  than cloning again. Keep the folder in place; the plugin link points to it.
+- **Another plugin occupies the link:** the installer stops without replacing
+  it. Update that checkout, or remove only its plugin link before installing.
+- **A brief theme flash remains:** check the installer's startup-hook message.
+  A custom package path may require `--html`. Reapply after upgrading Pi Web.
+- **An update looks cached:** reload the gateway page. If it still shows an old
+  layout, refresh without cache and confirm the checkout was updated on that
+  gateway. No session-daemon restart is required for plugin updates.
+
 ### Avoid the initial theme flash
 
 The optional startup hook applies the selected palette before the app renders,
@@ -177,15 +199,37 @@ The optional startup hook adds a small pre-paint block to the installed client H
 session data are not changed. Disposal removes styles, observers, font, and
 injected controls. Disconnected message roots are released by the observer.
 
-DM Sans is served locally under the included SIL OFL license. Earlier palette
-versions are preserved in browser/index.before-contrast.js and
-browser/index.before-studio.js. The plugin is MIT licensed; palette attribution
-and font licenses are in `LICENSE.vitesse` and `LICENSE.dm-sans`.
+The plugin code is MIT licensed: anyone may install, use, modify, and distribute
+it, including commercially, while retaining the required copyright and license
+notices. Bundled assets keep their own licenses; the font is under SIL OFL 1.1.
+Do not sell the font by itself or remove its OFL notice.
 
-The browser tab icon is the upstream [Pi favicon](https://pi.dev/favicon.svg),
-provided through the [Pi brand assets](https://pi.dev/press-kit).
+See [Third-party notices](THIRD_PARTY_NOTICES.md) for every bundled asset's
+source, license, and redistribution requirements, and [Asset provenance](docs/asset-provenance.json)
+for file hashes. All third-party license texts are included in this repository.
 
-Provider logos are bundled from Lobe Icons static SVG package v1.95.1 under
-the included `LICENSE.icons`. Brand marks belong to their respective owners.
+Brand names and logos identify the selected models and the compatible host.
+They belong to their respective owners. The code's MIT license does not grant
+trademark rights or imply endorsement. Follow the owners' applicable brand
+rules when redistributing or promoting a modified version. Model logos do not
+grant access to models; provider accounts and service terms remain separate.
 
-Additional model-family logos are bundled from Lobe Icons static SVG 1.95.1 under `LICENSE.icons`; Muse uses Meta’s brand mark, Nemotron uses Nvidia’s, and HY3/HY4 use Hunyuan’s.
+The Pi favicon is an unmodified asset from the MIT-licensed Pi website source,
+with its copyright notice retained in `LICENSE.pi`. Pi Web screenshot attribution
+is retained in `LICENSE.pi-web`. Screenshots use demonstration content.
+
+This is a license and provenance review, not a guarantee against all legal
+claims. Rights holders can have additional trademark requirements, and laws
+and service terms vary by jurisdiction and use.
+
+## Sharing and contributions
+
+A description you can use when sharing the project:
+
+> Studio Dark is a free, open-source community theme for Pi Web. It adds a dark
+> layout, compact tool calls, clearer model controls, and a mobile-friendly
+> composer. It installs into an existing Pi Web setup without a build step.
+
+Link readers to this README for installation, screenshots, compatibility, and
+licenses. Suggestions and fixes are welcome; see [Contributing](CONTRIBUTING.md)
+for source and attribution requirements.

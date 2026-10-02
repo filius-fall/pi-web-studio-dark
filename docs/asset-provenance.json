@@ -1,0 +1,125 @@
+{
+  "reviewed": "2026-10-02",
+  "assets": [
+    {
+      "path": "browser/icons/claude-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "a3101f3047a119aa11825ad9369510f0c472428c8c52d420e31bc62db44a8364",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/deepseek-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "deba5f98a5c1796e20fcac3149bcd7eb8a32f0bdd04d048819400b1f28bd1439",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/gemini-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "8ab0a9bafec11f7e69bcb9fc4ffd8f1bc927d1ddcbbb6ff36dee5ae8b5a9d602",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/grok.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "9175fc90c22655160231976c849f25a03b888d7cc0e04c5f1b987b659bb07c95",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/hunyuan-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "510e7bb438506b5aadfaf8b9551d1606efd5b4171161a64a64204c72a453658a",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/kimi-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "74a7292aeb0220445d14c5d397d75760e2e8c6ed6a9e5fe4f3023471bf62a9ff",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/meta-brand-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "445ae6eae9d0cabd9b89f18be0cad2ecede5af42d2da60cf72ad213d4e8f7cc0",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/minimax-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "7f7187fa6d9b341ac5f22f6c5a970523afb439dc45566d64eb4f4b9b604d6b01",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/nvidia-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "8c941e4eb8b782eccaaea1240c059d20be33ab8eda28d7c9ed9b53ac802fe683",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/openai.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "a595df6b423920c67a7f8f73c063e4bfb72d415948097b6cac063a2366bb5186",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/qwen-color.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "77f5768c66d08ce1d3d14e73373975c1bc0454be88c81523ddd0ffd7e2974029",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/xiaomimimo.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "b04ad7dad52af2212c4567daf0ee6856f2c4625c92c680a27f9880295d558b71",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/icons/zai.svg",
+      "component": "Lobe Icons",
+      "source": "https://registry.npmjs.org/@lobehub/icons-static-svg/-/icons-static-svg-1.95.1.tgz",
+      "license": "LICENSE.icons",
+      "sha256": "e748cb5108ce37b116d7a5ba97d37e0ae97eadf6849b0de11afb248e244a01e1",
+      "version": "1.95.1"
+    },
+    {
+      "path": "browser/pi-icon.svg",
+      "component": "Pi favicon",
+      "source": "https://raw.githubusercontent.com/earendil-works/pi-website/2f5e410b97474d0a34ec2500aa1aa58d6c3f992c/src/favicon.svg",
+      "license": "LICENSE.pi",
+      "sha256": "a5624bc3b8cac94de75f6f13701eca2ad3ef67bbeba286c4af3f398806f0858a",
+      "version": "2f5e410b97474d0a34ec2500aa1aa58d6c3f992c"
+    },
+    {
+      "path": "browser/dm-sans.woff2",
+      "component": "DM Sans",
+      "source": "https://github.com/google/fonts/tree/main/ofl/dmsans",
+      "license": "LICENSE.dm-sans",
+      "sha256": "9fea608a947e67020c33cad9a6fe3d60c54119dfb8cff87768a8117a15ed7543",
+      "version": "4.004 (embedded font metadata)"
+    }
+  ]
+}
