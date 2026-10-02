@@ -181,9 +181,9 @@ export function appearanceCss(s) {
     :host(prompt-editor)${s} .attachment-delivery select { display: block; max-width: 100%; padding: 5px 22px 5px 8px; font-size: 11px; border: 1px solid #ffffff10; border-radius: 6px; background-color: #202020; }
     :host(prompt-editor)${s} .attachment-delivery::after { content: attr(data-studio-help); display: block; margin-top: 4px; line-height: 1.4; }
     :host(prompt-editor)${s} .markdown-editor .cm-editor, :host(prompt-editor)${s} .markdown-editor .cm-editor.cm-focused { border: 0; border-radius: 0; background: transparent; min-height: 24px; outline: none; }
-    :host(prompt-editor)${s} .markdown-editor .cm-content { min-height: 24px; padding: 0; font-size: 15px; line-height: 1.6; }
-    :host(prompt-editor)${s} .cm-placeholder { font-size: 0; }
-    :host(prompt-editor)${s} .cm-placeholder::after { content: "Ask Pi…"; font-size: 15px; color: #85858b; }
+    :host(prompt-editor)${s} .markdown-editor .cm-content { min-height: 24px; padding: 6px 0; font-size: 15px; line-height: 1.6; }
+    :host(prompt-editor)${s} .cm-placeholder { font-size: 15px; color: #85858b; }
+    :host(prompt-editor)${s} .cm-cursor { border-left: 1.5px solid #ededf0; }
     :host(prompt-editor)${s} .mode-hint { position: static; display: table; max-width: 100%; margin-top: 6px; }
     :host(prompt-editor)${s} .actions { gap: 8px; }
     :host(prompt-editor)${s} .compact-status { gap: 6px; margin-right: 36px; }
@@ -280,6 +280,70 @@ export function appearanceCss(s) {
       ${s} .msg.user { padding: 12px 14px; }
       ${s} textarea, ${s} .markdown-editor .cm-editor { font-size: 16px; }
       ${s} .action-main { padding-top: 10px; padding-bottom: 10px; }
+    }
+    .studio-mobile-header, .studio-mobile-home-intro { display: none; }
+    @media (max-width: 760px) {
+      ${s} main.chat-view { background: #080808; }
+      ${s} app-mobile-main-tabs, ${s} status-bar { display: none; }
+      :host(app-context-bar)${s} .context-bar { display: none; }
+      :host(app-context-bar)${s} .studio-mobile-header { position: relative; display: grid; grid-template-columns: 40px minmax(0, 1fr) 40px 40px; align-items: center; gap: 4px; padding: 8px 10px; min-height: 44px; background: #121212; }
+      ${s} .studio-mobile-header button { display: grid; align-items: center; justify-content: center; min-width: 0; min-height: 40px; padding: 6px; border: 0; border-radius: 10px; color: #eee; background: transparent; }
+      ${s} .studio-mobile-header button[hidden], ${s} .studio-mobile-header img[hidden] { display: none; }
+      ${s} .studio-mobile-home-icon { width: 24px; height: 24px; justify-self: center; }
+      ${s} .studio-mobile-home-intro { display: block; padding: 20px 18px 8px; background: #000; }
+      ${s} .studio-mobile-home-intro strong { font-size: 22px; color: #eee; }
+      ${s} .studio-mobile-home-intro p { margin: 6px 0 0; color: #929298; font-size: 12px; line-height: 1.5; }
+      ${s} .studio-mobile-header svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+      ${s} .studio-mobile-header .studio-mobile-location { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; text-align: left; gap: 3px; }
+      ${s} .studio-mobile-header strong, ${s} .studio-mobile-header small { display: block; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      ${s} .studio-mobile-header strong { font-size: 16px; font-weight: 600; }
+      ${s} .studio-mobile-header small { font-size: 11px; color: #99999f; }
+      ${s} .studio-mobile-menu { position: absolute; z-index: 40; top: calc(100% - 2px); right: 10px; width: min(280px, calc(100vw - 20px)); max-height: 65dvh; overflow-y: auto; padding: 6px; border: 1px solid #ffffff16; border-radius: 14px; background: #191919; box-shadow: 0 12px 36px #0008; }
+      ${s} .studio-mobile-menu[hidden] { display: none; }
+      ${s} .studio-mobile-menu button { display: flex; width: 100%; justify-content: flex-start; text-align: left; min-height: 42px; padding: 9px 12px; font-size: 13px; }
+      ${s} .studio-mobile-menu button:hover { background: #628dff18; }
+      ${s} .studio-mobile-menu button:disabled, ${s} .studio-mobile-header > button:disabled { color: #666; }
+      :host(app-navigation-panel)${s} header strong { display: none; }
+      :host(chat-view)${s} { background: #080808; border-radius: 22px 22px 0 0; }
+      ${s} .chat { padding: 20px 18px 18px; line-height: 1.75; }
+      ${s} .msg { font-size: 15px; margin-bottom: 24px; overflow-wrap: anywhere; }
+      ${s} .msg.assistant > .msg-header { display: none; }
+      ${s} .msg.user { display: flex; flex-direction: column; width: fit-content; max-width: 92%; margin-left: auto; margin-right: 0; padding: 14px 16px; border: 0; border-radius: 20px; background: #181818; }
+      ${s} .msg.user > .msg-header { order: 2; min-height: 16px; margin: 10px 0 0; justify-content: flex-end; }
+      ${s} .msg.user:has(.chat-image) { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 8px; }
+      ${s} .msg.user:has(.chat-image) > :not(.chat-image) { grid-column: 1 / -1; }
+      ${s} .msg.user .chat-image { order: -1; max-width: 124px; margin-bottom: 10px; --pi-image-max-height: 140px; --pi-image-radius: 10px; }
+      ${s} .msg.user .msg-header .label, ${s} .msg.user .msg-action:not([aria-label="Copy user message"]) { display: none; }
+      ${s} .msg.user .msg-meta { max-width: 150px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; font-size: 10px; }
+      ${s} .msg-header-trailing { gap: 6px; }
+      ${s} .msg.user .msg-actions { opacity: 1; }
+      ${s} .studio-message-nav, ${s} .studio-message-preview { display: none; }
+      ${s} .event-group { border: 0; }
+      ${s} .event-group > summary { font-size: 12px; }
+      ${s} .studio-inline-activity { font-size: 12px; padding: 6px 0; }
+      :host(prompt-editor)${s} { width: calc(100% - 24px); max-width: none; margin: 0 12px; padding: 8px 0 max(10px, env(safe-area-inset-bottom)); background: #080808; }
+      :host(prompt-editor)${s} footer { display: block; padding: 2px 48px 2px 42px; min-height: 44px; border-radius: 25px; border-color: #ffffff08; background: #1b1b1b; }
+      :host(prompt-editor)${s} .editor-wrap { width: 100%; }
+      :host(prompt-editor)${s} .markdown-editor .cm-content { font-size: 16px; line-height: 1.5; min-height: 24px; padding: 10px 0; }
+      :host(prompt-editor)${s} .cm-placeholder { font-size: 16px; }
+      :host(prompt-editor)${s} .cm-scroller { max-height: min(160px, 30dvh); overflow-y: auto; }
+      :host(prompt-editor)${s} .compact-status { display: none; }
+      :host(prompt-editor)${s} .actions { position: absolute; right: 6px; bottom: 6px; display: flex; gap: 5px; }
+      :host(prompt-editor)${s} .send-button, :host(prompt-editor)${s} .stop-button { width: 36px; height: 36px; min-width: 36px; }
+      :host(prompt-editor)${s} .stop-button:disabled { display: none; }
+      :host(prompt-editor)${s} .editor-attach, :host(prompt-editor)${s} footer:has(.steer-button) .editor-attach { left: 6px; right: auto; bottom: 6px; width: 32px; height: 36px; }
+      :host(prompt-editor)${s} .editor-attach svg { display: none; }
+      :host(prompt-editor)${s} .editor-attach::before { content: "+"; font-size: 27px; line-height: 1; color: #e8e8ed; }
+      :host(prompt-editor)${s} .steer-button { display: none; }
+      :host(prompt-editor)${s} footer:has(.stop-button:not(:disabled)) { padding-right: 90px; }
+      :host(prompt-editor)${s} footer[data-studio-text="false"]:has(.stop-button:not(:disabled)) { padding-right: 48px; }
+      :host(prompt-editor)${s} footer[data-studio-text="false"]:has(.stop-button:not(:disabled)) .send-button { display: none; }
+      :host(prompt-editor)${s} .attachments { gap: 6px; margin: 8px 0 6px; }
+      :host(prompt-editor)${s} .attachment-chip { width: 56px; height: 56px; }
+      :host(prompt-editor)${s} .attachment-delivery { flex-basis: 100%; }
+      :host(prompt-editor)${s} .attachment-delivery::after { font-size: 10px; }
+      :host(prompt-editor)${s} footer:has(.attachments) { border-radius: 20px; }
+      :host(model-picker)${s} modal-surface { --modal-surface-backdrop-padding: 16px 12px; --modal-surface-width: calc(100vw - 24px); }
     }
     @supports (background-clip: text) {
       ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label {

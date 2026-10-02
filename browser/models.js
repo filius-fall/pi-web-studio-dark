@@ -20,6 +20,10 @@ function setText(element, value) {
 }
 export function decorateModels(root) {
   if (root.host?.localName === 'prompt-editor') {
+    const footer = root.querySelector('footer');
+    if (footer) footer.dataset.studioText = String((root.host.draft ?? '').trim().length > 0 || (root.host.attachments?.length ?? 0) > 0);
+    const placeholder = root.querySelector('.cm-placeholder');
+    if (placeholder) setText(placeholder, document.documentElement.dataset.piWebTheme === 'vitesse:black' ? 'Ask Pi…' : 'Message pi... Use / for commands, @ for tracked files, @ space for all files, # for models');
     const button = root.querySelector('.select-model');
     const model = root.host.status?.model;
     if (button && model?.id) {
@@ -82,6 +86,9 @@ function clearAttachmentDelivery(root) {
 }
 export function clearModels(root) {
   clearAttachmentDelivery(root);
+  const placeholder = root.querySelector('.cm-placeholder');
+  if (placeholder) setText(placeholder, 'Message pi... Use / for commands, @ for tracked files, @ space for all files, # for models');
+  root.querySelector('footer')?.removeAttribute('data-studio-text');
   for (const element of root.querySelectorAll('.studio-model-name, .studio-model-current')) element.remove();
   for (const element of root.querySelectorAll('[data-studio-brand], [data-studio-reasoning]')) {
     for (const name of ['data-studio-brand', 'data-studio-label', 'data-studio-current', 'data-studio-reasoning']) element.removeAttribute(name);

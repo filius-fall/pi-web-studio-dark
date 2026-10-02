@@ -24,6 +24,10 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
 - Working/thinking status appears below the latest response; informational session updates stay out of the composer.
 - One clickable marker per loaded user message, with hover previews, keyboard navigation, and an earlier-history control.
+- Mobile chat uses a compact header and single-row composer. Model, reasoning, and navigation controls remain available from the header menu.
+- Mobile Home lists your machines, projects, workspaces, and sessions. The chat back arrow returns Home; Home has no back arrow. Open `/?view=navigation` for Home directly.
+- Mobile user images sit above the text in compact previews; active empty composers show Stop, with Send available when text or attachments are added.
+- Normal-size placeholders preserve the editor caret. Desktop inputs focus after the startup screen is ready; phones wait for your tap.
 - Thin scrollbars, readable metadata, and responsive padding.
 
 ## Screenshots
@@ -55,6 +59,12 @@ Pin important sessions and restore completed work from Done:
 Image previews stay above your message, with clear delivery choices:
 
 ![Composer with an image attachment](docs/screenshots/attachments.png)
+
+Mobile chat and image messages:
+
+![Mobile chat](docs/screenshots/mobile-chat.png)
+
+![Mobile images and thinking](docs/screenshots/mobile-images.png)
 
 ## Session controls
 
@@ -131,7 +141,7 @@ unlink "$HOME/.pi-web/plugins/vitesse"
 ## Compatibility and licenses
 
 This uses the theme API and a scoped browser presentation layer. CSS classes
-the native session-tree method, and panel-toggle labels must be reviewed after Pi Web upgrades.
+the native session-tree and navigation methods, editor focus behavior, and panel-toggle labels must be reviewed after Pi Web upgrades.
 The optional startup hook adds a small pre-paint block to the installed client HTML; no server execution code is changed. Provider settings and
 session data are not changed. Disposal removes styles, observers, font, and
 injected controls. Disconnected message roots are released by the observer.
