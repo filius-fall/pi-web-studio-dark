@@ -9,7 +9,7 @@ export const theme = {
   order: 5,
   colorScheme: "dark",
   tokens: {
-    "--pi-bg": "#111111",
+    "--pi-bg": "#121212",
     "--pi-surface": "#1b1b1b",
     "--pi-surface-hover": "#252525",
     "--pi-terminal-bg": "#0b0b0b",
@@ -40,8 +40,8 @@ export const theme = {
     "--pi-shadow-soft": "#00000066",
     "--pi-shadow": "#00000099",
     "--pi-shadow-strong": "#000000cc",
-    "--pi-bg-overlay-soft": "#111111dd",
-    "--pi-bg-overlay": "#111111ee",
+    "--pi-bg-overlay-soft": "#121212dd",
+    "--pi-bg-overlay": "#121212ee",
     "--pi-success-bg-overlay": "#031a11ee",
     "--pi-terminal-selection": "#eeeeee18"
   }

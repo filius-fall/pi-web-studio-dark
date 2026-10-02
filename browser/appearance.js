@@ -12,7 +12,8 @@ export function appearanceCss(s) {
       ${s} .shell.workspace-panel-collapsed chat-view { padding-top: 38px; box-sizing: border-box; }
     }
     ${s} .shell { --navigation-panel-size: 272px; --workspace-panel-size: minmax(280px, 28vw); }
-    ${s} aside, ${s} .mobile-navigation-panel { background: #070707; }
+    ${s} aside, ${s} .mobile-navigation-panel { background: #030303; }
+    :host(app-navigation-panel)${s} { background: #030303; --pi-bg: #030303; --pi-surface: #171717; --pi-surface-hover: #1c1c1c; --pi-border: #232323; --pi-border-muted: #151515; }
     ${s} project-list { flex: 0 1 auto; max-height: 30%; }
     ${s} workspace-list { flex: 0 1 auto; max-height: 22%; }
     ${s} session-list { flex: 1 1 0; }
@@ -57,9 +58,9 @@ export function appearanceCss(s) {
     ${s} .action-row { margin: 3px 0; border-radius: 10px; overflow: clip; }
     ${s} .action-main, ${s} .action-menu-toggle { border: 0; border-radius: 0; background: transparent; font-size: 13px; }
     ${s} .action-main { padding-top: 8px; padding-bottom: 8px; }
-    ${s} .action-row.selected .action-main, ${s} .action-row.selected .action-menu-toggle { border: 0; background: #202020; color: #fafafa; }
+    ${s} .action-row.selected .action-main, ${s} .action-row.selected .action-menu-toggle { border: 0; background: #1d1e1e; color: #fafafa; }
     ${s} .action-row.selected { box-shadow: none; }
-    ${s} .action-row.selected .action-main { background: #202020; box-shadow: none; }
+    ${s} .action-row.selected .action-main { background: #1d1e1e; box-shadow: none; }
     ${s} .action-row:not(.selected):hover .action-main, ${s} .action-menu-toggle:hover { background: #191919; }
     ${s} .action-name { font-size: 13px; line-height: 1.5; }
     ${s} .action-main small { font-size: 11px; line-height: 1.5; margin-top: 2px; color: #9c9ca6; }
@@ -68,7 +69,7 @@ export function appearanceCss(s) {
     ${s} .section-toggle { text-transform: none; letter-spacing: 0; }
     ${s} .section-title { font-weight: 600; }
     ${s} .tabs button { border-color: transparent; background: transparent; font-size: 12px; padding: 6px 9px; }
-    ${s} .tabs button.selected { border-color: #ffffff12; background: #202020; color: #fafafa; }
+    ${s} .tabs button.selected { border-color: #ffffff12; background: #1d1e1e; color: #fafafa; }
     ${s} .markdown-editor .cm-editor, ${s} textarea { border-radius: 16px; border-color: #ffffff12; background: #191919; font-size: 14px; }
     ${s} .markdown-editor .cm-editor.cm-focused, ${s} textarea:focus { outline: none; border-color: #628dff; }
     ${s} .editor-wrap { border-radius: 12px; }

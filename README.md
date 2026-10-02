@@ -20,10 +20,12 @@ Pi Web `1.202610.0` in Chromium at desktop and phone widths. Other browser
 engines are not yet validated; the stylesheet uses `:host-context`.
 
 ```sh
-git clone https://github.com/filius-fall/pi-web-studio-dark.git "$HOME/pi-web-studio-dark"
+git clone <repository-url> "$HOME/pi-web-studio-dark"
 mkdir -p "$HOME/.pi-web/plugins"
 ln -s "$HOME/pi-web-studio-dark" "$HOME/.pi-web/plugins/vitesse"
 ```
+
+Replace `<repository-url>` with this repository's clone URL.
 
 If `PI_WEB_DATA_DIR` is set, use its `plugins` directory instead of
 `~/.pi-web/plugins`. If a `vitesse` plugin is already installed, update that
@@ -64,16 +66,3 @@ DM Sans is served locally under the included SIL OFL license. Earlier palette
 versions are preserved in browser/index.before-contrast.js and
 browser/index.before-studio.js. The plugin is MIT licensed; palette attribution
 and font licenses are in `LICENSE.vitesse` and `LICENSE.dm-sans`.
-
-## Maintainer checkout
-
-Keep the installed checkout in place because the plugin link points to it.
-This project uses two publishing remotes:
-
-```sh
-git push github main
-git push gitea main
-```
-
-GitHub is the public distribution repository; Gitea is a private copy.
-Publishing code does not automatically deploy updates to other machines.
