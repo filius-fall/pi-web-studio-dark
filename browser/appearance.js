@@ -12,7 +12,7 @@ export function appearanceCss(s) {
       ${s} .shell.workspace-panel-collapsed chat-view { padding-top: 38px; box-sizing: border-box; }
     }
     ${s} .shell { --navigation-panel-size: 272px; --workspace-panel-size: minmax(280px, 28vw); }
-    ${s} aside, ${s} .mobile-navigation-panel { background: #121212; }
+    ${s} aside, ${s} .mobile-navigation-panel { background: #070707; }
     ${s} project-list { flex: 0 1 auto; max-height: 30%; }
     ${s} workspace-list { flex: 0 1 auto; max-height: 22%; }
     ${s} session-list { flex: 1 1 0; }
@@ -23,7 +23,7 @@ export function appearanceCss(s) {
     ${s} .chat { padding: 28px clamp(16px, 4vw, 52px) 24px; line-height: 1.7; }
     ${s} .msg { max-width: 850px; margin: 0 auto 28px; font-size: 14px; }
     ${s} .msg.assistant, ${s} .msg.tool-image-output { border: 0; border-radius: 0; background: transparent; padding: 0; }
-    ${s} .msg.user { border: 1px solid #ffffff0d; border-radius: 12px; background: #242424; padding: 14px 18px; }
+    ${s} .msg.user { border: 1px solid #ffffff0d; border-radius: 16px; background: #1c1c1c; padding: 14px 18px; }
     ${s} .msg > .msg-header { position: static; min-height: 20px; margin: 0 0 10px; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
     ${s} .msg.user > .msg-header { background: transparent; border: 0; }
     ${s} .msg-header .label { font-size: 11px; font-weight: 600; text-transform: none; letter-spacing: .02em; }
@@ -31,19 +31,36 @@ export function appearanceCss(s) {
     ${s} .msg.user > .msg-header .label { color: #b4b4bd; }
     ${s} .msg-meta { opacity: 1 !important; color: #93939c; font-size: 11px; }
     ${s} .msg-action { border-color: transparent; background: transparent; }
-    ${s} .msg.event-group, ${s} .msg.event-group.live { border: 0; border-left: 2px solid #39393f; border-radius: 0; background: transparent; color: var(--pi-text-secondary); }
+    ${s} .msg.event-group, ${s} .msg.event-group.live { border: 0; border-left: 0; border-radius: 0; background: transparent; color: var(--pi-text-secondary); }
     ${s} .msg.event-group > summary, ${s} .msg.event-group.live > summary { position: static; padding: 6px 10px; background: transparent; border-color: #ffffff12; color: #a8a8b2; border-radius: 9px 9px 0 0; font-size: 12px; }
     ${s} .group-msg > .msg-header { position: static; background: transparent; border-color: #ffffff0d; box-shadow: none; }
     ${s} .msg.tool, ${s} .msg.bash, ${s} .msg.skill { border-color: #ffffff18; background: #1c1c1c; border-radius: 10px; }
     ${s} .msg.tool-execution-shell, ${s} .msg.ask-user-record-shell { border: 0; background: transparent; padding: 0; }
-    ${s} .activity-dock { border-color: #ffffff18; background: #202020; }
-    ${s} .action-row { margin: 2px 0; border-radius: 7px; overflow: clip; }
+    ${s} .activity-dock { border: 0; border-radius: 6px 6px 0 0; background: #191919; }
+    ${s} .activity-dock.active { color: #00bff3; background: #151515; }
+    ${s} .activity-indicator.session, ${s} .activity-indicator.sending { background: #00bff3; }
+    ${s} .tool-card, ${s} .tool-card.pending, ${s} .tool-card.running, ${s} .tool-card.success { border: 0; border-top: 1px solid #ffffff0c; border-radius: 0; background: transparent; padding: 10px 0; gap: 6px; }
+    ${s} .tool-title { gap: 8px; font-size: 13px; }
+    ${s} .tool-title strong { color: #a0a0a5; font-weight: 500; }
+    ${s} .tool-title .summary, ${s} .tool-title .path { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    ${s} .tool-title .summary { color: #929298; }
+    ${s} .tool-meta, ${s} .status-label { color: #89898f; font-size: 10px; letter-spacing: 0; text-transform: none; }
+    ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon, ${s} .tool-card.running .status-label { color: #00bff3; }
+    ${s} .tool-card.success .status-icon { color: #34d399; }
+    ${s} .tool-card.error .status-icon, ${s} .tool-card.error .status-label { color: var(--pi-danger); }
+    ${s} .text-body, ${s} .diff-details { border-top: 0; padding-top: 2px; }
+    ${s} .text-body > summary, ${s} .diff-details > summary { color: #929298; font-size: 12px; }
+    ${s} .msg.event-group > summary { color: #929298; padding: 6px 0; }
+    ${s} .msg.event-group > summary .label { text-transform: none; font-weight: 400; }
+    ${s} .group-body { padding-left: 0; padding-right: 0; }
+
+    ${s} .action-row { margin: 3px 0; border-radius: 10px; overflow: clip; }
     ${s} .action-main, ${s} .action-menu-toggle { border: 0; border-radius: 0; background: transparent; font-size: 13px; }
     ${s} .action-main { padding-top: 8px; padding-bottom: 8px; }
-    ${s} .action-row.selected .action-main, ${s} .action-row.selected .action-menu-toggle { border: 0; background: #2a2a2d; color: #fafafa; }
-    ${s} .action-row.selected { box-shadow: inset 2px 0 0 #628dff; }
-    ${s} .action-row.selected .action-main { background: #2a2a2d; box-shadow: inset 2px 0 0 #628dff; }
-    ${s} .action-row:not(.selected):hover .action-main, ${s} .action-menu-toggle:hover { background: #222225; }
+    ${s} .action-row.selected .action-main, ${s} .action-row.selected .action-menu-toggle { border: 0; background: #202020; color: #fafafa; }
+    ${s} .action-row.selected { box-shadow: none; }
+    ${s} .action-row.selected .action-main { background: #202020; box-shadow: none; }
+    ${s} .action-row:not(.selected):hover .action-main, ${s} .action-menu-toggle:hover { background: #191919; }
     ${s} .action-name { font-size: 13px; line-height: 1.5; }
     ${s} .action-main small { font-size: 11px; line-height: 1.5; margin-top: 2px; color: #9c9ca6; }
     ${s} .action-menu-toggle { min-width: 28px; }
@@ -51,8 +68,8 @@ export function appearanceCss(s) {
     ${s} .section-toggle { text-transform: none; letter-spacing: 0; }
     ${s} .section-title { font-weight: 600; }
     ${s} .tabs button { border-color: transparent; background: transparent; font-size: 12px; padding: 6px 9px; }
-    ${s} .tabs button.selected { border-color: #ffffff12; background: #2a2a2d; color: #fafafa; }
-    ${s} .markdown-editor .cm-editor, ${s} textarea { border-radius: 12px; border-color: #ffffff24; background: #222225; font-size: 14px; }
+    ${s} .tabs button.selected { border-color: #ffffff12; background: #202020; color: #fafafa; }
+    ${s} .markdown-editor .cm-editor, ${s} textarea { border-radius: 16px; border-color: #ffffff12; background: #191919; font-size: 14px; }
     ${s} .markdown-editor .cm-editor.cm-focused, ${s} textarea:focus { outline: none; border-color: #628dff; }
     ${s} .editor-wrap { border-radius: 12px; }
     ${s} .notification-tray { background: #1c1c1c; max-height: min(180px, 24vh); }

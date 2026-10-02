@@ -1,13 +1,15 @@
 {
   "name": "pi-web-vitesse-black",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "private": true,
   "type": "module",
   "piWeb": {
-    "plugins": [{
-      "id": "vitesse",
-      "browserRoot": "browser",
-      "module": "browser/index.js"
-    }]
+    "plugins": [
+      {
+        "id": "vitesse",
+        "browserRoot": "browser",
+        "module": "browser/index.js"
+      }
+    ]
   }
 }

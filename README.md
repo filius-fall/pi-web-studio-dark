@@ -5,8 +5,9 @@ Dark appearance and compact layout for Pi Web v1.202610.0.
 A local browser plugin for [Pi Web](https://pi-web.dev). It changes presentation and
 layout while preserving Pi Web's agent, sessions, and provider configuration.
 
-- DM Sans, charcoal surfaces, restrained blue highlights.
-- Flat assistant messages, neutral user messages, compact expandable events.
+- DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
+- Flat assistant messages, neutral user messages, compact expandable events and tool calls.
+- Tool command summaries stay on one line; full command/output and diffs remain available in Details.
 - Compact navigation rows; Projects and Workspaces size to content, Sessions fills the remaining space.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
