@@ -76,11 +76,6 @@ The complete desktop layout: sidebar, conversation, completed work, and composer
 
 ![Studio Dark full desktop app](docs/screenshots/desktop.png)
 
-The complete mobile chat: session header, response, model/reasoning selectors,
-and compact input.
-
-![Studio Dark full mobile chat](docs/screenshots/mobile-chat.png)
-
 ### Completed work
 
 One dropdown keeps completed activity out of the way. Open it to inspect progress
@@ -115,18 +110,25 @@ Message markers preview your prompts and jump to their position.
 
 ![Desktop reading layout](docs/screenshots/reading-desktop.png)
 
-![Mobile reading layout](docs/screenshots/reading-mobile.png)
-
 ![User message navigation](docs/screenshots/message-navigation.png)
 
 ### Images and attachments
 
-Image previews stay above your message, with clear delivery choices on desktop
-and compact image messages on mobile.
+Image previews stay above your message, with clear delivery choices.
 
 ![Composer with an image attachment](docs/screenshots/attachments.png)
 
+### Mobile
+
+The complete mobile chat includes the session header, response, model/reasoning
+selectors, and compact input. Image messages and the reading layout adapt to
+phone screens.
+
+![Studio Dark full mobile chat](docs/screenshots/mobile-chat.png)
+
 ![Mobile images and thinking](docs/screenshots/mobile-images.png)
+
+![Mobile reading layout](docs/screenshots/reading-mobile.png)
 
 ## Session controls
 
