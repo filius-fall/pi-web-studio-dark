@@ -37,11 +37,16 @@ export function appearanceCss(s) {
     ${s} .group-msg > .msg-header { position: static; background: transparent; border-color: #ffffff0d; box-shadow: none; }
     ${s} .msg.tool, ${s} .msg.bash, ${s} .msg.skill { border-color: #ffffff18; background: #1c1c1c; border-radius: 10px; }
     ${s} .msg.tool-execution-shell, ${s} .msg.ask-user-record-shell { border: 0; background: transparent; padding: 0; }
+    ${s} .msg.tool-execution-shell { margin-bottom: 8px; }
     ${s} .activity-dock { border: 0; border-radius: 6px 6px 0 0; background: #191919; }
     ${s} .activity-dock.active { color: #00bff3; background: #151515; }
     ${s} .activity-indicator.session, ${s} .activity-indicator.sending { background: #00bff3; }
-    ${s} .tool-card, ${s} .tool-card.pending, ${s} .tool-card.running, ${s} .tool-card.success { border: 0; border-top: 1px solid #ffffff0c; border-radius: 0; background: transparent; padding: 10px 0; gap: 6px; }
+    ${s} .tool-card, ${s} .tool-card.pending, ${s} .tool-card.running, ${s} .tool-card.success { border: 0; border-top: 1px solid #ffffff0c; border-radius: 0; background: transparent; padding: 10px 0; gap: 0; }
+    ${s} .tool-card { position: relative; gap: 0; }
+    ${s} .tool-header { min-height: 28px; box-sizing: border-box; }
+    ${s} .tool-card:has(> .text-body) .tool-header { padding-right: 36px; }
     ${s} .tool-header, ${s} .tool-title, ${s} .tool-meta { align-items: center; }
+    ${s} .status-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
     ${s} .tool-title { gap: 8px; font-size: 13px; line-height: 20px; }
     ${s} .status-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 14px; width: 14px; height: 20px; line-height: 1; box-sizing: border-box; }
     ${s} .tool-title strong { color: #a0a0a5; font-weight: 500; }
@@ -67,11 +72,13 @@ export function appearanceCss(s) {
     ${s} details.part[open] > formatted-text { animation: studio-details-enter 180ms ease-out both; }
     ${s} .text-body, ${s} .diff-details { border-top: 0; padding-top: 2px; }
     ${s} .diff-details > summary { color: #929298; font-size: 12px; }
-    ${s} .text-body > summary { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; box-sizing: border-box; padding: 0; color: #929298; font-size: 0; list-style: none; border-radius: 5px; cursor: pointer; }
+    ${s} .text-body { margin: 0; padding: 0; }
+    ${s} .text-body[open] { padding-top: 8px; }
+    ${s} .text-body > summary { position: absolute; top: 10px; right: 0; z-index: 1; display: flex; align-items: center; justify-content: flex-end; width: 100%; height: 28px; box-sizing: border-box; padding: 0 10px; color: #929298; font-size: 0; list-style: none; border-radius: 5px; cursor: pointer; }
     ${s} .text-body > summary::-webkit-details-marker { display: none; }
     ${s} .text-body > summary::before { content: ""; width: 7px; height: 7px; box-sizing: border-box; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform 160ms ease; }
     ${s} .text-body[open] > summary::before { transform: translateY(2px) rotate(225deg); }
-    ${s} .text-body > summary:hover { color: #e8e8ed; background: #ffffff08; }
+    ${s} .text-body > summary:hover { color: #e8e8ed; background: #ffffff04; }
     ${s} .text-body > summary:focus-visible { outline: 2px solid var(--pi-accent); outline-offset: 2px; }
     ${s} .msg.event-group > summary { color: #929298; padding: 6px 0; }
     ${s} .msg.event-group > summary .label { text-transform: none; font-weight: 400; }
