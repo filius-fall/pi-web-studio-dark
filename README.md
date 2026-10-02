@@ -68,50 +68,63 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 
 ## Screenshots
 
-Screenshots use sample projects and conversation content.
+Captured with Studio Dark 1.15.0. All images use demonstration content.
 
-Completed work stays out of the way; open the dropdown to inspect the original
-progress updates, thinking, and tool activity:
+### Full app overview
+
+The complete desktop layout: sidebar, conversation, completed work, and composer.
+
+![Studio Dark full desktop app](docs/screenshots/desktop.png)
+
+The complete mobile chat: session header, response, model/reasoning selectors,
+and compact input.
+
+![Studio Dark full mobile chat](docs/screenshots/mobile-chat.png)
+
+### Completed work
+
+One dropdown keeps completed activity out of the way. Open it to inspect progress
+updates, thinking, and tool calls while the final answer remains visible.
 
 ![Completed work collapsed](docs/screenshots/work-done-collapsed.png)
 
 ![Completed work expanded](docs/screenshots/work-done-expanded.png)
 
-![Desktop chat with compact tool calls](docs/screenshots/desktop.png)
+### Tool details and thinking
 
-Reading layout with headings, links, lists, tables, and code panels:
+Expand a tool to inspect its command and output. Active thinking uses a brain
+icon with a gentle animation.
+
+![Expanded tool details](docs/screenshots/tool-details.png)
+
+![Thinking indicator](docs/screenshots/thinking.png)
+
+### Models and sessions
+
+Model-family logos and current/default indicators make selection clear. Pin
+important sessions and restore completed work from Done.
+
+![Model picker](docs/screenshots/model-picker.png)
+
+![Pinned and completed sessions](docs/screenshots/sessions.png)
+
+### Reading and message navigation
+
+Headings, links, lists, tables, and code panels share a consistent reading layout.
+Message markers preview your prompts and jump to their position.
 
 ![Desktop reading layout](docs/screenshots/reading-desktop.png)
 
 ![Mobile reading layout](docs/screenshots/reading-mobile.png)
 
-Expanded tool command and output:
-
-![Expanded tool details](docs/screenshots/tool-details.png)
-
-Model selection with provider logos and current/default indicators:
-
-![Model picker](docs/screenshots/model-picker.png)
-
-Message markers preview your prompts and jump to their position:
-
 ![User message navigation](docs/screenshots/message-navigation.png)
 
-Active thinking with a brain icon and moving highlight:
+### Images and attachments
 
-![Thinking indicator](docs/screenshots/thinking.png)
-
-Pin important sessions and restore completed work from Done:
-
-![Pinned and completed sessions](docs/screenshots/sessions.png)
-
-Image previews stay above your message, with clear delivery choices:
+Image previews stay above your message, with clear delivery choices on desktop
+and compact image messages on mobile.
 
 ![Composer with an image attachment](docs/screenshots/attachments.png)
-
-Mobile chat and image messages:
-
-![Mobile chat](docs/screenshots/mobile-chat.png)
 
 ![Mobile images and thinking](docs/screenshots/mobile-images.png)
 
