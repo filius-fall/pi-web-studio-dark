@@ -68,7 +68,7 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 
 ## Screenshots
 
-The screenshots show the current Studio Dark interface with demonstration content. Every desktop feature image includes the full app and sidebar; mobile screenshots are grouped at the end.
+The screenshots show Studio Dark with demonstration content. Every desktop feature image includes the full app and sidebar; mobile screenshots are grouped at the end.
 
 ### Full app overview
 
@@ -80,6 +80,12 @@ The complete desktop layout: sidebar, conversation, completed work, and composer
 
 One dropdown keeps completed activity out of the way. Open it to inspect progress
 updates, thinking, and tool calls while the final answer remains visible.
+Activity groups start collapsed with a plain-language summary such as
+**Ran 4 commands and used browser once**. Open a group to inspect its steps.
+Queued messages appear as compact bubbles aligned with the conversation.
+Use the composer's **Send now** (steer) button to deliver a new instruction at
+the next model call. Pi Web's current API cannot promote an individual message
+that is already queued; **Clear queue** keeps its native whole-queue behavior.
 
 ![Completed work collapsed](docs/screenshots/completed-work-sidebar-collapsed.png)
 
@@ -87,7 +93,8 @@ updates, thinking, and tool calls while the final answer remains visible.
 
 ### Tool details and thinking
 
-Tool calls appear as compact, evenly spaced action rows, nested under completed
+Tool calls use short names such as **Run script**, **Check logs**, and **Read file**
+while running and after completion. They appear as evenly spaced action rows, nested under completed
 work without stacked divider rails. Expand any call for its full command and
 result in roomy, wrapped panels. Thinking uses a gentle brain animation, and
 image analysis adds a small scanning indicator while the model reads an

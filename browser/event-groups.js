@@ -1,4 +1,6 @@
 // Fold completed work without moving native message nodes or changing session data.
+import { activitySummary } from './tool-labels.js';
+
 const states = new WeakMap();
 function setHidden(node, hidden) {
   if (node.dataset.studioWorkHidden !== String(hidden)) node.dataset.studioWorkHidden = String(hidden);
@@ -10,8 +12,36 @@ export function decorateEventGroups(root) {
   if (!chat) return;
   let state = states.get(root);
   if (!state || state.session !== host.sessionId) {
-    clearEventGroups(root);state = { session: host.sessionId, turns: new Map() };states.set(root, state);
+    clearEventGroups(root);state = { session: host.sessionId, turns: new Map(), groups: new Map() };states.set(root, state);
   }
+  // Native groups render their children lazily. Read execution data from the
+  // messages so the summary is accurate even when a group is closed.
+  const groupExecutions = new Map();
+  for (const group of chat.querySelectorAll('.msg.event-group')) {
+    const summary = group.querySelector(':scope > summary');
+    const nativeCaption = summary?.querySelector('span:not(.studio-group-caption)');
+    if (!nativeCaption) continue;
+    let record = state.groups.get(group);
+    if (!record) {
+      record = { folded: false };state.groups.set(group, record);
+    }
+    const count = Number(nativeCaption.textContent.match(/(\d+) events?\b/)?.[1] || 0);
+    const start = Number(group.dataset.index);
+    const executions = Number.isInteger(start) ? (host.messages || []).slice(start, start + count)
+      .flatMap(message => (message.parts || []).filter(part => part.type === 'toolExecution')) : [];
+    if (executions.length && !record.folded) {
+      // Preserve subsequent mouse/keyboard choices through native disclosure
+      // state. Pure thinking groups keep their existing live presentation.
+      record.folded = true;group.open = false;
+    }
+    groupExecutions.set(group, executions);
+    let caption = summary.querySelector('.studio-group-caption');
+    if (!caption) { caption = document.createElement('span');caption.className = 'studio-group-caption';summary.append(caption); }
+    const label = executions.length ? activitySummary(executions) : 'Thinking and updates';
+    if (caption.textContent !== label) caption.textContent = label;
+    group.setAttribute('data-studio-activity-group', '');
+  }
+  for (const [group] of state.groups) if (!group.isConnected) state.groups.delete(group);
   const turns = [];
   let turn;
   for (const node of chat.children) {
@@ -44,8 +74,9 @@ export function decorateEventGroups(root) {
     }
     if (record.live && !live) record.expanded = false;
     record.live = live;record.work = work;
-    const tools = work.reduce((count, node) => count + (node.matches('.event-group') ? Number(node.querySelector(':scope > summary > span')?.textContent.match(/(\d+) tool\b/)?.[1] || 0) : node.matches('.tool-execution-shell, .tool, .bash') ? 1 : 0), 0);
-    const label = tools ? `Work done · ${tools} tool call${tools === 1 ? '' : 's'}` : 'Work done';
+    const executions = work.flatMap(node => node.matches('.event-group') ? groupExecutions.get(node) || [] :
+      [...node.querySelectorAll('tool-execution-view')].map(tool => tool.execution).filter(Boolean));
+    const label = executions.length ? `Work done · ${activitySummary(executions)}` : 'Work done';
     if (record.button.textContent !== label) record.button.textContent = label;
     record.button.setAttribute('aria-expanded', String(record.expanded));
     record.wrap.hidden = live;
@@ -62,6 +93,10 @@ export function decorateEventGroups(root) {
 export function clearEventGroups(root) {
   const state = states.get(root);
   if (state) for (const record of state.turns.values()) record.wrap.remove();
+  if (state) for (const [group] of state.groups) {
+    group.querySelector('.studio-group-caption')?.remove();
+    group.removeAttribute('data-studio-activity-group');
+  }
   for (const summary of root.querySelectorAll('.studio-work-summary')) summary.remove();
   for (const node of root.querySelectorAll('[data-studio-work-hidden]')) node.removeAttribute('data-studio-work-hidden');
   states.delete(root);

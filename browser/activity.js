@@ -1,8 +1,22 @@
+import { toolActionName } from './tool-labels.js';
+
 const toolStates = new WeakMap();
 function text(element, value) { if (element.textContent !== value) element.textContent = value; }
 export function decorateActivity(root) {
   if (document.documentElement.dataset.piWebTheme !== "vitesse:black") { clearActivity(root);return; }
   const kind = root.host?.localName;
+  if (kind === 'prompt-editor') {
+    const steer = root.querySelector('.steer-button');
+    if (steer) {
+      if (!steer.hasAttribute('data-studio-steer-title')) {
+        steer.dataset.studioSteerTitle = steer.title;
+        steer.dataset.studioSteerAria = steer.getAttribute('aria-label') || '';
+      }
+      const title = 'Send now — steer the response at the next model call';
+      if (steer.title !== title) steer.title = title;
+      if (steer.getAttribute('aria-label') !== 'Send now (steer current response)') steer.setAttribute('aria-label', 'Send now (steer current response)');
+    }
+  }
   if (kind === 'tool-execution-view') {
     const execution = root.host.execution;
     const card = root.querySelector('.tool-card');
@@ -12,26 +26,13 @@ export function decorateActivity(root) {
     card.dataset.studioActive = String(active);
     let label = title.querySelector('.studio-tool-label');
     if (!label) { label = document.createElement('span'); label.className = 'studio-tool-label'; title.append(label); }
-    const action = typeof execution.summary === 'string' ? execution.summary.trim() : '';
+    const action = toolActionName(execution);
     // The spinner and status icon already communicate progress; keep the row
     // label focused on the action so it stays concise in nested event lists.
-    text(label, action || execution.toolName || 'tool');
-    const commandSummary = title.querySelector('.summary');
-    if (commandSummary && action) {
-      if (!commandSummary.hasAttribute('data-studio-command')) {
-        commandSummary.dataset.studioCommand = commandSummary.getAttribute('title') || commandSummary.textContent.trim();
-        commandSummary.dataset.studioOriginalTitle = commandSummary.getAttribute('title') || '';
-        commandSummary.dataset.studioOriginalAria = commandSummary.getAttribute('aria-label') || '';
-      }
-      const command = commandSummary.dataset.studioCommand;
-      if (action !== command) {
-        text(commandSummary, action);
-        commandSummary.title = command ? `Command: ${command}` : action;
-        const ariaLabel = command ? `Action: ${action}. Command: ${command}` : action;
-        if (commandSummary.getAttribute('aria-label') !== ariaLabel) commandSummary.setAttribute('aria-label', ariaLabel);
-        commandSummary.setAttribute('data-studio-action', '');
-      }
-    }
+    text(label, action);
+    const target = title.querySelector('.summary, .path');
+    const fullTarget = target?.getAttribute('title') || execution.summary || execution.toolName || '';
+    if (label.title !== fullTarget) label.title = fullTarget;
     let state = toolStates.get(root);
     if (!state) {
       state = { manual: false, onInteract: event => {
@@ -54,6 +55,12 @@ export function decorateActivity(root) {
     const host = root.host;
     const chat = root.querySelector('.chat');
     if (!chat) return;
+    for (const message of root.querySelectorAll('.queued-message')) {
+      let state = message.querySelector('.studio-queue-state');
+      if (!state) { state = document.createElement('span');state.className = 'studio-queue-state';message.append(state); }
+      const nativeKind = message.querySelector('.queued-kind')?.textContent || '';
+      text(state, nativeKind.startsWith('Steer') ? 'Steering' : 'Queued');
+    }
     const status = host.status;
     const last = host.messages?.at(-1);
     const thinking = status?.isStreaming && last?.role === 'assistant' && last.parts?.at(-1)?.type === 'thinking';
@@ -73,17 +80,12 @@ export function decorateActivity(root) {
 export function clearActivity(root) {
   const state = toolStates.get(root);
   if (state) { root.removeEventListener('pointerdown', state.onInteract, true);root.removeEventListener('keydown', state.onInteract, true);toolStates.delete(root); }
-  for (const element of root.querySelectorAll('.studio-tool-label, .studio-inline-activity, .studio-ticks')) element.remove();
-  for (const summary of root.querySelectorAll('.tool-title .summary[data-studio-command]')) {
-    text(summary, summary.dataset.studioCommand);
-    if (summary.dataset.studioOriginalTitle) summary.setAttribute('title', summary.dataset.studioOriginalTitle);
-    else summary.removeAttribute('title');
-    if (summary.dataset.studioOriginalAria) summary.setAttribute('aria-label', summary.dataset.studioOriginalAria);
-    else summary.removeAttribute('aria-label');
-    delete summary.dataset.studioCommand;
-    delete summary.dataset.studioOriginalTitle;
-    delete summary.dataset.studioOriginalAria;
-    summary.removeAttribute('data-studio-action');
+  for (const element of root.querySelectorAll('.studio-tool-label, .studio-inline-activity, .studio-ticks, .studio-queue-state')) element.remove();
+  const steer = root.querySelector('.steer-button[data-studio-steer-title]');
+  if (steer) {
+    steer.title = steer.dataset.studioSteerTitle;
+    steer.setAttribute('aria-label', steer.dataset.studioSteerAria);
+    delete steer.dataset.studioSteerTitle;delete steer.dataset.studioSteerAria;
   }
   root.querySelector('[data-studio-active]')?.removeAttribute('data-studio-active');
 }
