@@ -1,5 +1,6 @@
 import { createMobilePresentation } from "./mobile.js";
 import { decorateReading } from "./reading.js";
+import { decorateEventGroups, clearEventGroups } from "./event-groups.js";
 import { createComposerLayout } from "./composer-layout.js";
 import { createSessionManagement } from "./session-management.js";
 import { decorateMessageNavigation, clearMessageNavigation } from "./message-navigation.js";
@@ -157,6 +158,7 @@ function installChatContrast(signal) {
           if (observed instanceof ShadowRoot && !observed.host.isConnected) {
             watcher.disconnect();
             clearMessageNavigation(observed);
+            clearEventGroups(observed);
             sessionManagement.clear(observed);
             mobilePresentation.clear(observed);
             observed.removeEventListener("click", rememberTools, true);
@@ -169,6 +171,7 @@ function installChatContrast(signal) {
       sessionManagement.decorate(root);
       decorateModels(root);
       decorateReading(root);
+      decorateEventGroups(root);
       mobilePresentation.decorate(root);
       composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
       if (root.host?.localName === "app-navigation-panel") {
@@ -189,6 +192,7 @@ function installChatContrast(signal) {
     sessionManagement.decorate(root);
     decorateModels(root);
     decorateReading(root);
+    decorateEventGroups(root);
     mobilePresentation.decorate(root);
     composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
     syncThinking(root);
@@ -247,6 +251,7 @@ function installChatContrast(signal) {
       clearModels(root);
       clearActivity(root);
       clearMessageNavigation(root);
+      clearEventGroups(root);
       root.removeEventListener("click", rememberTools, true);
       for (const summary of root.querySelectorAll("[data-studio-reasoning]")) {
         summary.removeAttribute("data-studio-thinking");

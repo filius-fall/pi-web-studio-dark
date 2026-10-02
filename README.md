@@ -40,6 +40,7 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 - Official Pi browser tab icon, served locally with the plugin.
 - DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
+- Completed response activity collapses into one Work done dropdown; expand it to inspect thinking, updates, skills, and tool calls. Repeated event headers and divider lines are removed.
 - A shared 800px reading and composer column, 16px DM Sans body text, generous paragraph/list spacing, and a clear heading hierarchy.
 - Blue underlined hyperlinks, subtle inline code, readable tables, and horizontally scrollable code panels with language labels and native copy controls.
 - Tool calls use one compact row with a status icon, truncated command, and inline down/up chevron. Click the row to reveal the full command and output; diffs keep their native controls.
