@@ -70,6 +70,13 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 
 Screenshots use sample projects and conversation content.
 
+Completed work stays out of the way; open the dropdown to inspect the original
+progress updates, thinking, and tool activity:
+
+![Completed work collapsed](docs/screenshots/work-done-collapsed.png)
+
+![Completed work expanded](docs/screenshots/work-done-expanded.png)
+
 ![Desktop chat with compact tool calls](docs/screenshots/desktop.png)
 
 Reading layout with headings, links, lists, tables, and code panels:
