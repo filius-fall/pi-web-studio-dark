@@ -9,11 +9,14 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
 - Tool calls use one compact row with a status icon, truncated command, and inline down/up chevron. Click the row to reveal the full command and output; diffs keep their native controls.
+- Project badges, clear session cards, hover/focus menus, and working/unread/age indicators.
 - Compact navigation rows; Projects and Workspaces size to content, Sessions fills the remaining space.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
 - Aligned status icons, blue tool-call spinners, and a slow moving highlight across running tool text.
 - Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
+- Compact model picker with provider logos, readable names, current-model badges, and native default controls.
+- One rounded composer panel with model and reasoning labels, attachments, send, and stop controls.
 - Thin scrollbars, readable metadata, and responsive padding.
 
 ## Screenshots
@@ -82,3 +85,6 @@ and font licenses are in `LICENSE.vitesse` and `LICENSE.dm-sans`.
 
 The browser tab icon is the upstream [Pi favicon](https://pi.dev/favicon.svg),
 provided through the [Pi brand assets](https://pi.dev/press-kit).
+
+Provider logos are bundled from Lobe Icons static SVG package v1.95.1 under
+the included `LICENSE.icons`. Brand marks belong to their respective owners.

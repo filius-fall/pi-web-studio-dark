@@ -1,4 +1,6 @@
 import { appearanceCss } from "./appearance.js";
+import { decorateNavigation, clearNavigation } from "./navigation.js";
+import { decorateModels, clearModels } from "./models.js";
 // Pi Web adaptation of Anthony Fu's Vitesse Black palette.
 // https://github.com/antfu/vscode-theme-vitesse
 // Contrast variant requested by the user: bright neutral text and saturated accents.
@@ -145,11 +147,20 @@ function installChatContrast(signal) {
           }
         }
       }
+      decorateNavigation(root);
+      decorateModels(root);
+      if (root.host?.localName === "app-navigation-panel") {
+        for (const list of root.querySelectorAll("project-list, workspace-list, session-list")) {
+          if (list.shadowRoot) decorateNavigation(list.shadowRoot);
+        }
+      }
       syncThinking(root);
       installToolsButton();
     });
     roots.set(root, observer);
-    observer.observe(root, { childList: true, subtree: true });
+    observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor"].includes(root.host?.localName), ...(["project-list", "workspace-list", "session-list", "prompt-editor"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label"] } : {}) });
+    decorateNavigation(root);
+    decorateModels(root);
     syncThinking(root);
   }
   observe(document);
@@ -168,6 +179,9 @@ function installChatContrast(signal) {
 
     } catch { /* Storage may be unavailable; leave the app's layout untouched. */ }
   }
+  const navigationTimer = setInterval(() => {
+    for (const root of roots.keys()) decorateNavigation(root);
+  }, 60000);
   let layoutTimer = setTimeout(syncLayout, 500);
   function onResize() {
     clearTimeout(layoutTimer);
@@ -178,9 +192,12 @@ function installChatContrast(signal) {
     if (disposed) return;
     disposed = true;
     clearTimeout(layoutTimer);
+    clearInterval(navigationTimer);
     window.removeEventListener("resize", onResize);
     for (const [root, observer] of roots) {
       observer.disconnect();
+      clearNavigation(root);
+      clearModels(root);
       root.removeEventListener("click", rememberTools, true);
       for (const summary of root.querySelectorAll("[data-studio-thinking]")) summary.removeAttribute("data-studio-thinking");
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);

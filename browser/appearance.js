@@ -1,5 +1,6 @@
 // Presentation overrides for Pi Web v1.202610.0. All rules are theme-scoped.
 export function appearanceCss(s) {
+  const icon = name => new URL(`./icons/${name}.svg`, import.meta.url).href;
   return `
     ${s} { font-family: "Pi Studio Sans", system-ui, sans-serif !important; -webkit-font-smoothing: antialiased; --pi-control-font-family: "Pi Studio Sans", system-ui, sans-serif; }
     ${s} button, ${s} input, ${s} select, ${s} textarea { font-family: "Pi Studio Sans", system-ui, sans-serif !important; }
@@ -94,6 +95,33 @@ export function appearanceCss(s) {
     ${s} .action-name { font-size: 13px; line-height: 1.5; }
     ${s} .action-main small { font-size: 11px; line-height: 1.5; margin-top: 2px; color: #9c9ca6; }
     ${s} .action-menu-toggle { min-width: 28px; }
+    .studio-session-meta { display: none; }
+    ${s} .action-row { grid-template-columns: minmax(0, 1fr); margin: 4px 0; }
+    ${s} .action-main { padding: 10px 12px 10px calc(12px + var(--depth, 0) * 12px); }
+    ${s} .action-menu { position: absolute; right: 5px; bottom: 5px; z-index: 2; }
+    ${s} .action-menu-toggle { min-width: 24px; width: 24px; height: 24px; border-radius: 5px; opacity: 0; }
+    ${s} .action-row:hover .action-menu-toggle, ${s} .action-row:focus-within .action-menu-toggle, ${s} .action-row:has(.action-menu-panel) .action-menu-toggle { opacity: 1; }
+    ${s} .action-row.selected .action-menu-toggle { background: transparent; }
+    ${s} .action-name { display: block; font-size: 14px; line-height: 21px; max-height: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    ${s} .action-main[data-studio-badge] { padding-left: 44px; }
+    ${s} .action-main[data-studio-badge]::before { content: attr(data-studio-badge); position: absolute; left: 12px; top: 10px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 6px; color: var(--studio-badge-color); background: color-mix(in srgb, var(--studio-badge-color) 14%, transparent); font-size: 10px; font-weight: 650; }
+    ${s} .action-main small { color: #727278; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    ${s} .action-activity { top: 14px; right: 12px; width: 12px; height: 12px; }
+    ${s} .action-activity .activity-indicator.session, ${s} .action-activity .activity-indicator.sending, ${s} .action-activity .activity-indicator.terminal { width: 12px; height: 12px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; background: transparent; border-radius: 50%; animation: studio-tool-spin 900ms linear infinite; }
+    :host(session-list)${s} .action-main { padding: 12px 12px 16px calc(12px + var(--depth, 0) * 12px); }
+    :host(session-list)${s} .action-main.selecting { padding-left: calc(34px + var(--depth, 0) * 12px); }
+    :host(session-list)${s} .session-checkbox { top: 17px; }
+    :host(session-list)${s} .action-name { color: #929298; }
+    :host(session-list)${s} .action-row.selected .action-name, :host(session-list)${s} .action-row.unread .action-name, :host(session-list)${s} .action-main:has(.studio-session-state[data-active="true"]) .action-name { color: #e8e8ed; font-weight: 500; }
+    :host(session-list)${s} .action-main > small, :host(session-list)${s} .action-activity { display: none; }
+    ${s} .studio-session-meta { display: flex; align-items: center; gap: 7px; min-width: 0; margin-bottom: 7px; font-size: 11px; line-height: 22px; color: #85858b; }
+    ${s} .studio-project-badge { flex: 0 0 22px; width: 22px; height: 22px; display: grid; place-items: center; border-radius: 6px; color: var(--studio-badge-color); background: color-mix(in srgb, var(--studio-badge-color) 14%, transparent); font-size: 10px; font-weight: 650; }
+    ${s} .studio-project-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    ${s} .studio-session-state { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px; margin-left: auto; white-space: nowrap; }
+    ${s} .studio-session-state[data-active="true"], ${s} .studio-session-state[data-unread="true"] { color: #00bff3; }
+    ${s} .studio-session-state[data-active="true"]::before { content: ""; width: 11px; height: 11px; box-sizing: border-box; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: studio-tool-spin 900ms linear infinite; }
+    @media (hover: none) { ${s} .action-menu-toggle { opacity: 1; } }
+
     ${s} section > h2 { font-size: 11px; font-weight: 500; letter-spacing: .05em; box-shadow: none; background: transparent; padding-top: 8px; padding-bottom: 8px; }
     ${s} .section-toggle { text-transform: none; letter-spacing: 0; }
     ${s} .section-title { font-weight: 600; }
@@ -106,6 +134,69 @@ export function appearanceCss(s) {
     ${s} .notification-header { background: #1c1c1c; min-height: 34px; }
     ${s} .notification-heading { font-size: 12px; font-weight: 500; }
     ${s} .notification-row { font-size: 12px; line-height: 1.5; }
+    .studio-model-name, .studio-model-current { display: none; }
+    ${s} [data-studio-brand] { position: relative; }
+    ${s} [data-studio-brand]::before { content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; background: #e8e8ed; mask: var(--studio-brand-icon) center / contain no-repeat; pointer-events: none; }
+    ${s} [data-studio-brand="openai"] { --studio-brand-icon: url("${icon('openai')}"); }
+    ${s} [data-studio-brand="zai"] { --studio-brand-icon: url("${icon('zai')}"); }
+    ${s} [data-studio-brand="gemini"]::before { mask: none; background: url("${icon('gemini-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="deepseek"]::before { mask: none; background: url("${icon('deepseek-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="generic"]::before { mask: none; content: "AI"; display: grid; place-items: center; background: #252528; border-radius: 6px; font-size: 10px; color: #a0a0a5; }
+    :host(model-picker)${s} modal-surface { --modal-surface-width: min(560px, calc(100vw - 48px)); --modal-surface-max-height: min(620px, calc(100vh - 64px)); --modal-surface-radius: 18px; }
+    :host(model-picker)${s} header { padding: 18px 20px 12px; border: 0; }
+    :host(model-picker)${s} header strong { font-size: 17px; font-weight: 600; }
+    :host(model-picker)${s} header button { width: 28px; height: 28px; border-radius: 7px; }
+    :host(model-picker)${s} .scope-toggle { margin: 0 20px; width: fit-content; padding: 3px; background: #191919; border: 1px solid #ffffff0d; border-radius: 9px; }
+    :host(model-picker)${s} .scope-toggle button { flex: none; font-size: 12px; padding: 6px 14px; }
+    :host(model-picker)${s} .scope-toggle button[aria-pressed="true"] { background: #2a2a2d; }
+    :host(model-picker)${s} .search-row { margin: 14px 20px 6px; }
+    :host(model-picker)${s} input.search { font-size: 13px; border-radius: 10px; padding: 10px 12px; background: #191919; border-color: #ffffff16; }
+    :host(model-picker)${s} .default-help { padding: 7px 20px; font-size: 11px; color: #85858b; }
+    :host(model-picker)${s} .default-help strong { font-size: 0; }
+    :host(model-picker)${s} .default-help strong::after { content: "Star a model to use it for new sessions"; font-size: 11px; font-weight: 400; }
+    :host(model-picker)${s} .options { margin: 0 10px 12px; }
+    :host(model-picker)${s} .default-row, :host(model-picker)${s} .catalog-row { margin: 3px 0; border: 0; border-radius: 10px; overflow: hidden; }
+    :host(model-picker)${s} .default-row:has(> button.selected), :host(model-picker)${s} .catalog-row.selected { background: #242426; }
+    :host(model-picker)${s} .default-row:hover, :host(model-picker)${s} .catalog-row:hover { background: #1c1c1e; }
+    :host(model-picker)${s} .options button[data-studio-brand] { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-content: center; gap: 3px 10px; min-height: 60px; padding: 10px 12px 10px 50px; font-size: 13px; border: 0; background: transparent; }
+    :host(model-picker)${s} button[data-studio-brand] > span:not(.studio-model-name):not(.studio-model-current) { display: none; }
+    :host(model-picker)${s} .studio-model-name { display: block; grid-column: 1; grid-row: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+    :host(model-picker)${s} button[data-studio-brand] small { grid-column: 1; grid-row: 2; font-size: 11px; margin: 0; color: #85858b; }
+    :host(model-picker)${s} .studio-model-current { display: block; grid-column: 2; grid-row: 1 / 3; align-self: center; background: #628dff18; color: #9fb6ff; border-radius: 5px; padding: 3px 7px; font-size: 10px; }
+    :host(model-picker)${s} .default-pin { color: #75757b; width: 32px !important; height: 32px !important; }
+    :host(model-picker)${s} .default-pin[aria-pressed="true"] { color: #9fb6ff; }
+    :host(prompt-editor)${s} { max-width: 960px; width: 100%; margin: 0 auto; box-sizing: border-box; padding: 10px 20px 6px; }
+    :host(prompt-editor)${s} footer { position: relative; padding: 14px; border: 1px solid #ffffff10; border-radius: 20px; background: #191919; gap: 12px; }
+    :host(prompt-editor)${s} footer:focus-within { border-color: #44444a; }
+    :host(prompt-editor)${s} footer.shell-mode { border-color: var(--pi-success-border); background: #15231d; }
+    :host(prompt-editor)${s} .editor-wrap { position: static; }
+    :host(prompt-editor)${s} .markdown-editor .cm-editor, :host(prompt-editor)${s} .markdown-editor .cm-editor.cm-focused { border: 0; border-radius: 0; background: transparent; min-height: 80px; outline: none; }
+    :host(prompt-editor)${s} .markdown-editor .cm-content { min-height: 64px; padding: 0 0 6px; font-size: 15px; line-height: 1.6; }
+    :host(prompt-editor)${s} .cm-placeholder { font-size: 0; }
+    :host(prompt-editor)${s} .cm-placeholder::after { content: "Ask Pi…"; font-size: 15px; color: #85858b; }
+    :host(prompt-editor)${s} .mode-hint { position: static; display: table; max-width: 100%; margin-top: 6px; }
+    :host(prompt-editor)${s} .actions { gap: 8px; }
+    :host(prompt-editor)${s} .compact-status { gap: 6px; margin-right: 36px; }
+    :host(prompt-editor)${s} .compact-status > button { height: 32px; border: 0; border-radius: 6px; background: transparent; color: #b4b4bd; }
+    :host(prompt-editor)${s} .select-model[data-studio-brand] { font-size: 0; padding: 0 22px 0 28px; max-width: min(34vw, 260px); }
+    :host(prompt-editor)${s} .select-model[data-studio-brand]::before { left: 0; width: 20px; height: 20px; }
+    :host(prompt-editor)${s} .select-model[data-studio-label]::after { content: attr(data-studio-label); font-size: 13px; }
+    :host(prompt-editor)${s} .select-thinking[data-studio-reasoning] { width: auto; padding: 0 20px 0 10px; border-left: 1px solid #ffffff10; border-radius: 0; }
+    :host(prompt-editor)${s} .select-thinking[data-studio-reasoning] svg { display: none; }
+    :host(prompt-editor)${s} .select-thinking[data-studio-reasoning]::after { content: attr(data-studio-reasoning); font-size: 12px; }
+    :host(prompt-editor)${s} .select-model, :host(prompt-editor)${s} .select-thinking { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='m3 4.5 3 3 3-3' stroke='%23929298' fill='none' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E") !important; background-repeat: no-repeat !important; background-size: 12px !important; background-position: right 4px center !important; }
+    :host(prompt-editor)${s} .editor-attach { right: 104px; bottom: 14px; width: 32px; height: 32px; border: 0; background: transparent; color: #a0a0a5; }
+    :host(prompt-editor)${s} footer:has(.steer-button) .editor-attach { right: 148px; }
+    :host(prompt-editor)${s} .send-button { order: 4; border-radius: 50%; border: 0; width: 34px; height: 34px; background: #3868ee; color: #fff; }
+    :host(prompt-editor)${s} .send-button:not(:disabled) { color: #fff; }
+    :host(prompt-editor)${s} .send-button .prompt-action-icon { display: none; }
+    :host(prompt-editor)${s} .send-button::before { content: ""; width: 18px; height: 18px; background: currentColor; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 20V4m-6 6 6-6 6 6' fill='none' stroke='black' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+    :host(prompt-editor)${s} .send-button:disabled { opacity: .4; }
+    :host(prompt-editor)${s} .stop-button { order: 3; border-radius: 50%; border: 0; width: 34px; height: 34px; }
+    :host(prompt-editor)${s} .stop-button:not(:disabled) { background: #e8404a; color: #fff; }
+    :host(prompt-editor)${s} .stop-button:disabled { background: #232326; color: #65656b; }
+    :host(prompt-editor)${s} .steer-button { order: 2; }
+
     @media (max-width: 760px) {
       ${s} .context-chip { font-size: 12px; padding: 3px 7px; }
       ${s} .context-bar { padding: 4px 0; }
@@ -133,6 +224,7 @@ export function appearanceCss(s) {
     @keyframes studio-working-pulse { 0%, 100% { opacity: .45; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) {
       ${s} button, ${s} .text-body > summary::before { transition: none; }
+      ${s} .action-activity .activity-indicator, ${s} .studio-session-state::before { animation: none !important; }
       ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { animation: none !important; background: none; color: #a0a0a5 !important; }
       ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { color: #00bff3 !important; }
       ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} details.part[open] > formatted-text { animation: none !important; }
