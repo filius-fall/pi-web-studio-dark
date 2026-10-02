@@ -34,22 +34,6 @@ export function decorateActivity(root) {
     state.status = execution.status;
     state.active = active;
   }
-  if (kind === 'conversation-meter') {
-    const meter = root.querySelector('.meter');
-    if (!meter) return;
-    let ticks = meter.querySelector('.studio-ticks');
-    if (!ticks) {
-      ticks = document.createElement('div');ticks.className = 'studio-ticks';ticks.setAttribute('aria-hidden', 'true');
-      for (let i = 0; i < 32; i++) ticks.append(document.createElement('i'));
-      meter.append(ticks);
-    }
-    const percent = Math.min(100, Math.max(0, Number(root.host.positionPercent) || 0));
-    const current = Math.round(percent * 31 / 100);
-    for (const [i, tick] of [...ticks.children].entries()) {
-      const value = String(Math.abs(i - current) <= 1);
-      if (tick.dataset.current !== value) tick.dataset.current = value;
-    }
-  }
   if (kind === 'chat-view') {
     const host = root.host;
     const chat = root.querySelector('.chat');
@@ -59,12 +43,13 @@ export function decorateActivity(root) {
     const thinking = status?.isStreaming && last?.role === 'assistant' && last.parts?.at(-1)?.type === 'thinking';
     const label = host.isSendingPrompt ? 'Sending message' : status?.isCompacting ? 'Compacting conversation' : status?.isBashRunning ? 'Running command' : thinking ? 'Thinking' : status?.isStreaming ? 'Working' : '';
     let indicator = root.querySelector('.studio-inline-activity');
-    if (!label) { indicator?.remove(); return; }
+    if (!label || (label === "Thinking" && root.querySelector("summary[data-studio-thinking]"))) { indicator?.remove(); return; }
     if (!indicator) {
       indicator = document.createElement('div');indicator.className = 'studio-inline-activity';indicator.setAttribute('role', 'status');
       const spinner = document.createElement('span');spinner.className = 'studio-inline-spinner';spinner.setAttribute('aria-hidden', 'true');
       const caption = document.createElement('span');caption.className = 'studio-inline-label';indicator.append(spinner, caption);
     }
+    indicator.dataset.thinking = String(label === "Thinking");
     text(indicator.lastElementChild, label);
     if (chat.lastElementChild !== indicator) chat.append(indicator);
   }

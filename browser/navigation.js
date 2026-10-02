@@ -1,5 +1,5 @@
 // Presentation metadata for the existing navigation rows. Native actions stay intact.
-const badgeColors = ['#818cf8', '#38bdf8', '#a3e635', '#fbbf24', '#c084fc'];
+const badgeColors = ['#628dff', '#38bdf8', '#82a8ff', '#9bb8ff'];
 function badge(name) {
   const words = name.match(/[\p{L}\p{N}]+/gu) ?? ['Pi'];
   return (words.length > 1 ? words[0][0] + words[1][0] : words[0].slice(0, 2)).toUpperCase();

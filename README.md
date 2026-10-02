@@ -14,12 +14,13 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
 - Aligned status icons, blue tool-call spinners, and a slow moving highlight across running tool text.
+- Brain icons with a gentle pulse during active thinking, static icons for completed reasoning, and moving text highlights.
 - Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
 - Compact model picker with provider logos, readable names, current-model badges, and native default controls.
-- One rounded composer panel with model and reasoning labels, attachments, send, and stop controls.
+- Compact composer that grows with multiline text and image previews, with clear model/reasoning labels and attachment/send/stop controls.
 - Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
 - Working/thinking status appears below the latest response; informational session updates stay out of the composer.
-- Vertical conversation-position ticks replace the horizontal meter.
+- One clickable marker per loaded user message, with hover previews, keyboard navigation, and an earlier-history control.
 - Thin scrollbars, readable metadata, and responsive padding.
 
 ## Screenshots
@@ -35,6 +36,14 @@ Expanded tool command and output:
 Model selection with provider logos and current/default indicators:
 
 ![Model picker](docs/screenshots/model-picker.png)
+
+Message markers preview your prompts and jump to their position:
+
+![User message navigation](docs/screenshots/message-navigation.png)
+
+Active thinking with a brain icon and moving highlight:
+
+![Thinking indicator](docs/screenshots/thinking.png)
 
 ## Install
 

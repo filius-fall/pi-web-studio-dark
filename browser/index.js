@@ -1,3 +1,4 @@
+import { decorateMessageNavigation, clearMessageNavigation } from "./message-navigation.js";
 import { decorateActivity, clearActivity } from "./activity.js";
 import { appearanceCss } from "./appearance.js";
 import { decorateNavigation, clearNavigation } from "./navigation.js";
@@ -84,7 +85,7 @@ function installChatContrast(signal) {
   }
   const roots = new Map();
   const themeObserver = new MutationObserver(() => {
-    for (const root of roots.keys()) decorateActivity(root);
+    for (const root of roots.keys()) { decorateActivity(root);decorateMessageNavigation(root); }
   });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-pi-web-theme"] });
   let disposed = false;
@@ -134,6 +135,7 @@ function installChatContrast(signal) {
       .filter(summary => summary.textContent.trim().toLowerCase() === "thinking");
     const current = thinking ? summaries.at(-1) : undefined;
     for (const summary of summaries) {
+      summary.setAttribute("data-studio-reasoning", "");
       if (summary === current) summary.setAttribute("data-studio-thinking", "");
       else summary.removeAttribute("data-studio-thinking");
     }
@@ -146,6 +148,7 @@ function installChatContrast(signal) {
         for (const [observed, watcher] of roots) {
           if (observed instanceof ShadowRoot && !observed.host.isConnected) {
             watcher.disconnect();
+            clearMessageNavigation(observed);
             observed.removeEventListener("click", rememberTools, true);
             observed.adoptedStyleSheets = observed.adoptedStyleSheets.filter(s => s !== sheet);
             roots.delete(observed);
@@ -161,6 +164,7 @@ function installChatContrast(signal) {
       }
       syncThinking(root);
       decorateActivity(root);
+      decorateMessageNavigation(root);
       installToolsButton();
     });
     roots.set(root, observer);
@@ -169,6 +173,7 @@ function installChatContrast(signal) {
     decorateModels(root);
     syncThinking(root);
     decorateActivity(root);
+    decorateMessageNavigation(root);
   }
   observe(document);
   discover(document);
@@ -218,8 +223,12 @@ function installChatContrast(signal) {
       clearNavigation(root);
       clearModels(root);
       clearActivity(root);
+      clearMessageNavigation(root);
       root.removeEventListener("click", rememberTools, true);
-      for (const summary of root.querySelectorAll("[data-studio-thinking]")) summary.removeAttribute("data-studio-thinking");
+      for (const summary of root.querySelectorAll("[data-studio-reasoning]")) {
+        summary.removeAttribute("data-studio-thinking");
+        summary.removeAttribute("data-studio-reasoning");
+      }
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
     }
     roots.clear();
