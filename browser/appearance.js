@@ -66,7 +66,13 @@ export function appearanceCss(s) {
     ${s} summary[data-studio-thinking]::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: #00bff3; animation: studio-working-pulse 1200ms ease-in-out infinite; }
     ${s} details.part[open] > formatted-text { animation: studio-details-enter 180ms ease-out both; }
     ${s} .text-body, ${s} .diff-details { border-top: 0; padding-top: 2px; }
-    ${s} .text-body > summary, ${s} .diff-details > summary { color: #929298; font-size: 12px; }
+    ${s} .diff-details > summary { color: #929298; font-size: 12px; }
+    ${s} .text-body > summary { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; box-sizing: border-box; padding: 0; color: #929298; font-size: 0; list-style: none; border-radius: 5px; cursor: pointer; }
+    ${s} .text-body > summary::-webkit-details-marker { display: none; }
+    ${s} .text-body > summary::before { content: ""; width: 7px; height: 7px; box-sizing: border-box; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform 160ms ease; }
+    ${s} .text-body[open] > summary::before { transform: translateY(2px) rotate(225deg); }
+    ${s} .text-body > summary:hover { color: #e8e8ed; background: #ffffff08; }
+    ${s} .text-body > summary:focus-visible { outline: 2px solid var(--pi-accent); outline-offset: 2px; }
     ${s} .msg.event-group > summary { color: #929298; padding: 6px 0; }
     ${s} .msg.event-group > summary .label { text-transform: none; font-weight: 400; }
     ${s} .group-body { padding-left: 0; padding-right: 0; }
@@ -119,7 +125,7 @@ export function appearanceCss(s) {
     @keyframes studio-details-enter { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes studio-working-pulse { 0%, 100% { opacity: .45; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) {
-      ${s} button { transition: none; }
+      ${s} button, ${s} .text-body > summary::before { transition: none; }
       ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { animation: none !important; background: none; color: #a0a0a5 !important; }
       ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { color: #00bff3 !important; }
       ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} details.part[open] > formatted-text { animation: none !important; }
