@@ -1,11 +1,24 @@
 const attachmentSelects = new WeakSet();
-function brand(value) {
+export function modelBrand(value) {
+  function identify(name) {
+    if (/gemini/.test(name)) return 'gemini';
+    if (/glm|\bzai\b|z-ai/.test(name)) return 'zai';
+    if (/deepseek/.test(name)) return 'deepseek';
+    if (/grok|\bxai\b|x-ai/.test(name)) return 'grok';
+    if (/kimi|moonshot/.test(name)) return 'kimi';
+    if (/claude|anthropic/.test(name)) return 'claude';
+    if (/muse/.test(name)) return 'muse';
+    if (/nemotron|nemtron|nvidia/.test(name)) return 'nemotron';
+    if (/qwen|qwq/.test(name)) return 'qwen';
+    if (/minimax/.test(name)) return 'minimax';
+    if (/mimo|xiaomi/.test(name)) return 'mimo';
+    if (/hunyuan|(?:^|[-_/])hy[-_]?[34](?:[-_.:]|$)/.test(name)) return 'hunyuan';
+    if (/gpt|openai|chatgpt/.test(name)) return 'openai';
+    return undefined;
+  }
   const name = value.toLowerCase();
-  if (/gemini/.test(name)) return 'gemini';
-  if (/glm|\bzai\b|z-ai/.test(name)) return 'zai';
-  if (/deepseek/.test(name)) return 'deepseek';
-  if (/gpt|openai|chatgpt/.test(name)) return 'openai';
-  return 'generic';
+  // A model's family takes precedence over an API gateway or routing provider.
+  return identify(name.split('/').at(-1)) ?? identify(name) ?? 'generic';
 }
 function modelName(value) {
   const id = value.split('/').at(-1);
@@ -27,7 +40,7 @@ export function decorateModels(root) {
     const button = root.querySelector('.select-model');
     const model = root.host.status?.model;
     if (button && model?.id) {
-      button.dataset.studioBrand = brand(`${model.provider}/${model.id}`);
+      button.dataset.studioBrand = modelBrand(`${model.provider}/${model.id}`);
       button.dataset.studioLabel = modelName(model.id);
     }
     const thinking = root.querySelector('.select-thinking');
@@ -62,7 +75,7 @@ export function decorateModels(root) {
   for (const [index, button] of buttons.entries()) {
     const value = values[index]?.value;
     if (!value) continue;
-    button.dataset.studioBrand = brand(value);
+    button.dataset.studioBrand = modelBrand(value);
     button.dataset.studioCurrent = String(value === root.host.selectedValue);
     let label = button.querySelector('.studio-model-name');
     if (!label) {

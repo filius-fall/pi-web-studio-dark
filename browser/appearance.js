@@ -145,6 +145,15 @@ export function appearanceCss(s) {
     ${s} [data-studio-brand="zai"] { --studio-brand-icon: url("${icon('zai')}"); }
     ${s} [data-studio-brand="gemini"]::before { mask: none; background: url("${icon('gemini-color')}") center / contain no-repeat; }
     ${s} [data-studio-brand="deepseek"]::before { mask: none; background: url("${icon('deepseek-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="grok"] { --studio-brand-icon: url("${icon('grok')}"); }
+    ${s} [data-studio-brand="kimi"]::before { mask: none; background: url("${icon('kimi-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="claude"]::before { mask: none; background: url("${icon('claude-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="muse"]::before { mask: none; background: url("${icon('meta-brand-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="nemotron"]::before { mask: none; background: url("${icon('nvidia-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="qwen"]::before { mask: none; background: url("${icon('qwen-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="minimax"]::before { mask: none; background: url("${icon('minimax-color')}") center / contain no-repeat; }
+    ${s} [data-studio-brand="mimo"] { --studio-brand-icon: url("${icon('xiaomimimo')}"); }
+    ${s} [data-studio-brand="hunyuan"]::before { mask: none; background: url("${icon('hunyuan-color')}") center / contain no-repeat; }
     ${s} [data-studio-brand="generic"]::before { mask: none; content: "AI"; display: grid; place-items: center; background: #252528; border-radius: 6px; font-size: 10px; color: #a0a0a5; }
     :host(model-picker)${s} modal-surface { --modal-surface-width: min(560px, calc(100vw - 48px)); --modal-surface-max-height: min(620px, calc(100vh - 64px)); --modal-surface-radius: 18px; }
     :host(model-picker)${s} header { padding: 18px 20px 12px; border: 0; }

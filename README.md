@@ -18,7 +18,8 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Aligned status icons, blue tool-call spinners, and a slow moving highlight across running tool text.
 - Brain icons with a gentle pulse during active thinking, static icons for completed reasoning, and moving text highlights.
 - Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
-- Compact model picker with provider logos, readable names, current-model badges, and native default controls.
+- Compact model picker with model-family logos, readable names, current-model badges, and native default controls.
+- Logos for OpenAI, Gemini, GLM, DeepSeek, Grok, Kimi, Claude, Muse (Meta), Nemotron (Nvidia), Qwen, MiniMax, MiMo, and HY3/HY4 (Hunyuan). Model-family detection also works through routing providers.
 - Composer aligned with the response column, with image previews above the text and explanatory attachment delivery choices.
 - Compact composer that grows with multiline text and image previews, with clear model/reasoning labels and attachment/send/stop controls.
 - Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
@@ -156,3 +157,5 @@ provided through the [Pi brand assets](https://pi.dev/press-kit).
 
 Provider logos are bundled from Lobe Icons static SVG package v1.95.1 under
 the included `LICENSE.icons`. Brand marks belong to their respective owners.
+
+Additional model-family logos are bundled from Lobe Icons static SVG 1.95.1 under `LICENSE.icons`; Muse uses Meta’s brand mark, Nemotron uses Nvidia’s, and HY3/HY4 use Hunyuan’s.
