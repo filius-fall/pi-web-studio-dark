@@ -24,10 +24,12 @@ Reload Pi Web and choose **Actions → Select Theme → Studio Dark**. On mobile
 open **Session options → Actions → Select Theme**. Select it once in each browser.
 No build step or dependency install is needed.
 
-Installing with a coding agent? Ask it to read [AGENTS.md](AGENTS.md) and install
-Studio Dark on the machine serving your Pi Web URL. That file contains the exact
-commands, custom-directory options, activation steps, verification, and update
-instructions.
+**If you are a coding agent, read [AGENTS.md](AGENTS.md) before installing or
+updating this theme.** It contains the exact commands, custom-directory options,
+activation steps, verification, and update instructions.
+
+Installing with a coding agent? Tell it: “Read AGENTS.md and install Studio Dark
+on the machine serving my Pi Web URL.”
 
 The installer creates the plugin link, respects `PI_WEB_DATA_DIR`, and detects
 the installed Pi Web client for the startup theme fix. Existing plugin links
