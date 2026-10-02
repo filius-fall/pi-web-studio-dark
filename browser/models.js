@@ -1,3 +1,4 @@
+const attachmentSelects = new WeakSet();
 function brand(value) {
   const name = value.toLowerCase();
   if (/gemini/.test(name)) return 'gemini';
@@ -31,6 +32,24 @@ export function decorateModels(root) {
       const label = level === 'xhigh' ? 'Extra high' : typeof level === 'string' ? level[0].toUpperCase() + level.slice(1) : 'Default';
       thinking.dataset.studioReasoning = `Reasoning: ${label}`;
     }
+    const delivery = root.querySelector('.attachment-delivery');
+    const select = delivery?.querySelector('select');
+    if (select && document.documentElement.dataset.piWebTheme !== 'vitesse:black') clearAttachmentDelivery(root);
+    if (select && document.documentElement.dataset.piWebTheme === 'vitesse:black') {
+      if (!delivery.hasAttribute('data-studio-delivery-title')) delivery.dataset.studioDeliveryTitle = delivery.title;
+      if (!attachmentSelects.has(select)) {
+        attachmentSelects.add(select);
+        select.addEventListener('change', () => { Promise.resolve(root.host.updateComplete).then(() => decorateModels(root)); });
+      }
+      const inline = select.querySelector('option[value="inline"]');
+      const folder = select.querySelector('option[value="folder"]');
+      if (inline) inline.label = inline.disabled ? 'Send images with message (images only)' : 'Send images with message';
+      if (folder) folder.label = 'Save files to workspace';
+      const path = root.host.attachmentsFolder ?? '.pi-web/attachments';
+      const help = select.value === 'inline' ? 'The model sees these images directly.' : `Saved on the selected machine in ${path}; Pi receives their paths.`;
+      delivery.dataset.studioHelp = help;
+      delivery.title = help;
+    }
     return;
   }
   if (root.host?.localName !== 'model-picker') return;
@@ -54,7 +73,15 @@ export function decorateModels(root) {
     } else if (value !== root.host.selectedValue) current?.remove();
   }
 }
+function clearAttachmentDelivery(root) {
+  const delivery = root.querySelector('.attachment-delivery');
+  if (!delivery) return;
+  for (const option of delivery.querySelectorAll('option')) option.removeAttribute('label');
+  if (delivery.hasAttribute('data-studio-delivery-title')) delivery.title = delivery.dataset.studioDeliveryTitle;
+  delivery.removeAttribute('data-studio-delivery-title');delivery.removeAttribute('data-studio-help');
+}
 export function clearModels(root) {
+  clearAttachmentDelivery(root);
   for (const element of root.querySelectorAll('.studio-model-name, .studio-model-current')) element.remove();
   for (const element of root.querySelectorAll('[data-studio-brand], [data-studio-reasoning]')) {
     for (const name of ['data-studio-brand', 'data-studio-label', 'data-studio-current', 'data-studio-reasoning']) element.removeAttribute(name);

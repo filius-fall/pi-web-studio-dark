@@ -10,6 +10,8 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
 - Tool calls use one compact row with a status icon, truncated command, and inline down/up chevron. Click the row to reveal the full command and output; diffs keep their native controls.
 - Project badges, clear session cards, hover/focus menus, and working/unread/age indicators.
+- Pin/Unpin promotes sessions while keeping thread branches together. Pins persist in this browser, separately for each gateway URL.
+- Mark done archives an idle, saved session through Pi Web; Done sessions can be restored. Archiving never deletes a conversation.
 - Compact navigation rows; Projects and Workspaces size to content, Sessions fills the remaining space.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
@@ -17,6 +19,7 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Brain icons with a gentle pulse during active thinking, static icons for completed reasoning, and moving text highlights.
 - Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
 - Compact model picker with provider logos, readable names, current-model badges, and native default controls.
+- Composer aligned with the response column, with image previews above the text and explanatory attachment delivery choices.
 - Compact composer that grows with multiline text and image previews, with clear model/reasoning labels and attachment/send/stop controls.
 - Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
 - Working/thinking status appears below the latest response; informational session updates stay out of the composer.
@@ -44,6 +47,30 @@ Message markers preview your prompts and jump to their position:
 Active thinking with a brain icon and moving highlight:
 
 ![Thinking indicator](docs/screenshots/thinking.png)
+
+Pin important sessions and restore completed work from Done:
+
+![Pinned and completed sessions](docs/screenshots/sessions.png)
+
+Image previews stay above your message, with clear delivery choices:
+
+![Composer with an image attachment](docs/screenshots/attachments.png)
+
+## Session controls
+
+Hover a session or focus its row to reveal the pin and check controls. Pin/Unpin
+keeps important sessions at the top; a pinned child moves its entire branch.
+Use **Mark done** for an idle, saved session. It moves into **Done**, where the
+restore arrow brings it back. The session menu offers the same actions.
+
+Pins are stored per browser and gateway URL, scoped by machine and session.
+They do not sync between devices. Archived sessions are stored by Pi Web on the
+selected machine and are available from other devices connected to it.
+
+For attachments, **Send images with message** sends images directly to the
+model. **Save files to workspace** writes them to the selected machine's
+attachment folder and gives Pi their paths. General files use the workspace
+option; image delivery can use either option.
 
 ## Install
 
@@ -104,7 +131,7 @@ unlink "$HOME/.pi-web/plugins/vitesse"
 ## Compatibility and licenses
 
 This uses the theme API and a scoped browser presentation layer. CSS classes
-and the panel-toggle labels must be reviewed after Pi Web upgrades.
+the native session-tree method, and panel-toggle labels must be reviewed after Pi Web upgrades.
 The optional startup hook adds a small pre-paint block to the installed client HTML; no server execution code is changed. Provider settings and
 session data are not changed. Disposal removes styles, observers, font, and
 injected controls. Disconnected message roots are released by the observer.

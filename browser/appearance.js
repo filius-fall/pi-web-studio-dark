@@ -169,11 +169,17 @@ export function appearanceCss(s) {
     :host(model-picker)${s} .studio-model-current { display: block; grid-column: 2; grid-row: 1 / 3; align-self: center; background: #628dff18; color: #9fb6ff; border-radius: 5px; padding: 3px 7px; font-size: 10px; }
     :host(model-picker)${s} .default-pin { color: #75757b; width: 32px !important; height: 32px !important; }
     :host(model-picker)${s} .default-pin[aria-pressed="true"] { color: #9fb6ff; }
-    :host(prompt-editor)${s} { max-width: 960px; width: 100%; margin: 0 auto; box-sizing: border-box; padding: 10px 20px 6px; }
+    :host(prompt-editor)${s} { max-width: 850px; width: var(--studio-composer-width, calc(100% - 40px)); margin: 0 auto; margin-left: var(--studio-composer-left, auto); box-sizing: border-box; padding: 10px 0 6px; }
     :host(prompt-editor)${s} footer { position: relative; padding: 10px; border: 1px solid #ffffff10; border-radius: 20px; background: #191919; gap: 8px; }
     :host(prompt-editor)${s} footer:focus-within { border-color: #44444a; }
     :host(prompt-editor)${s} footer.shell-mode { border-color: var(--pi-success-border); background: #15231d; }
-    :host(prompt-editor)${s} .editor-wrap { position: static; }
+    :host(prompt-editor)${s} .editor-wrap { position: static; display: flex; flex-direction: column; gap: 0; }
+    :host(prompt-editor)${s} .attachments { order: -1; margin-top: 0; margin-bottom: 10px; gap: 8px; }
+    :host(prompt-editor)${s} .attachment-chip { width: 68px; height: 68px; border-radius: 10px; }
+    :host(prompt-editor)${s} .attachment-remove { width: 22px; height: 22px; border-radius: 7px; background: #121212cc; color: #eee; }
+    :host(prompt-editor)${s} .attachment-delivery { flex: 1 1 180px; align-self: center; font-size: 11px; color: #929298; }
+    :host(prompt-editor)${s} .attachment-delivery select { display: block; max-width: 100%; padding: 5px 22px 5px 8px; font-size: 11px; border: 1px solid #ffffff10; border-radius: 6px; background-color: #202020; }
+    :host(prompt-editor)${s} .attachment-delivery::after { content: attr(data-studio-help); display: block; margin-top: 4px; line-height: 1.4; }
     :host(prompt-editor)${s} .markdown-editor .cm-editor, :host(prompt-editor)${s} .markdown-editor .cm-editor.cm-focused { border: 0; border-radius: 0; background: transparent; min-height: 24px; outline: none; }
     :host(prompt-editor)${s} .markdown-editor .cm-content { min-height: 24px; padding: 0; font-size: 15px; line-height: 1.6; }
     :host(prompt-editor)${s} .cm-placeholder { font-size: 0; }
@@ -236,6 +242,31 @@ export function appearanceCss(s) {
     @media (prefers-reduced-motion: reduce) {
       ${s} .studio-inline-spinner { animation: none !important; }
     }
+
+    .studio-session-controls, .studio-session-menu-actions, .studio-session-notice { display: none; }
+    ${s} .studio-session-controls { position: absolute; right: 32px; bottom: 6px; display: flex; align-items: center; gap: 2px; z-index: 2; }
+    ${s} .studio-session-controls button { display: grid; place-items: center; width: 24px; height: 24px; padding: 0; border: 0; border-radius: 5px; background: transparent; color: #8b9bbb; opacity: 0; }
+    ${s} .studio-session-controls button[hidden], ${s} .studio-session-menu-actions button[hidden] { display: none; }
+    ${s} .action-row:hover .studio-session-controls button, ${s} .action-row:focus-within .studio-session-controls button, ${s} .studio-session-pin[aria-pressed="true"] { opacity: 1; }
+    ${s} .studio-session-pin[aria-pressed="true"] { color: #82a8ff; }
+    ${s} .studio-session-controls button:hover { background: #628dff18; color: #c8d8ff; }
+    ${s} .studio-session-controls button:disabled { color: #505a6c; cursor: default; }
+    ${s} .studio-session-controls button::before { content: ""; width: 14px; height: 14px; background: currentColor; }
+    ${s} .studio-session-pin::before { mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m16 3 5 5-5 2-3 5-3-3-3-3 5-3 2-5ZM10 12l-7 9' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+    ${s} .studio-session-done::before, ${s} .studio-session-state[data-archived="true"]::before { mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='9' fill='none' stroke='black' stroke-width='1.8'/%3E%3Cpath d='m8 12 3 3 5-6' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+    ${s} .studio-session-done[data-restore="true"]::before { mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m8 4-5 5 5 5M3 9h11a6 6 0 0 1 0 12h-4' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / contain no-repeat; }
+    ${s} .studio-session-done[data-pending="true"]::before { mask: none; width: 12px; height: 12px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; background: transparent; animation: studio-tool-spin 900ms linear infinite; }
+    :host(session-list)${s} .action-name { padding-right: 62px; }
+    ${s} .studio-session-state[data-archived="true"] { color: #82a8ff; }
+    ${s} .studio-session-state[data-archived="true"]::before { content: ""; width: 12px; height: 12px; background: currentColor; }
+    ${s} .studio-session-menu-actions { display: block; }
+    ${s} .action-menu-panel:has(.studio-session-menu-actions) > button[title="Archive session"] { display: none; }
+    :host(session-list)${s} .subheading .section-toggle span { font-size: 0; }
+    :host(session-list)${s} .subheading .section-toggle span::after { content: "▸ Done"; font-size: 12px; }
+    :host(session-list)${s} .subheading .section-toggle[aria-expanded="true"] span::after { content: "▾ Done"; }
+    ${s} .studio-session-notice { display: block; padding: 8px 12px; color: #9bb8ff; font-size: 12px; }
+    @media (hover: none) { ${s} .studio-session-controls button { opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) { ${s} .studio-session-done[data-pending="true"]::before { animation: none; } }
 
     @media (max-width: 760px) {
       ${s} .context-chip { font-size: 12px; padding: 3px 7px; }

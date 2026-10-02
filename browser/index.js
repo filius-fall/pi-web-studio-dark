@@ -1,3 +1,5 @@
+import { createComposerLayout } from "./composer-layout.js";
+import { createSessionManagement } from "./session-management.js";
 import { decorateMessageNavigation, clearMessageNavigation } from "./message-navigation.js";
 import { decorateActivity, clearActivity } from "./activity.js";
 import { appearanceCss } from "./appearance.js";
@@ -84,8 +86,11 @@ function installChatContrast(signal) {
     icon.sizes = "any";
   }
   const roots = new Map();
+  const sessionManagement = createSessionManagement();
+  const composerLayout = createComposerLayout();
   const themeObserver = new MutationObserver(() => {
-    for (const root of roots.keys()) { decorateActivity(root);decorateMessageNavigation(root); }
+    composerLayout.sync();
+    for (const root of roots.keys()) { decorateActivity(root);decorateMessageNavigation(root);sessionManagement.decorate(root);decorateModels(root); }
   });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-pi-web-theme"] });
   let disposed = false;
@@ -149,6 +154,7 @@ function installChatContrast(signal) {
           if (observed instanceof ShadowRoot && !observed.host.isConnected) {
             watcher.disconnect();
             clearMessageNavigation(observed);
+            sessionManagement.clear(observed);
             observed.removeEventListener("click", rememberTools, true);
             observed.adoptedStyleSheets = observed.adoptedStyleSheets.filter(s => s !== sheet);
             roots.delete(observed);
@@ -156,7 +162,9 @@ function installChatContrast(signal) {
         }
       }
       decorateNavigation(root);
+      sessionManagement.decorate(root);
       decorateModels(root);
+      composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
       if (root.host?.localName === "app-navigation-panel") {
         for (const list of root.querySelectorAll("project-list, workspace-list, session-list")) {
           if (list.shadowRoot) decorateNavigation(list.shadowRoot);
@@ -170,7 +178,9 @@ function installChatContrast(signal) {
     roots.set(root, observer);
     observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor", "chat-view", "tool-execution-view"].includes(root.host?.localName), ...(["project-list", "workspace-list", "session-list", "prompt-editor", "conversation-meter", "tool-execution-view"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label", "style"] } : {}) });
     decorateNavigation(root);
+    sessionManagement.decorate(root);
     decorateModels(root);
+    composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
     syncThinking(root);
     decorateActivity(root);
     decorateMessageNavigation(root);
@@ -213,6 +223,8 @@ function installChatContrast(signal) {
     if (disposed) return;
     disposed = true;
     themeObserver.disconnect();
+    sessionManagement.dispose();
+    composerLayout.dispose();
     clearTimeout(layoutTimer);
     clearInterval(navigationTimer);
     clearTimeout(readyTimer);

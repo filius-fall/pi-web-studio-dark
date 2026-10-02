@@ -58,11 +58,13 @@ export function decorateNavigation(root) {
     const indicator = main.querySelector('.action-activity .activity-indicator');
     const active = indicator?.matches('.session, .sending, .terminal') === true;
     const unread = row.classList.contains('unread') || !!main.querySelector('.activity-indicator.unread, .unread-ring');
-    const label = active ? indicator.classList.contains('sending') ? 'Sending' : indicator.classList.contains('terminal') ? 'Terminal' : 'Working' : unread ? 'New' : age(session?.modified);
-    state.dataset.active = String(active);
+    const archived = session?.archived === true;
+    const label = archived ? 'Done' : active ? indicator.classList.contains('sending') ? 'Sending' : indicator.classList.contains('terminal') ? 'Terminal' : 'Working' : unread ? 'New' : age(session?.modified);
+    state.dataset.active = String(active && !archived);
+    state.dataset.archived = String(archived);
     state.dataset.unread = String(!active && unread);
     text(state, label);
-    state.title = active ? label : unread ? 'Unread messages' : session?.modified ? `Last updated ${new Date(session.modified).toLocaleString()}` : '';
+    state.title = archived ? 'Archived session — restore it to continue' : active ? label : unread ? 'Unread messages' : session?.modified ? `Last updated ${new Date(session.modified).toLocaleString()}` : '';
   }
 }
 export function clearNavigation(root) {
