@@ -13,7 +13,7 @@ export function createComposerLayout() {
     const box = scroller.getBoundingClientRect();
     const style = getComputedStyle(scroller);
     const available = scroller.clientWidth - parseFloat(style.paddingLeft) - parseFloat(style.paddingRight);
-    const width = message?.getBoundingClientRect().width ?? Math.min(850, available);
+    const width = message?.getBoundingClientRect().width ?? Math.min(800, available);
     const left = message?.getBoundingClientRect().left ?? box.left + parseFloat(style.paddingLeft) + (available - width) / 2;
     if (box.width <= 0 || width <= 0) { clear();return; }
     const parent = editor.parentElement.getBoundingClientRect();

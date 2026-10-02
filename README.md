@@ -33,6 +33,8 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 - Official Pi browser tab icon, served locally with the plugin.
 - DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
+- A shared 800px reading and composer column, 16px DM Sans body text, generous paragraph/list spacing, and a clear heading hierarchy.
+- Blue underlined hyperlinks, subtle inline code, readable tables, and horizontally scrollable code panels with language labels and native copy controls.
 - Tool calls use one compact row with a status icon, truncated command, and inline down/up chevron. Click the row to reveal the full command and output; diffs keep their native controls.
 - Project badges, clear session cards, hover/focus menus, and working/unread/age indicators.
 - Pin/Unpin promotes sessions while keeping thread branches together. Pins persist in this browser, separately for each gateway URL.
@@ -61,6 +63,12 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 Screenshots use sample projects and conversation content.
 
 ![Desktop chat with compact tool calls](docs/screenshots/desktop.png)
+
+Reading layout with headings, links, lists, tables, and code panels:
+
+![Desktop reading layout](docs/screenshots/reading-desktop.png)
+
+![Mobile reading layout](docs/screenshots/reading-mobile.png)
 
 Expanded tool command and output:
 

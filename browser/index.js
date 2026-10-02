@@ -1,4 +1,5 @@
 import { createMobilePresentation } from "./mobile.js";
+import { decorateReading } from "./reading.js";
 import { createComposerLayout } from "./composer-layout.js";
 import { createSessionManagement } from "./session-management.js";
 import { decorateMessageNavigation, clearMessageNavigation } from "./message-navigation.js";
@@ -167,6 +168,7 @@ function installChatContrast(signal) {
       decorateNavigation(root);
       sessionManagement.decorate(root);
       decorateModels(root);
+      decorateReading(root);
       mobilePresentation.decorate(root);
       composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
       if (root.host?.localName === "app-navigation-panel") {
@@ -186,6 +188,7 @@ function installChatContrast(signal) {
     decorateNavigation(root);
     sessionManagement.decorate(root);
     decorateModels(root);
+    decorateReading(root);
     mobilePresentation.decorate(root);
     composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
     syncThinking(root);

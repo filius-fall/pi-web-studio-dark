@@ -24,7 +24,43 @@ export function appearanceCss(s) {
     ${s} .header-actions { min-width: 0; gap: 6px; }
     ${s} .header-actions machine-switcher { min-width: 0; }
     ${s} .chat { padding: 28px clamp(16px, 4vw, 52px) 24px; line-height: 1.7; }
-    ${s} .msg { max-width: 850px; margin: 0 auto 28px; font-size: 14px; }
+    ${s} .msg { max-width: 800px; margin: 0 auto 36px; font-size: 16px; }
+    :host(formatted-text)${s} { font-size: inherit; min-width: 0; }
+    :host(formatted-text)${s} .formatted { font-size: inherit; line-height: 1.8; color: #d5d5db; letter-spacing: .005em; font-kerning: normal; }
+    :host(formatted-text)${s} p, :host(formatted-text)${s} ul, :host(formatted-text)${s} ol, :host(formatted-text)${s} blockquote, :host(formatted-text)${s} .table-scroll, :host(formatted-text)${s} .code-block-wrapper { margin: 0 0 1.15em; }
+    :host(formatted-text)${s} .formatted > :last-child { margin-bottom: 0; }
+    :host(formatted-text)${s} strong { color: #eeeeF2; font-weight: 650; }
+    :host(formatted-text)${s} ul, :host(formatted-text)${s} ol { padding-left: 1.5em; }
+    :host(formatted-text)${s} li { padding-left: .2em; }
+    :host(formatted-text)${s} li + li { margin-top: .55em; }
+    :host(formatted-text)${s} li::marker { color: #94949f; }
+    :host(formatted-text)${s} li > p { margin-bottom: .5em; }
+    :host(formatted-text)${s} li > :last-child { margin-bottom: 0; }
+    :host(formatted-text)${s} li > ul, :host(formatted-text)${s} li > ol { margin-top: .5em; }
+    :host(formatted-text)${s} h1, :host(formatted-text)${s} h2, :host(formatted-text)${s} h3, :host(formatted-text)${s} h4, :host(formatted-text)${s} h5, :host(formatted-text)${s} h6 { color: #f0f0f3; font-weight: 650; line-height: 1.4; letter-spacing: -.015em; margin: 1.5em 0 .65em; }
+    :host(formatted-text)${s} .formatted > :is(h1, h2, h3, h4, h5, h6):first-child { margin-top: 0; }
+    :host(formatted-text)${s} h1 { font-size: 26px; }
+    :host(formatted-text)${s} h2 { font-size: 22px; }
+    :host(formatted-text)${s} h3 { font-size: 19px; }
+    :host(formatted-text)${s} h4, :host(formatted-text)${s} h5, :host(formatted-text)${s} h6 { font-size: 16px; }
+    :host(formatted-text)${s} a { color: #7daeff; text-decoration: underline; text-decoration-color: #7daeff55; text-underline-offset: .22em; text-decoration-thickness: 1px; overflow-wrap: anywhere; transition: color 140ms ease, text-decoration-color 140ms ease; }
+    :host(formatted-text)${s} a:hover { color: #acd0ff; text-decoration-color: currentColor; }
+    :host(formatted-text)${s} a:focus-visible { outline: 2px solid #7daeff; outline-offset: 3px; border-radius: 3px; }
+    :host(formatted-text)${s} a[href^="http"]::after { content: '\\00a0↗'; font-size: .75em; text-decoration: none; }
+    :host(formatted-text)${s} code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; font-size: .88em; line-height: inherit; letter-spacing: 0; border: 1px solid #ffffff0d; border-radius: 6px; padding: .12em .35em; background: #ffffff06; color: #e1e1e8; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+    :host(formatted-text)${s} a code { color: inherit; }
+    :host(formatted-text)${s} .code-block-wrapper { border: 1px solid #ffffff12; border-radius: 12px; background: #101114; overflow: hidden; }
+    :host(formatted-text)${s} .code-block-wrapper::before { content: attr(data-studio-language); display: flex; align-items: center; min-height: 40px; padding: 0 16px; border-bottom: 1px solid #ffffff0c; background: #17181c; color: #a5a5af; font-size: 11px; font-weight: 500; letter-spacing: .035em; }
+    :host(formatted-text)${s} .code-block-wrapper pre, :host(formatted-text)${s} pre { border: 0; border-radius: 0; background: transparent; padding: 18px 20px; margin: 0; line-height: 1.7; tab-size: 2; }
+    :host(formatted-text)${s} pre code { display: block; font-size: 13.5px; line-height: 1.7; border: 0; border-radius: 0; padding: 0; background: transparent; white-space: pre; overflow-wrap: normal; box-decoration-break: slice; }
+    :host(formatted-text)${s} .code-copy-button { top: 5px; right: 8px; width: 30px; height: 30px; border: 0; border-radius: 6px; background: transparent; color: #9c9ca7; }
+    :host(formatted-text)${s} .code-copy-button:hover, :host(formatted-text)${s} .code-copy-button:focus-visible { color: #eeeef2; background: #ffffff0a; }
+    :host(formatted-text)${s} blockquote { border-left: 2px solid #628dff66; padding: 2px 0 2px 18px; color: #aaaab6; }
+    :host(formatted-text)${s} hr { margin: 1.6em 0; border: 0; border-top: 1px solid #ffffff0c; }
+    :host(formatted-text)${s} .table-scroll { border: 1px solid #ffffff0d; border-radius: 10px; }
+    :host(formatted-text)${s} th, :host(formatted-text)${s} td { border: 0; border-bottom: 1px solid #ffffff0c; padding: 12px 16px; text-align: start; line-height: 1.65; }
+    :host(formatted-text)${s} th { background: #ffffff03; color: #b6b6c0; font-size: 13px; font-weight: 600; }
+    :host(formatted-text)${s} tr:last-child td { border-bottom: 0; }
     ${s} .msg.assistant, ${s} .msg.tool-image-output { border: 0; border-radius: 0; background: transparent; padding: 0; }
     ${s} .msg.user { border: 1px solid #ffffff0d; border-radius: 16px; background: #1c1c1c; padding: 14px 18px; }
     ${s} .msg > .msg-header { position: static; min-height: 20px; margin: 0 0 10px; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: transparent; }
@@ -178,7 +214,7 @@ export function appearanceCss(s) {
     :host(model-picker)${s} .studio-model-current { display: block; grid-column: 2; grid-row: 1 / 3; align-self: center; background: #628dff18; color: #9fb6ff; border-radius: 5px; padding: 3px 7px; font-size: 10px; }
     :host(model-picker)${s} .default-pin { color: #75757b; width: 32px !important; height: 32px !important; }
     :host(model-picker)${s} .default-pin[aria-pressed="true"] { color: #9fb6ff; }
-    :host(prompt-editor)${s} { max-width: 850px; width: var(--studio-composer-width, calc(100% - 40px)); margin: 0 auto; margin-left: var(--studio-composer-left, auto); box-sizing: border-box; padding: 10px 0 6px; }
+    :host(prompt-editor)${s} { max-width: 800px; width: var(--studio-composer-width, calc(100% - 40px)); margin: 0 auto; margin-left: var(--studio-composer-left, auto); box-sizing: border-box; padding: 10px 0 6px; }
     :host(prompt-editor)${s} footer { position: relative; padding: 10px; border: 1px solid #ffffff10; border-radius: 20px; background: #191919; gap: 8px; }
     :host(prompt-editor)${s} footer:focus-within { border-color: #44444a; }
     :host(prompt-editor)${s} footer.shell-mode { border-color: var(--pi-success-border); background: #15231d; }
@@ -234,7 +270,7 @@ export function appearanceCss(s) {
     ${s} .tool-card[data-studio-active="true"] .tool-title > .path { display: none; }
     ${s} .tool-card[data-studio-active="true"] .studio-tool-label { display: inline; color: #a0a0a5; }
     ${s} .activity-dock { display: none; }
-    ${s} .studio-inline-activity { display: flex; align-items: center; gap: 9px; max-width: 850px; margin: 16px auto 8px; color: #a0a0a5; font-size: 13px; line-height: 20px; }
+    ${s} .studio-inline-activity { display: flex; align-items: center; gap: 9px; max-width: 800px; margin: 16px auto 8px; color: #a0a0a5; font-size: 13px; line-height: 20px; }
     ${s} .studio-inline-spinner { flex: 0 0 12px; width: 12px; height: 12px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; border-radius: 50%; animation: studio-tool-spin 900ms linear infinite; }
     ${s} .studio-inline-activity[data-thinking="true"] .studio-inline-spinner { flex-basis: 20px; width: 20px; height: 20px; border: 0; border-radius: 0; background: #929298; mask: url("${brain}") center / contain no-repeat; animation: studio-brain-breathe 2400ms ease-in-out infinite; }
     :host(conversation-meter)${s} { display: none; }
@@ -327,7 +363,13 @@ export function appearanceCss(s) {
       :host(app-navigation-panel)${s} header strong { display: none; }
       :host(chat-view)${s} { background: #080808; border-radius: 22px 22px 0 0; }
       ${s} .chat { padding: 20px 18px 18px; line-height: 1.75; }
-      ${s} .msg { font-size: 15px; margin-bottom: 24px; overflow-wrap: anywhere; }
+      ${s} .msg { font-size: 16px; margin-bottom: 30px; overflow-wrap: anywhere; }
+      :host(formatted-text)${s} .formatted { line-height: 1.75; }
+      :host(formatted-text)${s} h1 { font-size: 24px; }
+      :host(formatted-text)${s} h2 { font-size: 21px; }
+      :host(formatted-text)${s} .code-block-wrapper pre { padding: 14px 16px; }
+      :host(formatted-text)${s} pre code { font-size: 13px; }
+      :host(formatted-text)${s} th, :host(formatted-text)${s} td { padding: 10px 12px; }
       ${s} .msg.assistant > .msg-header { display: none; }
       ${s} .msg.user { display: flex; flex-direction: column; width: fit-content; max-width: 92%; margin-left: auto; margin-right: 0; padding: 14px 16px; border: 0; border-radius: 20px; background: #181818; }
       ${s} .msg.user > .msg-header { order: 2; min-height: 16px; margin: 10px 0 0; justify-content: flex-end; }
