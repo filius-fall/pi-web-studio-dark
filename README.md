@@ -25,7 +25,7 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
 - Working/thinking status appears below the latest response; informational session updates stay out of the composer.
 - One clickable marker per loaded user message, with hover previews, keyboard navigation, and an earlier-history control.
-- Mobile chat uses a compact header and single-row composer. Model, reasoning, and navigation controls remain available from the header menu.
+- Mobile chat uses a compact header and single-row composer, with visible model and reasoning selectors above the input. Navigation controls remain available from the header menu.
 - Mobile Home lists your machines, projects, workspaces, and sessions. The chat back arrow returns Home; Home has no back arrow. Open `/?view=navigation` for Home directly.
 - Mobile user images sit above the text in compact previews; active empty composers show Stop, with Send available when text or attachments are added.
 - Normal-size placeholders preserve the editor caret. Desktop inputs focus after the startup screen is ready; phones wait for your tap.

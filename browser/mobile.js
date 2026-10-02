@@ -13,6 +13,31 @@ export function createMobilePresentation() {
     if (disposed) return;
     if (root.host?.localName === 'prompt-editor') {
       const p = root.host;
+      roots.add(root);
+      const footer = root.querySelector('footer');
+      let choices = root.querySelector('.studio-mobile-model-controls');
+      if (footer && !choices) {
+        choices = document.createElement('div');choices.className = 'studio-mobile-model-controls';
+        const model = button('Select model'), reasoning = button('Select reasoning');
+        model.className = 'studio-mobile-model';reasoning.className = 'studio-mobile-reasoning';
+        for (const [proxy, selector] of [[model, '.select-model'], [reasoning, '.select-thinking']]) {
+          const label = document.createElement('span');proxy.replaceChildren(label);
+          proxy.onclick = () => root.querySelector(selector)?.click();
+          choices.append(proxy);
+        }
+        footer.before(choices);
+      }
+      if (choices) {
+        for (const [selector, nativeSelector, fallback, attribute] of [
+          ['.studio-mobile-model', '.select-model', 'Choose model', 'studioLabel'],
+          ['.studio-mobile-reasoning', '.select-thinking', 'Reasoning', 'studioReasoning']
+        ]) {
+          const native = root.querySelector(nativeSelector), proxy = choices.querySelector(selector);
+          const label = native?.dataset[attribute] || fallback;
+          text(proxy.querySelector('span'), label);proxy.title = label;proxy.disabled = !native || native.disabled;
+          if (selector === '.studio-mobile-model') proxy.dataset.studioBrand = native?.dataset.studioBrand || 'generic';
+        }
+      }
       if (!focused.has(p) && p.editor && root.querySelector(".cm-content")) {
         focused.add(p);
         function focusWhenVisible() {
@@ -88,5 +113,5 @@ export function createMobilePresentation() {
       const b = header.querySelector(`[data-action="${name}"]`);text(b, label);b.disabled = !available;
     }
   }
-  return { decorate, clear(root) { roots.delete(root);root.querySelector('.studio-mobile-header')?.remove(); }, dispose() { disposed = true;for (const waiter of waiters) waiter.disconnect();waiters.clear();for (const root of roots) { root.querySelector('.studio-mobile-header')?.remove();root.host.getRootNode().querySelector('.studio-mobile-home-intro')?.remove(); }roots.clear(); } };
+  return { decorate, clear(root) { roots.delete(root);root.querySelector('.studio-mobile-header')?.remove();root.querySelector('.studio-mobile-model-controls')?.remove(); }, dispose() { disposed = true;for (const waiter of waiters) waiter.disconnect();waiters.clear();for (const root of roots) { root.querySelector('.studio-mobile-header')?.remove();root.querySelector('.studio-mobile-model-controls')?.remove();root.host.getRootNode().querySelector('.studio-mobile-home-intro')?.remove(); }roots.clear(); } };
 }

@@ -138,7 +138,7 @@ export function appearanceCss(s) {
     ${s} .notification-header { background: #1c1c1c; min-height: 34px; }
     ${s} .notification-heading { font-size: 12px; font-weight: 500; }
     ${s} .notification-row { font-size: 12px; line-height: 1.5; }
-    .studio-model-name, .studio-model-current { display: none; }
+    .studio-model-name, .studio-model-current, .studio-mobile-model-controls { display: none; }
     ${s} [data-studio-brand] { position: relative; }
     ${s} [data-studio-brand]::before { content: ""; position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 22px; height: 22px; background: #e8e8ed; mask: var(--studio-brand-icon) center / contain no-repeat; pointer-events: none; }
     ${s} [data-studio-brand="openai"] { --studio-brand-icon: url("${icon('openai')}"); }
@@ -349,6 +349,14 @@ export function appearanceCss(s) {
       :host(prompt-editor)${s} .cm-placeholder { font-size: 16px; }
       :host(prompt-editor)${s} .cm-scroller { max-height: min(160px, 30dvh); overflow-y: auto; }
       :host(prompt-editor)${s} .compact-status { display: none; }
+      :host(prompt-editor)${s} .studio-mobile-model-controls { display: flex; align-items: center; gap: 8px; margin: -6px 2px 4px; min-width: 0; }
+      :host(prompt-editor)${s} .studio-mobile-model-controls button { display: flex; align-items: center; gap: 8px; min-width: 0; min-height: 44px; padding: 0 20px 0 8px; border: 0; border-radius: 8px; background: transparent; color: #b6b6bf; font-size: 12px; cursor: pointer; }
+      :host(prompt-editor)${s} .studio-mobile-model-controls button:hover { background: #ffffff08; }
+      :host(prompt-editor)${s} .studio-mobile-model-controls button::after { content: ''; width: 6px; height: 6px; flex-shrink: 0; border-right: 1.5px solid #888; border-bottom: 1.5px solid #888; transform: translateY(-2px) rotate(45deg); }
+      :host(prompt-editor)${s} .studio-mobile-model-controls span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+      :host(prompt-editor)${s} .studio-mobile-model { flex: 1 1 0; padding-left: 32px !important; }
+      :host(prompt-editor)${s} .studio-mobile-model::before { left: 6px; width: 18px; height: 18px; }
+      :host(prompt-editor)${s} .studio-mobile-reasoning { flex: 0 1 auto; max-width: 48%; }
       :host(prompt-editor)${s} .actions { position: absolute; right: 6px; bottom: 6px; display: flex; gap: 5px; }
       :host(prompt-editor)${s} .send-button, :host(prompt-editor)${s} .stop-button { width: 36px; height: 36px; min-width: 36px; }
       :host(prompt-editor)${s} .stop-button:disabled { display: none; }
