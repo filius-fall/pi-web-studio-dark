@@ -2,6 +2,21 @@
 export function appearanceCss(s) {
   const icon = name => new URL(`./icons/${name}.svg`, import.meta.url).href;
   const brain = new URL("./brain.svg", import.meta.url).href;
+  // Original outline drawings for action types, kept inline with the theme.
+  const activityPaths = {
+    terminal: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/>',
+    edit: '<path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6M14 5l5-3 3 3-11 11-4 1 1-4Z"/>',
+    book: '<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/>',
+    browser: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01m3 0h.01M13 12l5 3-3 1-1 3Z"/>',
+    image: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m4 18 5-5 3 3 4-6 5 8"/>',
+    search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',
+    clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',
+    tool: '<path d="m14 5 4-3 4 4-3 4-4-1-9 12-4-4L14 9Z"/>',
+  };
+  const activityIcons = Object.entries(activityPaths).map(([kind, paths]) => {
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
+    return `${s} .studio-tool-icon[data-kind="${kind}"] { mask: url("data:image/svg+xml,${encodeURIComponent(svg)}") center / contain no-repeat; }`;
+  }).join('\n');
   return `
     ${s} { font-family: "Pi Studio Sans", system-ui, sans-serif !important; -webkit-font-smoothing: antialiased; --pi-control-font-family: "Pi Studio Sans", system-ui, sans-serif; }
     ${s} button, ${s} input, ${s} select, ${s} textarea { font-family: "Pi Studio Sans", system-ui, sans-serif !important; }
@@ -125,6 +140,12 @@ export function appearanceCss(s) {
     ${s} .tool-header, ${s} .tool-title, ${s} .tool-meta { align-items: center; }
     ${s} .status-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
     ${s} .tool-title { min-width: 0; flex: 1 1 auto; gap: 8px; font-size: 13px; line-height: 20px; }
+    .studio-tool-icon { display: none; }
+    ${s} .studio-tool-icon { display: inline-block; flex: 0 0 17px; width: 17px; height: 17px; color: #929298; background: currentColor; }
+    ${s} .tool-title:has(.studio-tool-icon) > .status-icon { display: none; }
+    ${s} .tool-card.running .studio-tool-icon, ${s} .tool-card.pending .studio-tool-icon { color: #a9c8ff; animation: studio-working-pulse 1400ms ease-in-out infinite; }
+    ${s} .tool-card.error .studio-tool-icon { color: var(--pi-danger); }
+    ${activityIcons}
     ${s} .status-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 14px; width: 14px; height: 20px; line-height: 1; box-sizing: border-box; }
     ${s} .tool-title strong { color: #a0a0a5; font-weight: 500; }
     ${s} .tool-title .summary, ${s} .tool-title .path { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -487,7 +508,7 @@ export function appearanceCss(s) {
       ${s} .action-activity .activity-indicator, ${s} .studio-session-state::before { animation: none !important; }
       ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label { animation: none !important; background: none; color: #a0a0a5 !important; }
       ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label { color: #00bff3 !important; }
-      ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} .studio-image-scan-line, ${s} details.part[open] > formatted-text { animation: none !important; }
+      ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .studio-tool-icon, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} .studio-image-scan-line, ${s} details.part[open] > formatted-text { animation: none !important; }
     }
   `;
 }

@@ -1,4 +1,16 @@
 // Presentation only: never change the tool's arguments or expanded details.
+export function toolActionKind(execution) {
+  const name = (execution.toolName || '').toLowerCase();
+  if (/browser|playwright|puppeteer|preview/.test(name)) return 'browser';
+  if (/(?:^|[_:.-])(?:bash|shell|exec_command|run_command|terminal)$/.test(name)) return 'terminal';
+  if (/apply_patch|edit|write|create_file/.test(name)) return 'edit';
+  if (/view_image|read_image/.test(name)) return 'image';
+  if (/search|grep|find/.test(name)) return 'search';
+  if (/read/.test(name)) return 'book';
+  if (/wait|sleep/.test(name)) return 'clock';
+  return 'tool';
+}
+
 export function toolActionName(execution) {
   const name = (execution.toolName || '').toLowerCase();
   const args = execution.args && typeof execution.args === 'object' ? execution.args : {};

@@ -91,14 +91,24 @@ that is already queued; **Clear queue** keeps its native whole-queue behavior.
 
 ![Completed work expanded](docs/screenshots/completed-work-sidebar-expanded.png)
 
+### Queued messages
+
+Queued follow-ups sit in compact conversation bubbles. Use **Send now** in the
+composer to steer an active response with a new instruction.
+
+![Queued follow-up and Send now control](docs/screenshots/queued-messages.png)
+
 ### Tool details and thinking
 
 Tool calls use short names such as **Run script**, **Check logs**, and **Read file**
 while running and after completion. They appear as evenly spaced action rows, nested under completed
 work without stacked divider rails. Expand any call for its full command and
-result in roomy, wrapped panels. Thinking uses a gentle brain animation, and
+result in roomy, wrapped panels. Action icons distinguish terminal commands,
+file edits, reading, browsing, and images. Thinking uses a gentle brain animation, and
 image analysis adds a small scanning indicator while the model reads an
 attachment.
+
+![Action icons for reading, editing, and commands](docs/screenshots/tool-icons.png)
 
 ![Expanded tool details](docs/screenshots/tool-details.png)
 

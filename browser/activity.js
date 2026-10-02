@@ -1,4 +1,4 @@
-import { toolActionName } from './tool-labels.js';
+import { toolActionName, toolActionKind } from './tool-labels.js';
 
 const toolStates = new WeakMap();
 function text(element, value) { if (element.textContent !== value) element.textContent = value; }
@@ -24,6 +24,10 @@ export function decorateActivity(root) {
     if (!execution || !card || !title) return;
     const active = ['pending', 'running'].includes(execution.status);
     card.dataset.studioActive = String(active);
+    let icon = title.querySelector('.studio-tool-icon');
+    if (!icon) { icon = document.createElement('span');icon.className = 'studio-tool-icon';icon.setAttribute('aria-hidden', 'true');title.append(icon); }
+    const actionKind = toolActionKind(execution);
+    if (icon.dataset.kind !== actionKind) icon.dataset.kind = actionKind;
     let label = title.querySelector('.studio-tool-label');
     if (!label) { label = document.createElement('span'); label.className = 'studio-tool-label'; title.append(label); }
     const action = toolActionName(execution);
@@ -80,7 +84,7 @@ export function decorateActivity(root) {
 export function clearActivity(root) {
   const state = toolStates.get(root);
   if (state) { root.removeEventListener('pointerdown', state.onInteract, true);root.removeEventListener('keydown', state.onInteract, true);toolStates.delete(root); }
-  for (const element of root.querySelectorAll('.studio-tool-label, .studio-inline-activity, .studio-ticks, .studio-queue-state')) element.remove();
+  for (const element of root.querySelectorAll('.studio-tool-icon, .studio-tool-label, .studio-inline-activity, .studio-ticks, .studio-queue-state')) element.remove();
   const steer = root.querySelector('.steer-button[data-studio-steer-title]');
   if (steer) {
     steer.title = steer.dataset.studioSteerTitle;
