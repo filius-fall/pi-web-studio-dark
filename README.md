@@ -11,7 +11,8 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Compact navigation rows; Projects and Workspaces size to content, Sessions fills the remaining space.
 - Desktop workspace pane initially closed, with your open/closed preference remembered per browser, reopened with Files & terminal or the native edge toggle.
 - Bounded, scrollable notification tray preserves full warning content.
-- Blue tool-call spinners, gentle entry and details animations, with reduced-motion support.
+- Aligned status icons, blue tool-call spinners, and a slow moving highlight across running tool text.
+- Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
 - Thin scrollbars, readable metadata, and responsive padding.
 
 ## Screenshots

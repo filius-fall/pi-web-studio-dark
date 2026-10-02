@@ -101,6 +101,20 @@ function installChatContrast(signal) {
       discover(root);
     }
   }
+  function syncThinking(root) {
+    if (root.host?.localName !== "chat-view") return;
+    const chat = root.host;
+    const last = chat.messages?.at(-1);
+    const active = chat.isSessionLive?.() === true;
+    const thinking = active && (last?.role === "assistant" && last.parts?.at(-1)?.type === "thinking");
+    const summaries = [...root.querySelectorAll("details.part:not(.skill-invocation) > summary")]
+      .filter(summary => summary.textContent.trim().toLowerCase() === "thinking");
+    const current = thinking ? summaries.at(-1) : undefined;
+    for (const summary of summaries) {
+      if (summary === current) summary.setAttribute("data-studio-thinking", "");
+      else summary.removeAttribute("data-studio-thinking");
+    }
+  }
   function observe(root) {
     const observer = new MutationObserver(records => {
       for (const record of records) for (const node of record.addedNodes) discover(node);
@@ -115,10 +129,12 @@ function installChatContrast(signal) {
           }
         }
       }
+      syncThinking(root);
       installToolsButton();
     });
     roots.set(root, observer);
     observer.observe(root, { childList: true, subtree: true });
+    syncThinking(root);
   }
   observe(document);
   discover(document);
@@ -150,6 +166,7 @@ function installChatContrast(signal) {
     for (const [root, observer] of roots) {
       observer.disconnect();
       root.removeEventListener("click", rememberTools, true);
+      for (const summary of root.querySelectorAll("[data-studio-thinking]")) summary.removeAttribute("data-studio-thinking");
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
     }
     roots.clear();

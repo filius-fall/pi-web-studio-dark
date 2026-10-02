@@ -41,18 +41,30 @@ export function appearanceCss(s) {
     ${s} .activity-dock.active { color: #00bff3; background: #151515; }
     ${s} .activity-indicator.session, ${s} .activity-indicator.sending { background: #00bff3; }
     ${s} .tool-card, ${s} .tool-card.pending, ${s} .tool-card.running, ${s} .tool-card.success { border: 0; border-top: 1px solid #ffffff0c; border-radius: 0; background: transparent; padding: 10px 0; gap: 6px; }
-    ${s} .tool-title { gap: 8px; font-size: 13px; }
+    ${s} .tool-header, ${s} .tool-title, ${s} .tool-meta { align-items: center; }
+    ${s} .tool-title { gap: 8px; font-size: 13px; line-height: 20px; }
+    ${s} .status-icon { display: inline-flex; align-items: center; justify-content: center; flex: 0 0 14px; width: 14px; height: 20px; line-height: 1; box-sizing: border-box; }
     ${s} .tool-title strong { color: #a0a0a5; font-weight: 500; }
     ${s} .tool-title .summary, ${s} .tool-title .path { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    ${s} .tool-title .summary { color: #929298; }
+    ${s} .tool-title .summary { flex: 0 1 auto; color: #929298; }
     ${s} .tool-meta, ${s} .status-label { color: #89898f; font-size: 10px; letter-spacing: 0; text-transform: none; }
     ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon, ${s} .tool-card.running .status-label { color: #00bff3; }
     ${s} .tool-card.success .status-icon { color: #34d399; }
     ${s} .tool-card.error .status-icon, ${s} .tool-card.error .status-label { color: var(--pi-danger); }
     ${s} .tool-card { animation: studio-tool-enter 160ms ease-out both; }
-    ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon { display: inline-block; width: 11px; height: 11px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; border-radius: 50%; font-size: 0; animation: studio-tool-spin 900ms linear infinite; }
+    ${s} .tool-card.running .status-icon, ${s} .tool-card.pending .status-icon { font-size: 0; }
+    ${s} .tool-card.running .status-icon::before, ${s} .tool-card.pending .status-icon::before, ${s} summary[data-studio-thinking]::before { content: ""; display: block; flex: 0 0 12px; width: 12px; height: 12px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; border-radius: 50%; animation: studio-tool-spin 900ms linear infinite; }
     ${s} .text-body[open] .detail-target, ${s} .text-body[open] .detail-result, ${s} .diff-details[open] .diff { animation: studio-details-enter 180ms ease-out both; }
-    ${s} .activity-dock.active .dot { animation: studio-working-pulse 1400ms ease-in-out infinite; }
+    ${s} .activity-dock { gap: 10px; padding: 6px 12px; line-height: 18px; }
+    ${s} .activity-dock.active .dot { position: relative; width: 4px; height: 4px; margin: 0 8px; opacity: 1; animation: studio-working-pulse 1200ms ease-in-out infinite; }
+    ${s} .activity-dock.active .dot::before, ${s} .activity-dock.active .dot::after { content: ""; position: absolute; top: 0; width: 4px; height: 4px; border-radius: 50%; background: currentColor; animation: studio-working-pulse 1200ms ease-in-out infinite; }
+    ${s} .activity-dock.active .dot::before { left: -7px; animation-delay: -200ms; }
+    ${s} .activity-dock.active .dot::after { left: 7px; animation-delay: 200ms; }
+    ${s} details.part:not(.skill-invocation) > summary { line-height: 20px; color: #929298; }
+    ${s} summary[data-studio-thinking] { width: fit-content; max-width: 100%; display: flex; align-items: center; gap: 8px; color: #00bff3 !important; list-style: none; }
+    ${s} summary[data-studio-thinking]::-webkit-details-marker { display: none; }
+    ${s} summary[data-studio-thinking]::after { content: ""; width: 4px; height: 4px; border-radius: 50%; background: #00bff3; animation: studio-working-pulse 1200ms ease-in-out infinite; }
+    ${s} details.part[open] > formatted-text { animation: studio-details-enter 180ms ease-out both; }
     ${s} .text-body, ${s} .diff-details { border-top: 0; padding-top: 2px; }
     ${s} .text-body > summary, ${s} .diff-details > summary { color: #929298; font-size: 12px; }
     ${s} .msg.event-group > summary { color: #929298; padding: 6px 0; }
@@ -94,13 +106,23 @@ export function appearanceCss(s) {
       ${s} textarea, ${s} .markdown-editor .cm-editor { font-size: 16px; }
       ${s} .action-main { padding-top: 10px; padding-bottom: 10px; }
     }
+    @supports (background-clip: text) {
+      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text {
+        background-image: linear-gradient(100deg, #929298 0%, #929298 38%, #e8e8ed 48%, #80d8f2 52%, #929298 62%, #929298 100%);
+        background-size: 250% 100%; background-clip: text; -webkit-background-clip: text; color: transparent !important;
+        animation: studio-text-sheen 3200ms ease-in-out infinite;
+      }
+    }
+    @keyframes studio-text-sheen { from { background-position: 100% 0; } to { background-position: -100% 0; } }
     @keyframes studio-tool-spin { to { transform: rotate(360deg); } }
     @keyframes studio-tool-enter { from { opacity: 0; } to { opacity: 1; } }
     @keyframes studio-details-enter { from { opacity: 0; transform: translateY(-2px); } to { opacity: 1; transform: translateY(0); } }
     @keyframes studio-working-pulse { 0%, 100% { opacity: .45; transform: scale(.85); } 50% { opacity: 1; transform: scale(1); } }
     @media (prefers-reduced-motion: reduce) {
       ${s} button { transition: none; }
-      ${s} .tool-card, ${s} .status-icon, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot { animation: none !important; }
+      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { animation: none !important; background: none; color: #a0a0a5 !important; }
+      ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { color: #00bff3 !important; }
+      ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} details.part[open] > formatted-text { animation: none !important; }
     }
   `;
 }
