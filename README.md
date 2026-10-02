@@ -108,7 +108,7 @@ important sessions and restore completed work from Done.
 Headings, links, lists, tables, and code panels share a consistent reading layout.
 Message markers preview your prompts and jump to their position.
 
-![Desktop reading layout](docs/screenshots/reading-desktop.png)
+![Reading layout with sidebar and composer](docs/screenshots/reading-sidebar.png)
 
 ![User message navigation](docs/screenshots/message-navigation.png)
 
@@ -127,8 +127,6 @@ phone screens.
 ![Studio Dark full mobile chat](docs/screenshots/mobile-chat.png)
 
 ![Mobile images and thinking](docs/screenshots/mobile-images.png)
-
-![Mobile reading layout](docs/screenshots/reading-mobile.png)
 
 ## Session controls
 
