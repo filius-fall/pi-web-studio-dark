@@ -5,6 +5,7 @@ Dark appearance and compact layout for Pi Web v1.202610.0.
 A local browser plugin for [Pi Web](https://pi-web.dev). It changes presentation and
 layout while preserving Pi Web's agent, sessions, and provider configuration.
 
+- Official Pi browser tab icon, served locally with the plugin.
 - DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
 - Tool command summaries stay on one line; full command/output and diffs remain available in Details.
@@ -78,3 +79,6 @@ DM Sans is served locally under the included SIL OFL license. Earlier palette
 versions are preserved in browser/index.before-contrast.js and
 browser/index.before-studio.js. The plugin is MIT licensed; palette attribution
 and font licenses are in `LICENSE.vitesse` and `LICENSE.dm-sans`.
+
+The browser tab icon is the upstream [Pi favicon](https://pi.dev/favicon.svg),
+provided through the [Pi brand assets](https://pi.dev/press-kit).

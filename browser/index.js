@@ -63,6 +63,22 @@ function installChatContrast(signal) {
   const sheet = new CSSStyleSheet();
   const scope = ':host-context(html[data-pi-web-theme="vitesse:black"])';
   sheet.replaceSync(appearanceCss(scope));
+  // Use the upstream Pi favicon, served locally with the plugin.
+  const iconUrl = new URL("./pi-icon.svg", import.meta.url).href;
+  const icons = [...document.head.querySelectorAll('link[rel~="icon"]')];
+  const originalIcons = icons.map(icon => ({ icon, attributes: ["href", "type", "sizes"].map(name => [name, icon.getAttribute(name)]) }));
+  let addedIcon;
+  if (!icons.length) {
+    addedIcon = document.createElement("link");
+    addedIcon.rel = "icon";
+    document.head.append(addedIcon);
+    icons.push(addedIcon);
+  }
+  for (const icon of icons) {
+    icon.href = iconUrl;
+    icon.type = "image/svg+xml";
+    icon.sizes = "any";
+  }
   const roots = new Map();
   let disposed = false;
   let toolsButton;
@@ -170,6 +186,14 @@ function installChatContrast(signal) {
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
     }
     roots.clear();
+    for (const { icon, attributes } of originalIcons) {
+      if (icon.href !== iconUrl) continue;
+      for (const [name, value] of attributes) {
+        if (value === null) icon.removeAttribute(name);
+        else icon.setAttribute(name, value);
+      }
+    }
+    addedIcon?.remove();
     document.fonts.delete(font);
     toolsButton?.remove();
     signal.removeEventListener('abort', dispose);
