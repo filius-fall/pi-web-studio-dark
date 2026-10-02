@@ -1,3 +1,4 @@
+import { decorateActivity, clearActivity } from "./activity.js";
 import { appearanceCss } from "./appearance.js";
 import { decorateNavigation, clearNavigation } from "./navigation.js";
 import { decorateModels, clearModels } from "./models.js";
@@ -82,6 +83,10 @@ function installChatContrast(signal) {
     icon.sizes = "any";
   }
   const roots = new Map();
+  const themeObserver = new MutationObserver(() => {
+    for (const root of roots.keys()) decorateActivity(root);
+  });
+  themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-pi-web-theme"] });
   let disposed = false;
   let toolsButton;
   function rememberTools(event) {
@@ -123,7 +128,7 @@ function installChatContrast(signal) {
     if (root.host?.localName !== "chat-view") return;
     const chat = root.host;
     const last = chat.messages?.at(-1);
-    const active = chat.isSessionLive?.() === true;
+    const active = chat.status?.isStreaming === true;
     const thinking = active && (last?.role === "assistant" && last.parts?.at(-1)?.type === "thinking");
     const summaries = [...root.querySelectorAll("details.part:not(.skill-invocation) > summary")]
       .filter(summary => summary.textContent.trim().toLowerCase() === "thinking");
@@ -155,13 +160,15 @@ function installChatContrast(signal) {
         }
       }
       syncThinking(root);
+      decorateActivity(root);
       installToolsButton();
     });
     roots.set(root, observer);
-    observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor"].includes(root.host?.localName), ...(["project-list", "workspace-list", "session-list", "prompt-editor"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label"] } : {}) });
+    observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor", "chat-view", "tool-execution-view"].includes(root.host?.localName), ...(["project-list", "workspace-list", "session-list", "prompt-editor", "conversation-meter", "tool-execution-view"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label", "style"] } : {}) });
     decorateNavigation(root);
     decorateModels(root);
     syncThinking(root);
+    decorateActivity(root);
   }
   observe(document);
   discover(document);
@@ -183,6 +190,15 @@ function installChatContrast(signal) {
     for (const root of roots.keys()) decorateNavigation(root);
   }, 60000);
   let layoutTimer = setTimeout(syncLayout, 500);
+  // A pre-paint bootstrap can hold the shell until styles and fonts are ready.
+  const readyTimer = setTimeout(async () => {
+    await document.fonts.ready;
+    if (disposed) return;
+    syncLayout();
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      document.documentElement.removeAttribute("data-studio-loading");
+    }));
+  }, 550);
   function onResize() {
     clearTimeout(layoutTimer);
     layoutTimer = setTimeout(syncLayout, 100);
@@ -191,13 +207,17 @@ function installChatContrast(signal) {
   function dispose() {
     if (disposed) return;
     disposed = true;
+    themeObserver.disconnect();
     clearTimeout(layoutTimer);
     clearInterval(navigationTimer);
+    clearTimeout(readyTimer);
+    document.documentElement.removeAttribute("data-studio-loading");
     window.removeEventListener("resize", onResize);
     for (const [root, observer] of roots) {
       observer.disconnect();
       clearNavigation(root);
       clearModels(root);
+      clearActivity(root);
       root.removeEventListener("click", rememberTools, true);
       for (const summary of root.querySelectorAll("[data-studio-thinking]")) summary.removeAttribute("data-studio-thinking");
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);

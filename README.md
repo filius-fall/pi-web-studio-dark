@@ -17,6 +17,9 @@ layout while preserving Pi Web's agent, sessions, and provider configuration.
 - Active thinking and working indicators, gentle entry and details animations, with reduced-motion support.
 - Compact model picker with provider logos, readable names, current-model badges, and native default controls.
 - One rounded composer panel with model and reasoning labels, attachments, send, and stop controls.
+- Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
+- Working/thinking status appears below the latest response; informational session updates stay out of the composer.
+- Vertical conversation-position ticks replace the horizontal meter.
 - Thin scrollbars, readable metadata, and responsive padding.
 
 ## Screenshots
@@ -28,6 +31,10 @@ Screenshots use sample projects and conversation content.
 Expanded tool command and output:
 
 ![Expanded tool details](docs/screenshots/tool-details.png)
+
+Model selection with provider logos and current/default indicators:
+
+![Model picker](docs/screenshots/model-picker.png)
 
 ## Install
 
@@ -57,6 +64,21 @@ Studio Dark. Theme choice and panel preference are browser-local.
 Install on each gateway whose URL you use directly. Theme selection is saved
 per browser and gateway URL; select it once on your phone too.
 
+### Avoid the initial theme flash
+
+The optional startup hook applies the selected palette before the app renders,
+then reveals the shell after the plugin and font are ready. It only runs when
+Studio Dark is already selected in that browser. On each gateway:
+
+```sh
+node scripts/install-startup.mjs --html /path/to/pi-web/dist/client/index.html
+```
+
+Use the `dist/client/index.html` inside your installed `@jmfederico/pi-web`
+package. The installer keeps a backup and can be repeated. Reapply this hook
+after updating Pi Web. Remove it with the same command plus `--remove`.
+If the plugin fails to load, the normal app becomes visible after four seconds.
+
 ## Update and remove
 
 ```sh
@@ -74,7 +96,7 @@ unlink "$HOME/.pi-web/plugins/vitesse"
 
 This uses the theme API and a scoped browser presentation layer. CSS classes
 and the panel-toggle labels must be reviewed after Pi Web upgrades.
-No backend or installed application files are patched. Provider settings and
+The optional startup hook adds a small pre-paint block to the installed client HTML; no server execution code is changed. Provider settings and
 session data are not changed. Disposal removes styles, observers, font, and
 injected controls. Disconnected message roots are released by the observer.
 

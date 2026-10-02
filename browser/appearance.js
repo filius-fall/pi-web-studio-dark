@@ -197,6 +197,23 @@ export function appearanceCss(s) {
     :host(prompt-editor)${s} .stop-button:disabled { background: #232326; color: #65656b; }
     :host(prompt-editor)${s} .steer-button { order: 2; }
 
+    .studio-tool-label, .studio-inline-activity, .studio-ticks { display: none; }
+    ${s} .tool-card[data-studio-active="true"] .tool-title > strong,
+    ${s} .tool-card[data-studio-active="true"] .tool-title > .summary,
+    ${s} .tool-card[data-studio-active="true"] .tool-title > .path { display: none; }
+    ${s} .tool-card[data-studio-active="true"] .studio-tool-label { display: inline; color: #a0a0a5; }
+    ${s} .activity-dock { display: none; }
+    ${s} .studio-inline-activity { display: flex; align-items: center; gap: 9px; max-width: 850px; margin: 16px auto 8px; color: #a0a0a5; font-size: 13px; line-height: 20px; }
+    ${s} .studio-inline-spinner { flex: 0 0 12px; width: 12px; height: 12px; box-sizing: border-box; border: 1.5px solid #00bff3; border-right-color: transparent; border-radius: 50%; animation: studio-tool-spin 900ms linear infinite; }
+    :host(conversation-meter)${s} { top: 32px; bottom: 26px; left: 8px; right: auto; width: 12px; height: auto; opacity: 1; pointer-events: none; }
+    :host(conversation-meter)${s} .track { display: none; }
+    ${s} .studio-ticks { display: flex; flex-direction: column; justify-content: center; gap: 6px; height: 100%; max-height: 400px; }
+    ${s} .studio-ticks i { display: block; flex: 0 0 3px; width: 8px; border-radius: 2px; background: #343434; }
+    ${s} .studio-ticks i[data-current="true"] { background: #d6d6da; }
+    @media (prefers-reduced-motion: reduce) {
+      ${s} .studio-inline-spinner { animation: none; }
+    }
+
     @media (max-width: 760px) {
       ${s} .context-chip { font-size: 12px; padding: 3px 7px; }
       ${s} .context-bar { padding: 4px 0; }
@@ -211,7 +228,7 @@ export function appearanceCss(s) {
       ${s} .action-main { padding-top: 10px; padding-bottom: 10px; }
     }
     @supports (background-clip: text) {
-      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text {
+      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label {
         background-image: linear-gradient(100deg, #929298 0%, #929298 38%, #e8e8ed 48%, #80d8f2 52%, #929298 62%, #929298 100%);
         background-size: 250% 100%; background-clip: text; -webkit-background-clip: text; color: transparent !important;
         animation: studio-text-sheen 3200ms ease-in-out infinite;
@@ -225,8 +242,8 @@ export function appearanceCss(s) {
     @media (prefers-reduced-motion: reduce) {
       ${s} button, ${s} .text-body > summary::before { transition: none; }
       ${s} .action-activity .activity-indicator, ${s} .studio-session-state::before { animation: none !important; }
-      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { animation: none !important; background: none; color: #a0a0a5 !important; }
-      ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text { color: #00bff3 !important; }
+      ${s} .tool-card.running .tool-title strong, ${s} .tool-card.running .tool-title .summary, ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label { animation: none !important; background: none; color: #a0a0a5 !important; }
+      ${s} summary[data-studio-thinking], ${s} .activity-dock.active .activity-text, ${s} .studio-tool-label, ${s} .studio-inline-label { color: #00bff3 !important; }
       ${s} .tool-card, ${s} .status-icon, ${s} .status-icon::before, ${s} .detail-target, ${s} .detail-result, ${s} .diff, ${s} .activity-dock .dot, ${s} .activity-dock .dot::before, ${s} .activity-dock .dot::after, ${s} summary[data-studio-thinking]::before, ${s} summary[data-studio-thinking]::after, ${s} details.part[open] > formatted-text { animation: none !important; }
     }
   `;
