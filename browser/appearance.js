@@ -188,6 +188,18 @@ export function appearanceCss(s) {
     :host(prompt-editor)${s} .attachment-remove { width: 22px; height: 22px; border-radius: 7px; background: #121212cc; color: #eee; }
     :host(prompt-editor)${s} .attachment-delivery { flex: 1 1 180px; align-self: center; font-size: 11px; color: #929298; }
     :host(prompt-editor)${s} .attachment-delivery select { display: block; max-width: 100%; padding: 5px 22px 5px 8px; font-size: 11px; border: 1px solid #ffffff10; border-radius: 6px; background-color: #202020; }
+    :host(prompt-editor)${s} select[data-studio-delivery-native] { display: none; }
+    :host(prompt-editor)${s} .studio-delivery-toggle { display: inline-flex; align-items: center; gap: 12px; max-width: 100%; padding: 7px 10px; border: 1px solid #ffffff16; border-radius: 8px; background: #232323; color: #e8e8ed; font-size: 12px; text-align: left; cursor: pointer; }
+    :host(prompt-editor)${s} .studio-delivery-toggle::after { content: ''; width: 7px; height: 7px; flex-shrink: 0; border-right: 1.5px solid #999; border-bottom: 1.5px solid #999; transform: translateY(-2px) rotate(45deg); }
+    :host(prompt-editor)${s} .studio-delivery-menu { position: fixed; inset: auto; margin: 0; padding: 5px; box-sizing: border-box; border: 1px solid #ffffff18; border-radius: 12px; background: #202020; color: #e8e8ed; color-scheme: dark; box-shadow: 0 10px 32px #0008; }
+    :host(prompt-editor)${s} .studio-delivery-menu::backdrop { background: transparent; }
+    :host(prompt-editor)${s} .studio-delivery-menu button { display: block; width: 100%; padding: 10px 12px; border: 0; border-radius: 8px; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+    :host(prompt-editor)${s} .studio-delivery-menu button:hover, :host(prompt-editor)${s} .studio-delivery-menu button:focus-visible { background: #2d2d2d; }
+    :host(prompt-editor)${s} .studio-delivery-menu button[aria-checked="true"] { background: #172b49; }
+    :host(prompt-editor)${s} .studio-delivery-menu button:disabled { opacity: .45; cursor: default; }
+    :host(prompt-editor)${s} .studio-delivery-menu strong, :host(prompt-editor)${s} .studio-delivery-menu small { display: block; font-size: 12px; line-height: 1.5; }
+    :host(prompt-editor)${s} .studio-delivery-menu strong { font-weight: 500; }
+    :host(prompt-editor)${s} .studio-delivery-menu small { margin-top: 3px; color: #aaaab2; font-size: 11px; }
     :host(prompt-editor)${s} .attachment-delivery::after { content: attr(data-studio-help); display: block; margin-top: 4px; line-height: 1.4; }
     :host(prompt-editor)${s} .markdown-editor .cm-editor, :host(prompt-editor)${s} .markdown-editor .cm-editor.cm-focused { border: 0; border-radius: 0; background: transparent; min-height: 24px; outline: none; }
     :host(prompt-editor)${s} .markdown-editor .cm-content { min-height: 24px; padding: 6px 0; font-size: 15px; line-height: 1.6; }

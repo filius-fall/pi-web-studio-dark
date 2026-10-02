@@ -1,3 +1,4 @@
+import { decorateAttachmentDelivery, clearAttachmentDeliveryMenu } from './attachment-delivery.js';
 const attachmentSelects = new WeakSet();
 export function modelBrand(value) {
   function identify(name) {
@@ -66,6 +67,7 @@ export function decorateModels(root) {
       const help = select.value === 'inline' ? 'The model sees these images directly.' : `Saved on the selected machine in ${path}; Pi receives their paths.`;
       delivery.dataset.studioHelp = help;
       delivery.title = help;
+      decorateAttachmentDelivery(select);
     }
     return;
   }
@@ -93,6 +95,8 @@ export function decorateModels(root) {
 function clearAttachmentDelivery(root) {
   const delivery = root.querySelector('.attachment-delivery');
   if (!delivery) return;
+  const select = delivery.querySelector('select');
+  if (select) clearAttachmentDeliveryMenu(select);
   for (const option of delivery.querySelectorAll('option')) option.removeAttribute('label');
   if (delivery.hasAttribute('data-studio-delivery-title')) delivery.title = delivery.dataset.studioDeliveryTitle;
   delivery.removeAttribute('data-studio-delivery-title');delivery.removeAttribute('data-studio-help');
