@@ -5,6 +5,24 @@ Dark appearance and compact layout for Pi Web v1.202610.0.
 A local browser plugin for [Pi Web](https://pi-web.dev). It changes presentation and
 layout while preserving Pi Web's agent, sessions, and provider configuration.
 
+## Quick install
+
+With Pi Web already installed, run this on the machine serving its browser UI:
+
+```sh
+git clone https://github.com/filius-fall/pi-web-studio-dark.git "$HOME/pi-web-studio-dark" && node "$HOME/pi-web-studio-dark/scripts/install.mjs"
+```
+
+Reload Pi Web and choose **Actions → Select Theme → Studio Dark**. On mobile,
+open **Session options → Actions → Select Theme**. Select it once in each browser.
+No build step or dependency install is needed.
+
+The installer creates the plugin link, respects `PI_WEB_DATA_DIR`, and detects
+the installed Pi Web client for the startup theme fix. Existing plugin links
+are never overwritten. Keep the cloned folder in place while using the theme.
+
+## Features
+
 - Official Pi browser tab icon, served locally with the plugin.
 - DM Sans, near-black navigation, dark-gray chat, white text, and blue working indicators.
 - Flat assistant messages, neutral user messages, compact expandable events and tool calls.
@@ -90,16 +108,23 @@ Pi Web `1.202610.0` in Chromium at desktop and phone widths. Other browser
 engines are not yet validated; the stylesheet uses `:host-context`.
 
 ```sh
-git clone <repository-url> "$HOME/pi-web-studio-dark"
-mkdir -p "$HOME/.pi-web/plugins"
-ln -s "$HOME/pi-web-studio-dark" "$HOME/.pi-web/plugins/vitesse"
+node "$HOME/pi-web-studio-dark/scripts/install.mjs"
 ```
 
-Replace `<repository-url>` with this repository's clone URL.
+This command can be run again safely after updates. Clone the repository first
+using the quick install command above, or run `node scripts/install.mjs` from
+an existing checkout.
 
-If `PI_WEB_DATA_DIR` is set, use its `plugins` directory instead of
-`~/.pi-web/plugins`. If a `vitesse` plugin is already installed, update that
-installation rather than overwriting its link.
+For a custom data directory or package location:
+
+```sh
+node scripts/install.mjs --data-dir /path/to/pi-web-data --html /path/to/pi-web/dist/client/index.html
+```
+
+Use `--no-startup` to install only the plugin. If Pi Web cannot be detected or
+its client HTML is not writable, the theme still installs; the installer reports
+that the optional startup fix was skipped. No administrator privileges are
+required for the plugin itself.
 
 No build step, npm install, or session-daemon restart is needed. Reload Pi Web,
 then choose **Actions → Select Theme → Studio Dark**.
@@ -130,14 +155,19 @@ If the plugin fails to load, the normal app becomes visible after four seconds.
 
 ```sh
 git -C "$HOME/pi-web-studio-dark" pull --ff-only
+node "$HOME/pi-web-studio-dark/scripts/install.mjs"
 ```
 
-Reload Pi Web after updating. To uninstall, remove only the plugin link and
-reload:
+Reload Pi Web after updating. To uninstall, select another theme, then remove
+only the plugin link and reload:
 
 ```sh
 unlink "$HOME/.pi-web/plugins/vitesse"
 ```
+
+For a custom data directory, remove its `plugins/vitesse` link instead. To
+remove the optional startup hook as well, run the startup command above with
+`--remove` before deleting the cloned folder.
 
 ## Compatibility and licenses
 
