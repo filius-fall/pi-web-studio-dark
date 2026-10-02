@@ -12,10 +12,29 @@ export function decorateActivity(root) {
     card.dataset.studioActive = String(active);
     let label = title.querySelector('.studio-tool-label');
     if (!label) { label = document.createElement('span'); label.className = 'studio-tool-label'; title.append(label); }
-    text(label, `${execution.status === 'pending' ? 'Starting' : 'Running'} ${execution.toolName || 'tool'}`);
+    const action = typeof execution.summary === 'string' ? execution.summary.trim() : '';
+    // The spinner and status icon already communicate progress; keep the row
+    // label focused on the action so it stays concise in nested event lists.
+    text(label, action || execution.toolName || 'tool');
+    const commandSummary = title.querySelector('.summary');
+    if (commandSummary && action) {
+      if (!commandSummary.hasAttribute('data-studio-command')) {
+        commandSummary.dataset.studioCommand = commandSummary.getAttribute('title') || commandSummary.textContent.trim();
+        commandSummary.dataset.studioOriginalTitle = commandSummary.getAttribute('title') || '';
+        commandSummary.dataset.studioOriginalAria = commandSummary.getAttribute('aria-label') || '';
+      }
+      const command = commandSummary.dataset.studioCommand;
+      if (action !== command) {
+        text(commandSummary, action);
+        commandSummary.title = command ? `Command: ${command}` : action;
+        const ariaLabel = command ? `Action: ${action}. Command: ${command}` : action;
+        if (commandSummary.getAttribute('aria-label') !== ariaLabel) commandSummary.setAttribute('aria-label', ariaLabel);
+        commandSummary.setAttribute('data-studio-action', '');
+      }
+    }
     let state = toolStates.get(root);
     if (!state) {
-      state = { active: false, manual: false, onInteract: event => {
+      state = { manual: false, onInteract: event => {
         if (event.type === 'keydown' && !['Enter', ' '].includes(event.key)) return;
         const summary = event.target.closest?.('summary');
         if (summary && summary.parentElement.matches('.text-body')) {
@@ -28,11 +47,8 @@ export function decorateActivity(root) {
       toolStates.set(root, state);
     }
     const details = root.querySelector('.text-body');
-    if (details && active && !state.active && !state.manual) details.open = true;
-    if (details && !active && state.active && !state.manual && execution.status !== 'error') details.open = false;
     if (details && state.manual && state.status !== execution.status && execution.status !== 'error') details.open = state.manualOpen;
     state.status = execution.status;
-    state.active = active;
   }
   if (kind === 'chat-view') {
     const host = root.host;
@@ -58,5 +74,16 @@ export function clearActivity(root) {
   const state = toolStates.get(root);
   if (state) { root.removeEventListener('pointerdown', state.onInteract, true);root.removeEventListener('keydown', state.onInteract, true);toolStates.delete(root); }
   for (const element of root.querySelectorAll('.studio-tool-label, .studio-inline-activity, .studio-ticks')) element.remove();
+  for (const summary of root.querySelectorAll('.tool-title .summary[data-studio-command]')) {
+    text(summary, summary.dataset.studioCommand);
+    if (summary.dataset.studioOriginalTitle) summary.setAttribute('title', summary.dataset.studioOriginalTitle);
+    else summary.removeAttribute('title');
+    if (summary.dataset.studioOriginalAria) summary.setAttribute('aria-label', summary.dataset.studioOriginalAria);
+    else summary.removeAttribute('aria-label');
+    delete summary.dataset.studioCommand;
+    delete summary.dataset.studioOriginalTitle;
+    delete summary.dataset.studioOriginalAria;
+    summary.removeAttribute('data-studio-action');
+  }
   root.querySelector('[data-studio-active]')?.removeAttribute('data-studio-active');
 }

@@ -137,16 +137,55 @@ function installChatContrast(signal) {
   function syncThinking(root) {
     if (root.host?.localName !== "chat-view") return;
     const chat = root.host;
-    const last = chat.messages?.at(-1);
+    const messages = chat.messages || [];
+    const last = messages.at(-1);
     const active = chat.status?.isStreaming === true;
     const thinking = active && (last?.role === "assistant" && last.parts?.at(-1)?.type === "thinking");
+    let readingImage = false;
+    if (thinking) {
+      for (let index = messages.length - 1; index >= 0; index--) {
+        if (messages[index].role !== "user") continue;
+        readingImage = messages[index].parts?.some(part => part?.type === "image") === true;
+        break;
+      }
+    }
     const summaries = [...root.querySelectorAll("details.part:not(.skill-invocation) > summary")]
-      .filter(summary => summary.textContent.trim().toLowerCase() === "thinking");
+      .filter(summary => summary.hasAttribute("data-studio-reasoning") || summary.textContent.trim().toLowerCase() === "thinking");
     const current = thinking ? summaries.at(-1) : undefined;
     for (const summary of summaries) {
       summary.setAttribute("data-studio-reasoning", "");
       if (summary === current) summary.setAttribute("data-studio-thinking", "");
       else summary.removeAttribute("data-studio-thinking");
+      const isReadingImage = summary === current && readingImage;
+      if (isReadingImage) {
+        if (!summary.hasAttribute("data-studio-image-reading")) {
+          summary.dataset.studioOriginalAriaLabel = summary.getAttribute("aria-label") || "";
+          summary.setAttribute("aria-label", "Thinking, reading image");
+        }
+        summary.setAttribute("data-studio-image-reading", "");
+        if (!summary.querySelector(":scope > .studio-image-reading")) {
+          const badge = document.createElement("span");
+          badge.className = "studio-image-reading";
+          const icon = document.createElement("span");
+          icon.className = "studio-image-reading-icon";
+          icon.setAttribute("aria-hidden", "true");
+          const scanLine = document.createElement("span");
+          scanLine.className = "studio-image-scan-line";
+          icon.append(scanLine);
+          const label = document.createElement("span");
+          label.textContent = "Reading image";
+          badge.append(icon, label);
+          summary.append(badge);
+        }
+      } else {
+        if (summary.hasAttribute("data-studio-image-reading")) {
+          if (summary.dataset.studioOriginalAriaLabel) summary.setAttribute("aria-label", summary.dataset.studioOriginalAriaLabel);
+          else summary.removeAttribute("aria-label");
+          delete summary.dataset.studioOriginalAriaLabel;
+          summary.removeAttribute("data-studio-image-reading");
+          summary.querySelector(":scope > .studio-image-reading")?.remove();
+        }
+      }
     }
   }
   function observe(root) {
@@ -256,6 +295,13 @@ function installChatContrast(signal) {
       for (const summary of root.querySelectorAll("[data-studio-reasoning]")) {
         summary.removeAttribute("data-studio-thinking");
         summary.removeAttribute("data-studio-reasoning");
+        if (summary.hasAttribute("data-studio-image-reading")) {
+          if (summary.dataset.studioOriginalAriaLabel) summary.setAttribute("aria-label", summary.dataset.studioOriginalAriaLabel);
+          else summary.removeAttribute("aria-label");
+          delete summary.dataset.studioOriginalAriaLabel;
+          summary.removeAttribute("data-studio-image-reading");
+          summary.querySelector(":scope > .studio-image-reading")?.remove();
+        }
       }
       if (root instanceof ShadowRoot) root.adoptedStyleSheets = root.adoptedStyleSheets.filter(s => s !== sheet);
     }

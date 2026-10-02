@@ -43,7 +43,7 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 - Completed response activity collapses into one Work done dropdown; expand it to inspect thinking, updates, skills, and tool calls. Repeated event headers and divider lines are removed.
 - A shared 800px reading and composer column, 16px DM Sans body text, generous paragraph/list spacing, and a clear heading hierarchy.
 - Blue underlined hyperlinks, subtle inline code, readable tables, and horizontally scrollable code panels with language labels and native copy controls.
-- Tool calls use one compact row with a status icon, truncated command, and inline down/up chevron. Click the row to reveal the full command and output; diffs keep their native controls.
+- Tool calls use clean, nested action rows with status icons and independent expanders. Open any row to inspect its full command and result; diffs keep their native controls.
 - Project badges, clear session cards, hover/focus menus, and working/unread/age indicators.
 - Pin/Unpin promotes sessions while keeping thread branches together. Pins persist in this browser, separately for each gateway URL.
 - Mark done archives an idle, saved session through Pi Web; Done sessions can be restored. Archiving never deletes a conversation.
@@ -68,7 +68,7 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 
 ## Screenshots
 
-Captured with Studio Dark 1.15.0. All images use demonstration content.
+The screenshots show the current Studio Dark interface with demonstration content. Every desktop feature image includes the full app and sidebar; mobile screenshots are grouped at the end.
 
 ### Full app overview
 
@@ -87,8 +87,11 @@ updates, thinking, and tool calls while the final answer remains visible.
 
 ### Tool details and thinking
 
-Expand a tool to inspect its command and output. Active thinking uses a brain
-icon with a gentle animation.
+Tool calls appear as compact, evenly spaced action rows, nested under completed
+work without stacked divider rails. Expand any call for its full command and
+result in roomy, wrapped panels. Thinking uses a gentle brain animation, and
+image analysis adds a small scanning indicator while the model reads an
+attachment.
 
 ![Expanded tool details](docs/screenshots/tool-details.png)
 
