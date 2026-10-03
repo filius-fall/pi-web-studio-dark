@@ -138,13 +138,24 @@ Image previews stay above your message, with clear delivery choices.
 
 ![Composer with an image attachment](docs/screenshots/attachments.png)
 
-## New sessions
+### New sessions
 
 An empty session opens with a calm welcome screen and four starting points:
 explore the project, fix a problem, build a feature, or review changes. Selecting
 a suggestion fills the composer using Pi Web’s native draft editor. It never
 sends automatically or overwrites a draft. The welcome disappears as soon as
 messages or active work appear, and adapts to phone screens.
+
+### Questions and response actions
+
+Questions use compact choice cards, clear selection states, and a single-column
+layout on phones. Radio buttons, multiple selections, custom answers, and
+submission continue to use Pi Web’s native form.
+
+Saved assistant responses include **Fork from here** at the end. It creates a
+separate session through that response using Pi Web’s native clone action. The
+control is disabled when Pi Web disables message actions, and is unavailable
+for messages without a saved history entry.
 
 ### Mobile
 

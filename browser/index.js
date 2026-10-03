@@ -1,3 +1,4 @@
+import { decorateResponseActions, clearResponseActions } from './response-actions.js';
 import { decorateSessionStart, clearSessionStart } from './session-start.js';
 import { createMobilePresentation } from "./mobile.js";
 import { decorateReading } from "./reading.js";
@@ -95,7 +96,7 @@ function installChatContrast(signal) {
   const mobilePresentation = createMobilePresentation();
   const themeObserver = new MutationObserver(() => {
     composerLayout.sync();
-    for (const root of roots.keys()) { decorateActivity(root);decorateSessionStart(root);decorateMessageNavigation(root);sessionManagement.decorate(root);decorateModels(root); }
+    for (const root of roots.keys()) { decorateActivity(root);decorateSessionStart(root);decorateResponseActions(root);decorateMessageNavigation(root);sessionManagement.decorate(root);decorateModels(root); }
   });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-pi-web-theme"] });
   let disposed = false;
@@ -199,7 +200,7 @@ function installChatContrast(signal) {
             watcher.disconnect();
             clearMessageNavigation(observed);
             clearEventGroups(observed);
-            clearSessionStart(observed);
+            clearSessionStart(observed);clearResponseActions(observed);
             sessionManagement.clear(observed);
             mobilePresentation.clear(observed);
             observed.removeEventListener("click", rememberTools, true);
@@ -221,14 +222,14 @@ function installChatContrast(signal) {
         }
       }
       syncThinking(root);
-      decorateActivity(root);decorateSessionStart(root);
+      decorateActivity(root);decorateSessionStart(root);decorateResponseActions(root);
       decorateMessageNavigation(root);
       const contextRoot = document.querySelector("pi-web-app")?.shadowRoot?.querySelector("app-context-bar")?.shadowRoot;
       if (contextRoot) mobilePresentation.decorate(contextRoot);
       installToolsButton();
     });
     roots.set(root, observer);
-    observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor", "chat-view", "tool-execution-view"].includes(root.host?.localName), ...(["project-list", "workspace-list", "session-list", "prompt-editor", "conversation-meter", "tool-execution-view"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label", "style"] } : {}) });
+    observer.observe(root, { childList: true, subtree: true, characterData: ["project-list", "workspace-list", "session-list", "model-picker", "prompt-editor", "chat-view", "tool-execution-view"].includes(root.host?.localName), ...(root.host?.localName === "chat-view" ? { attributes: true, attributeFilter: ["disabled"] } : {}), ...(["project-list", "workspace-list", "session-list", "prompt-editor", "conversation-meter", "tool-execution-view"].includes(root.host?.localName) ? { attributes: true, attributeFilter: ["class", "aria-label", "style"] } : {}) });
     decorateNavigation(root);
     sessionManagement.decorate(root);
     decorateModels(root);
@@ -237,7 +238,7 @@ function installChatContrast(signal) {
     mobilePresentation.decorate(root);
     composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
     syncThinking(root);
-    decorateActivity(root);decorateSessionStart(root);
+    decorateActivity(root);decorateSessionStart(root);decorateResponseActions(root);
     decorateMessageNavigation(root);
   }
   observe(document);
@@ -293,7 +294,7 @@ function installChatContrast(signal) {
       clearActivity(root);
       clearMessageNavigation(root);
       clearEventGroups(root);
-      clearSessionStart(root);
+      clearSessionStart(root);clearResponseActions(root);
       root.removeEventListener("click", rememberTools, true);
       for (const summary of root.querySelectorAll("[data-studio-reasoning]")) {
         summary.removeAttribute("data-studio-thinking");

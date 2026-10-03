@@ -4,9 +4,9 @@ export function appearanceCss(s) {
   const brain = new URL("./brain.svg", import.meta.url).href;
   // Original outline drawings for action types, kept inline with the theme.
   const activityPaths = {
-    terminal: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="m7 9 3 3-3 3m6 0h4"/>',
-    edit: '<path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6M14 5l5-3 3 3-11 11-4 1 1-4Z"/>',
-    book: '<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15"/>',
+    terminal: '<path d="m4 6 6 6-6 6m9 0h7"/>',
+    edit: '<path d="M12 4H6a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-6m15 5 3-3 4 4-3 3M15 5 8 12l-1 5 5-1 7-7"/>',
+    book: '<path d="M12 5c-3-2-6-2-9-1v15c3-1 6-1 9 1 3-2 6-2 9-1V4c-3-1-6-1-9 1Zm0 0v15M6 8h3m6 0h3M6 11h3m6 0h3"/>',
     browser: '<rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 9h18M7 6.5h.01m3 0h.01M13 12l5 3-3 1-1 3Z"/>',
     image: '<rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8" cy="8" r="1.5"/><path d="m4 18 5-5 3 3 4-6 5 8"/>',
     search: '<circle cx="10" cy="10" r="6"/><path d="m15 15 6 6"/>',
@@ -15,7 +15,43 @@ export function appearanceCss(s) {
   };
   const activityIcons = Object.entries(activityPaths).map(([kind, paths]) => {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
-    return `${s} .studio-tool-icon[data-kind="${kind}"] { mask: url("data:image/svg+xml,${encodeURIComponent(svg)}") center / contain no-repeat; }`;
+    return `
+    ${s} .studio-response-actions { display: flex; margin-top: 22px; gap: 8px; }
+    ${s} .studio-fork-action { display: inline-flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 8px; padding: 6px 9px; background: transparent; color: #9696a3; font-size: 12px; cursor: pointer; }
+    ${s} .studio-fork-action:hover:enabled { background: #ffffff06; border-color: #ffffff12; color: #d6d6e2; }
+    ${s} .studio-fork-action:disabled { opacity: .4; cursor: default; }
+    ${s} .studio-fork-action svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    ${s} [data-studio-fork-footer] > .msg-header .msg-action:has(.msg-fork-icon) { display: none; }
+    :host(ask-user-card)${s} { display: block; width: min(100%, 820px); margin: 24px auto; box-sizing: border-box; }
+    :host(ask-user-card)${s} .card { overflow: hidden; border: 1px solid #ffffff12; border-radius: 18px; background: #1c1c1f; box-shadow: 0 12px 32px #00000012; }
+    :host(ask-user-card)${s} .card-header { padding: 18px 24px; border-bottom: 1px solid #ffffff08; border-radius: 0; background: transparent; box-shadow: none; }
+    :host(ask-user-card)${s} h2 { color: #e5e5ee; font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: -.01em; }
+    :host(ask-user-card)${s} .header-status { padding: 4px 9px; background: #ffffff05; border-radius: 20px; color: #9696a4; font-size: 11px; }
+    :host(ask-user-card)${s} .questions { gap: 24px; padding: 24px; }
+    :host(ask-user-card)${s} fieldset.question { padding: 0; border: 0; }
+    :host(ask-user-card)${s} legend { grid-template-columns: 24px minmax(0, 1fr); gap: 10px; padding: 0 0 14px; color: #dedee9; font-size: 15px; font-weight: 550; line-height: 1.65; }
+    :host(ask-user-card)${s} .question-number { display: grid; place-items: center; height: 24px; border-radius: 7px; background: #628dff12; color: #9db7ff; font-size: 12px; }
+    :host(ask-user-card)${s} .question-detail { margin: 0 0 14px; color: #9696a4; font-size: 13px; line-height: 1.7; }
+    :host(ask-user-card)${s} .options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; padding: 0; margin: 0; }
+    :host(ask-user-card)${s} .option { display: flex; align-items: flex-start; gap: 11px; min-width: 0; padding: 14px; margin: 0; border: 1px solid #ffffff10; border-radius: 11px; background: #ffffff02; cursor: pointer; transition: border-color 140ms ease, background 140ms ease; }
+    :host(ask-user-card)${s} .option:hover { border-color: #ffffff25; background: #ffffff04; }
+    :host(ask-user-card)${s} .option:has(input:checked) { border-color: #628dff70; background: #628dff0d; }
+    :host(ask-user-card)${s} .option:focus-within { outline: 2px solid #628dff; outline-offset: 2px; }
+    :host(ask-user-card)${s} .option input { flex: 0 0 16px; width: 16px; height: 16px; margin: 3px 0 0; accent-color: #628dff; }
+    :host(ask-user-card)${s} .option-copy { min-width: 0; }
+    :host(ask-user-card)${s} .option-label { color: #d4d4df; font-size: 13px; font-weight: 500; line-height: 1.6; }
+    :host(ask-user-card)${s} .option-detail { display: block; margin-top: 4px; color: #90909e; font-size: 12px; line-height: 1.65; }
+    :host(ask-user-card)${s} textarea { box-sizing: border-box; width: 100%; padding: 12px 14px; border: 1px solid #ffffff18; border-radius: 10px; background: #161619; color: #dedee9; line-height: 1.7; }
+    :host(ask-user-card)${s} .form-footer { padding: 16px 24px; border-top: 1px solid #ffffff08; background: #ffffff01; }
+    :host(ask-user-card)${s} .primary-action { min-height: 38px; padding: 9px 17px; border-radius: 10px; font-size: 13px; font-weight: 550; background: #416bee; }
+    @media (max-width: 600px) {
+      :host(ask-user-card)${s} { margin: 16px auto; }
+      :host(ask-user-card)${s} .card-header, :host(ask-user-card)${s} .form-footer { padding: 16px; }
+      :host(ask-user-card)${s} .questions { padding: 18px 16px; gap: 22px; }
+      :host(ask-user-card)${s} .options { grid-template-columns: minmax(0, 1fr); }
+      :host(ask-user-card)${s} legend { font-size: 14px; }
+    }
+${s} .studio-tool-icon[data-kind="${kind}"] { mask: url("data:image/svg+xml,${encodeURIComponent(svg)}") center / contain no-repeat; }`;
   }).join('\n');
   return `
     ${s} { font-family: "Pi Studio Sans", system-ui, sans-serif !important; -webkit-font-smoothing: antialiased; --pi-control-font-family: "Pi Studio Sans", system-ui, sans-serif; }
