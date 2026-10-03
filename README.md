@@ -134,7 +134,15 @@ Message markers preview your prompts and jump to their position.
 
 ### Images and attachments
 
-Image previews stay above your message, with clear delivery choices.
+Image previews stay above your message, with clear delivery choices. Pasted images
+show a larger thumbnail and filename. Attached source files show Python,
+JavaScript, TypeScript, Go, Rust, C, C++, or Markdown icons; PDF, TXT, DOCX,
+and ODT use document badges. Native file removal and delivery behavior is preserved.
+
+Links in a draft get compact previews inside the composer. GitHub repository
+URLs show the GitHub icon and `owner/repo`; other links show their domain and
+path. The original URL stays editable and is sent unchanged. Previews use local
+icons and do not fetch the linked site.
 
 ![Composer with an image attachment](docs/screenshots/attachments.png)
 
@@ -146,6 +154,8 @@ a suggestion fills the composer using Pi Web’s native draft editor. It never
 sends automatically or overwrites a draft. The welcome disappears as soon as
 messages or active work appear, and adapts to phone screens.
 
+![New session welcome with the full sidebar](docs/screenshots/new-session.png)
+
 ### Questions and response actions
 
 Questions use compact choice cards, clear selection states, and a single-column
@@ -156,6 +166,10 @@ Saved assistant responses include **Fork from here** at the end. It creates a
 separate session through that response using Pi Web’s native clone action. The
 control is disabled when Pi Web disables message actions, and is unavailable
 for messages without a saved history entry.
+
+![Question cards with the full sidebar](docs/screenshots/questions.png)
+
+![File icons, GitHub preview, and response fork action](docs/screenshots/composer-files-links.png)
 
 ### Mobile
 

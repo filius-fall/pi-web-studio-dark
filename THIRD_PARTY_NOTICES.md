@@ -1,6 +1,6 @@
 # Third-party notices
 
-Reviewed on 2026-10-02. Studio Dark is an independent community plugin.
+Reviewed on 2026-10-03. Studio Dark is an independent community plugin.
 Its original code and original SVG artwork are covered by [LICENSE](LICENSE).
 The following components retain their upstream copyright and license terms.
 
@@ -9,6 +9,7 @@ The following components retain their upstream copyright and license terms.
 | Vitesse Black palette and retained earlier palette variants in `browser/index*.js` | 2020 Primer; 2021 Anthony Fu. [Vitesse theme](https://github.com/antfu/vscode-theme-vitesse), derived from the Primer theme. | [MIT](LICENSE.vitesse) |
 | `browser/dm-sans.woff2` | 2014 The DM Sans Project Authors. Embedded metadata identifies DM Sans 9pt, version 4.004. [DM Sans](https://github.com/google/fonts/tree/main/ofl/dmsans). | [SIL OFL 1.1](LICENSE.dm-sans) |
 | All SVGs in `browser/icons/` | 2023 LobeHub. Unmodified files from `@lobehub/icons-static-svg` version 1.95.1, [Lobe Icons](https://github.com/lobehub/lobe-icons). | [MIT](LICENSE.icons) |
+| `browser/file-icons/*.svg` | Simple Icons contributors. Unmodified files from [Simple Icons](https://github.com/simple-icons/simple-icons/tree/1089fb7d2bf0e323f834c205ab76265005a6d5e8). Brand marks remain owned by their respective owners. | [CC0 1.0](LICENSE.simple-icons) |
 | `browser/pi-icon.svg` | 2026 Earendil Inc. and contributors. Unmodified `src/favicon.svg` from [Pi website source](https://github.com/earendil-works/pi-website/tree/2f5e410b97474d0a34ec2500aa1aa58d6c3f992c). | [MIT](LICENSE.pi) |
 | Pi Web UI depicted in `docs/screenshots/` | 2026 Federico Jaramillo Martinez. [Pi Web](https://pi-web.dev), version 1.202610.0. Screenshots were captured with demonstration content. Pi Web application code is not bundled in this plugin. | [MIT](LICENSE.pi-web) |
 

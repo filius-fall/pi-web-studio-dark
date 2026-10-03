@@ -1,5 +1,5 @@
 {
-  "reviewed": "2026-10-02",
+  "reviewed": "2026-10-03",
   "assets": [
     {
       "path": "browser/icons/claude-color.svg",
@@ -120,6 +120,87 @@
       "license": "LICENSE.dm-sans",
       "sha256": "9fea608a947e67020c33cad9a6fe3d60c54119dfb8cff87768a8117a15ed7543",
       "version": "4.004 (embedded font metadata)"
+    },
+    {
+      "path": "browser/file-icons/python.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/python.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "ad9468e1c4903f73ae7eebfbe980f0f727a10db695be3d914e7d8bd25356a862",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/javascript.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/javascript.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "c9be35a7a861ebe80ae4ee706d05004b99ee59fc63db69da6dcc10776718434b",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/typescript.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/typescript.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "7f023e8d1e767370306ec9437d2de5d5af97491d6208dd7799a3808a7c10a36a",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/go.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/go.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "36a745fe15584bf138d02ae6abcbdd155bc1cd4f4976634ad34861b2059db559",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/rust.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/rust.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "95a291d8887610d103704adcc5c5f2cbfa4c80a96f8e72b00531d5691beb67a8",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/c.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/c.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "fde4284070eedf24f3acc2f78368b8c25a204f9a1b8831caaae4652c3e716c88",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/cplusplus.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/cplusplus.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "adf33f5026f3f70d54f1068cb5d1a790c37b2105cbe728edd170251759d13f18",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/markdown.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/markdown.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "fac4fe3491647608362095b4b44d8bb8c45a37231a31309d435bf2e7592ac1e1",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
+    },
+    {
+      "path": "browser/file-icons/github.svg",
+      "component": "Simple Icons",
+      "source": "https://raw.githubusercontent.com/simple-icons/simple-icons/1089fb7d2bf0e323f834c205ab76265005a6d5e8/icons/github.svg",
+      "license": "LICENSE.simple-icons",
+      "copyright": "Simple Icons contributors; brand marks belong to their respective owners",
+      "sha256": "3bf8cceead820aec50d4ee825a3fd02c5a1cd6665cc9cf4cbf3d9c8861a204bb",
+      "version": "1089fb7d2bf0e323f834c205ab76265005a6d5e8"
     }
   ]
 }

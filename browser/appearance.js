@@ -16,6 +16,31 @@ export function appearanceCss(s) {
   const activityIcons = Object.entries(activityPaths).map(([kind, paths]) => {
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="black" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${paths}</svg>`;
     return `
+    :host(prompt-editor)${s} .studio-draft-links { display: flex; flex-wrap: wrap; gap: 7px; margin: 4px 0 10px; }
+    :host(prompt-editor)${s} .studio-draft-links a { display: inline-flex; align-items: center; gap: 7px; max-width: min(100%, 340px); box-sizing: border-box; padding: 6px 10px; border: 1px solid #8aaaff25; border-radius: 9px; background: #628dff09; color: #adbef1; font-size: 12px; text-decoration: none; }
+    :host(prompt-editor)${s} .studio-draft-links a:hover { border-color: #8aaaff60; background: #628dff15; }
+    :host(prompt-editor)${s} .studio-draft-links a > span:last-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    :host(prompt-editor)${s} .studio-draft-link-icon { flex: 0 0 16px; width: 16px; height: 16px; display: grid; place-items: center; }
+    :host(prompt-editor)${s} .studio-draft-link-icon[data-github] { mask: var(--studio-file-icon) center / contain no-repeat; background: currentColor; }
+    :host(prompt-editor)${s} .attachment-chip.attachment-chip-file { display: grid; grid-template-columns: 38px minmax(0, 1fr); grid-template-rows: auto auto; align-items: center; gap: 2px 10px; width: 210px; max-width: 100%; height: 66px; box-sizing: border-box; padding: 12px 32px 12px 12px; border: 1px solid #ffffff14; border-radius: 12px; background: #ffffff03; }
+    :host(prompt-editor)${s} .attachment-chip-file .attachment-file-preview { grid-row: 1 / 3; width: 38px; height: 38px; border: 1px solid #ffffff0a; border-radius: 9px; background: #ffffff04; font-size: 0; display: grid; place-items: center; }
+    :host(prompt-editor)${s} .studio-file-badge { display: grid; place-items: center; width: 22px; height: 22px; font-size: 9px; font-weight: 700; letter-spacing: .03em; }
+    :host(prompt-editor)${s} .studio-file-badge[data-icon] { mask: var(--studio-file-icon) center / contain no-repeat; background: currentColor; }
+    :host(prompt-editor)${s} .attachment-chip-file .attachment-file-name { position: static; width: auto; max-width: 100%; padding: 0; background: transparent; color: #dddde8; font-size: 12px; line-height: 1.4; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; text-align: left; }
+    :host(prompt-editor)${s} .studio-file-meta { color: #9797a5; font-size: 10px; line-height: 1.5; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+    :host(prompt-editor)${s} .attachment-chip.attachment-chip-image { width: 88px; height: 88px; border-radius: 12px; overflow: hidden; border: 1px solid #ffffff18; background: #161619; }
+    :host(prompt-editor)${s} .attachment-chip-image img { width: 100%; height: 100%; object-fit: cover; }
+    :host(prompt-editor)${s} .attachment-chip-image::after { content: attr(title); position: absolute; bottom: 0; left: 0; right: 0; padding: 9px 6px 5px; background: linear-gradient(transparent, #000b); color: #eeeef3; font-size: 9px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; pointer-events: none; }
+    :host(prompt-editor)${s} .attachment-chip .attachment-remove { top: 5px; right: 5px; z-index: 1; }
+    @media (max-width: 600px) {
+      :host(prompt-editor)${s} .attachment-chip.attachment-chip-image { width: 72px; height: 72px; }
+      :host(prompt-editor)${s} .attachments { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
+      :host(prompt-editor)${s} .attachment-chip.attachment-chip-file { width: 100%; height: 62px; grid-template-columns: 28px minmax(0, 1fr); gap: 2px 7px; padding: 10px 24px 10px 8px; }
+      :host(prompt-editor)${s} .attachment-chip-file .attachment-file-preview { width: 28px; height: 32px; }
+      :host(prompt-editor)${s} .attachment-chip-file .attachment-file-name { font-size: 11px; }
+      :host(prompt-editor)${s} .attachment-delivery { grid-column: 1 / -1; }
+    }
+
     ${s} .studio-response-actions { display: flex; margin-top: 22px; gap: 8px; }
     ${s} .studio-fork-action { display: inline-flex; align-items: center; gap: 7px; border: 1px solid transparent; border-radius: 8px; padding: 6px 9px; background: transparent; color: #9696a3; font-size: 12px; cursor: pointer; }
     ${s} .studio-fork-action:hover:enabled { background: #ffffff06; border-color: #ffffff12; color: #d6d6e2; }
