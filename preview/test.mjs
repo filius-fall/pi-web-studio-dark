@@ -1,0 +1,31 @@
+import assert from 'node:assert/strict';
+import { createServer } from 'node:http';
+import { runBrowser, closeAll, browserUrl } from './core.mjs';
+import server from './server.mjs';
+import companion from './companion.mjs';
+const web=createServer((_req,res)=>res.end('<title>Preview test</title><label>Name<input id="name"></label><button id="run" onclick="document.querySelector(\'output\').textContent=document.querySelector(\'input\').value">Run</button><output></output>'));
+await new Promise(resolve=>web.listen(0,'127.0.0.1',resolve));
+const url=`http://127.0.0.1:${web.address().port}`;
+const scope={cwd:process.cwd(),sessionId:'test-preview'};
+let tool;companion({registerTool:value=>{tool=value;}});
+const peer=server.activate().peer;
+const context={workspace:{path:scope.cwd},input:{sessionId:scope.sessionId,url},operation:'open',signal:new AbortController().signal};
+try {
+  assert.throws(()=>browserUrl('javascript:alert(1)'));assert.throws(()=>browserUrl('https://user:pass@example.com'));assert.equal(browserUrl('localhost:3000'),'http://localhost:3000/');
+  assert.deepEqual(await runBrowser(scope,'status'),{open:false});
+  await peer.request(context);
+  const call=params=>tool.execute('test',params,context.signal,()=>{},{cwd:scope.cwd,sessionManager:{getSessionId:()=>scope.sessionId}});
+  const snapshot=JSON.parse((await call({action:'inspect'})).content[0].text);
+  assert.equal(snapshot.title,'Preview test');assert.equal(snapshot.elements.length,2);
+  await call({action:'fill',ref:snapshot.elements.find(item=>item.tag==='input').ref,text:'Shared browser'});
+  await assert.rejects(()=>call({action:'click',ref:snapshot.elements.find(item=>item.tag==='button').ref}),/stale/);
+  await call({action:'click',selector:'#run'});
+  assert.equal(JSON.parse((await call({action:'evaluate',script:'document.querySelector("output").textContent'})).content[0].text).value,'Shared browser');
+  const shot=await call({action:'screenshot'});assert.equal(shot.content[1].mimeType,'image/png');assert(Buffer.from(shot.content[1].data,'base64').length>100);
+  await call({action:'resize',width:390,height:800});
+  const frame=await peer.request({...context,operation:'frame',input:{sessionId:scope.sessionId}});assert.deepEqual(frame.viewport,{width:390,height:800});assert.equal(frame.mimeType,'image/jpeg');
+  assert.deepEqual(await runBrowser({...scope,sessionId:'another-session'},'status'),{open:false});
+  const controller=new AbortController();controller.abort();await assert.rejects(()=>runBrowser(scope,'inspect',{},controller.signal));
+  await call({action:'close'});assert.deepEqual(await runBrowser(scope,'status'),{open:false});
+  console.log('PASS: shared panel/agent browser, references, fill/click, screenshots, viewport, isolation, cancellation, close, URL validation');
+} finally {await closeAll();await new Promise(resolve=>web.close(resolve));}

@@ -62,3 +62,14 @@ This review checks the identified components and retained notices. It is not
 a legal opinion or a guarantee that no copyright, trademark, patent, privacy,
 or other claim can arise. Review additional assets and dependencies whenever
 you extend or redistribute the plugin.
+
+## Optional Studio Preview dependencies
+
+The optional `preview/` package installs Playwright and Playwright Core 1.63.0
+(Apache-2.0, Microsoft Corporation), and TypeBox 1.3.34 (MIT, Copyright
+2017–2026 Haydn Paterson). Dependency files and Chromium binaries are not
+committed to this repository; the pinned npm packages retain their own license
+and notice files when installed. Playwright's browser downloads include
+Chromium and its separately licensed components. See [Playwright](https://github.com/microsoft/playwright/tree/v1.63.0)
+and [TypeBox](https://github.com/sinclairzx81/typebox) for source and terms.
+The original optional plugin code is MIT-licensed with the rest of this repo.

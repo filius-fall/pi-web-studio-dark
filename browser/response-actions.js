@@ -1,3 +1,4 @@
+import { sessionIsBusy } from './session-state.js';
 // Proxy the native per-message action; Pi Web owns entry selection and forking.
 export function decorateResponseActions(root) {
   if (root.host?.localName !== 'chat-view') return;
@@ -5,10 +6,21 @@ export function decorateResponseActions(root) {
     clearResponseActions(root);
     return;
   }
+  const finals = new Set();
+  const turns = [];
+  let candidate;
+  for (const node of root.querySelector('.chat')?.children || []) {
+    if (node.matches('.msg.user')) { if (candidate) turns.push(candidate);candidate = undefined; }
+    else if (node.matches('article.msg.assistant')) candidate = node;
+  }
+  if (candidate) turns.push(candidate);
+  const busy = sessionIsBusy(root.host);
+  const currentTurnEnd = candidate;
+  for (const message of turns) if (!busy || message !== currentTurnEnd) finals.add(message);
   for (const message of root.querySelectorAll('.msg.assistant, .group-msg.assistant')) {
     const native = message.querySelector('.msg-actions button[aria-label="Clone session from this message"]');
     let footer = message.querySelector(':scope > .studio-response-actions');
-    if (!native) { footer?.remove(); message.removeAttribute('data-studio-fork-footer'); continue; }
+    if (!native || !finals.has(message)) { footer?.remove(); message.removeAttribute('data-studio-fork-footer'); continue; }
     if (!footer) {
       footer = document.createElement('div');
       footer.className = 'studio-response-actions';

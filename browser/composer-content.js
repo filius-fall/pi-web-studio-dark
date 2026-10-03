@@ -1,3 +1,4 @@
+import { decorateInlineDraft, clearInlineDraft, hasInlineDraft } from './inline-draft.js';
 const fileTypes = {
   py: ['python', 'Python', '#8ab5e0'], pyw: ['python', 'Python', '#8ab5e0'],
   js: ['javascript', 'JavaScript', '#eed86b'], jsx: ['javascript', 'JavaScript', '#eed86b'], mjs: ['javascript', 'JavaScript', '#eed86b'], cjs: ['javascript', 'JavaScript', '#eed86b'],
@@ -33,6 +34,17 @@ export function draftLinks(text) {
   }
   return links;
 }
+export function draftFiles(text) {
+  const files = [], seen = new Set();
+  for (const match of text.matchAll(/(?:^|\s)@(?:"([^"\n]+)"|'([^'\n]+)'|([^\s]+))/g)) {
+    const path = (match[1] || match[2] || match[3]).replace(/[;,]+$/, '');
+    const name = path.split('/').at(-1);
+    if (!name || !fileTypes[name.split('.').at(-1)?.toLowerCase()] || seen.has(path)) continue;
+    seen.add(path);files.push({ path, name, ...filePresentation(name) });
+    if (files.length === 12) break;
+  }
+  return files;
+}
 export function decorateComposerContent(root) {
   if (root.host?.localName !== 'prompt-editor') return;
   if (document.documentElement.dataset.piWebTheme !== 'vitesse:black') { clearComposerContent(root); return; }
@@ -53,15 +65,27 @@ export function decorateComposerContent(root) {
     if (!meta) { meta = document.createElement('span');meta.className = 'studio-file-meta';meta.setAttribute('aria-hidden', 'true');chip.append(meta); }
     meta.textContent = type.label;
   }
+  decorateInlineDraft(root);
+  if (hasInlineDraft(root)) { root.querySelector('.studio-draft-links')?.remove();return; }
   const editor = root.host.view;
-  const links = draftLinks(editor?.state?.doc?.toString() || '');
+  const text = editor?.state?.doc?.toString() || '';
+  const links = draftLinks(text);
+  const files = draftFiles(text);
   let tray = root.querySelector('.studio-draft-links');
-  if (!links.length) { tray?.remove(); return; }
-  const signature = JSON.stringify(links);
+  if (!links.length && !files.length) { tray?.remove(); return; }
+  const signature = JSON.stringify({ links, files });
   if (tray?.dataset.signature === signature) return;
-  if (!tray) { tray = document.createElement('div');tray.className = 'studio-draft-links';tray.setAttribute('aria-label', 'Links in your draft');root.querySelector('.editor-wrap')?.insertBefore(tray, root.querySelector('.markdown-editor')); }
+  if (!tray) { tray = document.createElement('div');tray.className = 'studio-draft-links';tray.setAttribute('aria-label', 'Links and file references in your draft');root.querySelector('.editor-wrap')?.insertBefore(tray, root.querySelector('.markdown-editor')); }
   tray.dataset.signature = signature;
   tray.replaceChildren();
+  for (const file of files) {
+    const chip = document.createElement('span');chip.className = 'studio-draft-file';chip.title = `File reference: ${file.path}`;
+    const icon = document.createElement('span');icon.className = 'studio-file-badge';icon.setAttribute('aria-hidden', 'true');icon.style.color = file.color;
+    if (file.icon) { icon.dataset.icon = file.icon;icon.style.setProperty('--studio-file-icon', `url("${new URL(`./file-icons/${file.icon}.svg`, import.meta.url).href}")`); }
+    else icon.textContent = file.extension.toUpperCase();
+    const name = document.createElement('span');name.textContent = file.name;
+    chip.append(icon, name);tray.append(chip);
+  }
   for (const link of links) {
     const anchor = document.createElement('a');anchor.href = link.href;anchor.target = '_blank';anchor.rel = 'noopener noreferrer';anchor.title = link.href;
     const icon = document.createElement('span');icon.className = 'studio-draft-link-icon';icon.setAttribute('aria-hidden', 'true');
@@ -72,6 +96,7 @@ export function decorateComposerContent(root) {
   }
 }
 export function clearComposerContent(root) {
+  clearInlineDraft(root);
   root.querySelector('.studio-draft-links')?.remove();
   root.querySelectorAll('.studio-file-badge, .studio-file-meta').forEach(node => node.remove());
   root.querySelectorAll('[data-studio-file-key]').forEach(node => delete node.dataset.studioFileKey);

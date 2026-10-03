@@ -57,8 +57,8 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 - Logos for OpenAI, Gemini, GLM, DeepSeek, Grok, Kimi, Claude, Muse (Meta), Nemotron (Nvidia), Qwen, MiniMax, MiMo, and HY3/HY4 (Hunyuan). Model-family detection also works through routing providers.
 - Composer aligned with the response column, with image previews above the text and explanatory attachment delivery choices.
 - Compact composer that grows with multiline text and image previews, with clear model/reasoning labels and attachment/send/stop controls.
-- Active tools expand their command/output, then collapse on completion; manually expanded calls keep your choice.
-- Working/thinking status appears below the latest response; informational session updates stay out of the composer.
+- Tool rows stay on one line; full commands and output are available on demand. Completed activity collapses automatically.
+- One expandable Thinking/Working row shows live activity. Completion uses authoritative session status, stops animations, and leaves the final answer visible.
 - One clickable marker per loaded user message, with hover previews, keyboard navigation, and an earlier-history control.
 - Mobile chat uses a compact header and single-row composer, with visible model and reasoning selectors above the input. Navigation controls remain available from the header menu.
 - Mobile Home lists your machines, projects, workspaces, and sessions. The chat back arrow returns Home; Home has no back arrow. Open `/?view=navigation` for Home directly.
@@ -66,120 +66,100 @@ are never overwritten. Keep the cloned folder in place while using the theme.
 - Normal-size placeholders preserve the editor caret. Desktop inputs focus after the startup screen is ready; phones wait for your tap.
 - Thin scrollbars, readable metadata, and responsive padding.
 
+## Optional agent-controlled web preview
+
+Install the shared browser separately when you want it:
+
+```sh
+node scripts/install-preview.mjs
+```
+
+Open **Actions → Open Web Preview** or the **Preview** workspace tab. You and
+the agent share a session-isolated Chromium browser on the selected machine,
+with navigation, clicks, text entry, inspection, screenshots, and desktop/mobile
+viewports. The companion adds the `web_preview` tool to Pi. Chromium starts
+only when a page is opened; this feature has additional memory/disk requirements.
+See [preview/README.md](preview/README.md) for installation, activation, remote
+machines, supported operations, and limits.
+
 ## Screenshots
 
-The screenshots show Studio Dark with demonstration content. Every desktop feature image includes the full app and sidebar; mobile screenshots are grouped at the end.
+Studio Dark 1.20.0 with demonstration content. Every desktop image includes the
+sidebar; mobile images appear at the end.
 
 ### Full app overview
 
-The complete desktop layout: sidebar, conversation, completed work, and composer.
+The sidebar, complete response, one completed-work dropdown, and composer.
 
-![Studio Dark full desktop app](docs/screenshots/desktop.png)
+![Full desktop app](docs/screenshots/desktop.png)
 
-### Completed work
+### Activity and tool details
 
-One dropdown keeps completed activity out of the way. Open it to inspect progress
-updates, thinking, and tool calls while the final answer remains visible.
-Activity groups start collapsed with a plain-language summary such as
-**Ran 4 commands and used browser once**. Open a group to inspect its steps.
-Queued messages appear as compact bubbles aligned with the conversation.
-Use the composer's **Send now** (steer) button to deliver a new instruction at
-the next model call. Pi Web's current API cannot promote an individual message
-that is already queued; **Clear queue** keeps its native whole-queue behavior.
+One clickable **Thinking** or **Working** row contains the turn’s activity.
+Thinking has no arrow or duplicate heading. Completion collapses the activity,
+stops running animations, and leaves the final answer visible. Each tool row
+has a short action name and icon; expand it for the full command and output.
 
-![Completed work collapsed](docs/screenshots/completed-work-sidebar-collapsed.png)
+![Expanded command and result with sidebar](docs/screenshots/tool-details.png)
 
-![Completed work expanded](docs/screenshots/completed-work-sidebar-expanded.png)
+Image analysis adds a scanning **Reading image** indicator only during active work.
 
-### Queued messages
+![Image reading and one Thinking row](docs/screenshots/thinking.png)
 
-Queued follow-ups sit in compact conversation bubbles. Use **Send now** in the
-composer to steer an active response with a new instruction.
+### Queued follow-ups
 
-![Queued follow-up and Send now control](docs/screenshots/queued-messages.png)
+New messages sent during active work appear above the composer. Each has an
+attachment count, **Send now** arrow, and remove button. Send now steers at the
+next model call; it does not terminate a command. Pending messages and attachments
+are stored in this browser/origin until delivery or removal and survive a reload.
+Delivery failures remain available for retry. Existing server queues keep native
+Clear queue behavior because Pi Web does not expose per-message queue IDs.
 
-### Tool details and thinking
+![Queued follow-up with Send now and remove controls](docs/screenshots/queued-messages.png)
 
-Tool calls use short names such as **Run script**, **Check logs**, and **Read file**
-while running and after completion. They appear as evenly spaced action rows, nested under completed
-work without stacked divider rails. Expand any call for its full command and
-result in roomy, wrapped panels. Action icons distinguish terminal commands,
-file edits, reading, browsing, and images. Thinking uses a gentle brain animation, and
-image analysis adds a small scanning indicator while the model reads an
-attachment.
+### Files, links, and images
 
-![Action icons for reading, editing, and commands](docs/screenshots/tool-icons.png)
+Attachments use Python, JavaScript, TypeScript, Go, Rust, C, C++, and Markdown
+icons, plus PDF, TXT, DOCX, and ODT document badges. Images use thumbnails.
+Native file removal and attachment delivery choices remain available.
 
-![Expanded tool details](docs/screenshots/tool-details.png)
+GitHub links show their icon and `owner/repo` inline in the draft; supported
+`@file` mentions show their language/document icon. Click a chip to edit its
+complete original text. The original URL or file mention is sent unchanged.
+These previews use local icons without fetching linked websites.
 
-![Thinking indicator](docs/screenshots/thinking.png)
+![File cards, inline GitHub and Python chips, and one final fork action](docs/screenshots/composer-files-links.png)
 
-### Models and sessions
+![Pasted image preview and delivery choice](docs/screenshots/attachments.png)
 
-Model-family logos and current/default indicators make selection clear. Pin
-important sessions and restore completed work from Done.
+### New sessions and questions
 
-![Model picker](docs/screenshots/model-picker.png)
+The welcome screen offers four starting points. Suggestions fill an empty draft
+without sending it. Questions use compact choice cards and native form controls.
 
-![Pinned and completed sessions](docs/screenshots/sessions.png)
+![New session welcome with sidebar](docs/screenshots/new-session.png)
 
-### Reading and message navigation
+![Question choices with sidebar](docs/screenshots/questions.png)
 
-Headings, links, lists, tables, and code panels share a consistent reading layout.
-Message markers preview your prompts and jump to their position.
+Exactly one **Fork from here** control appears after the final saved response
+in each turn. It uses Pi Web’s native clone action and confirmation, and stays
+unavailable while that turn is running or its saved entry cannot be cloned.
 
-![Reading layout with sidebar and composer](docs/screenshots/reading-sidebar.png)
+### Shared web preview
 
-![User message navigation](docs/screenshots/message-navigation.png)
+The optional panel and agent share an isolated browser, with navigation,
+inspection, clicks, text entry, screenshots, and desktop/mobile viewports.
 
-### Images and attachments
-
-Image previews stay above your message, with clear delivery choices. Pasted images
-show a larger thumbnail and filename. Attached source files show Python,
-JavaScript, TypeScript, Go, Rust, C, C++, or Markdown icons; PDF, TXT, DOCX,
-and ODT use document badges. Native file removal and delivery behavior is preserved.
-
-Links in a draft get compact previews inside the composer. GitHub repository
-URLs show the GitHub icon and `owner/repo`; other links show their domain and
-path. The original URL stays editable and is sent unchanged. Previews use local
-icons and do not fetch the linked site.
-
-![Composer with an image attachment](docs/screenshots/attachments.png)
-
-### New sessions
-
-An empty session opens with a calm welcome screen and four starting points:
-explore the project, fix a problem, build a feature, or review changes. Selecting
-a suggestion fills the composer using Pi Web’s native draft editor. It never
-sends automatically or overwrites a draft. The welcome disappears as soon as
-messages or active work appear, and adapts to phone screens.
-
-![New session welcome with the full sidebar](docs/screenshots/new-session.png)
-
-### Questions and response actions
-
-Questions use compact choice cards, clear selection states, and a single-column
-layout on phones. Radio buttons, multiple selections, custom answers, and
-submission continue to use Pi Web’s native form.
-
-Saved assistant responses include **Fork from here** at the end. It creates a
-separate session through that response using Pi Web’s native clone action. The
-control is disabled when Pi Web disables message actions, and is unavailable
-for messages without a saved history entry.
-
-![Question cards with the full sidebar](docs/screenshots/questions.png)
-
-![File icons, GitHub preview, and response fork action](docs/screenshots/composer-files-links.png)
+![Shared browser beside the conversation and sidebar](docs/screenshots/web-preview.png)
 
 ### Mobile
 
-The complete mobile chat includes the session header, response, model/reasoning
-selectors, and compact input. Image messages and the reading layout adapt to
-phone screens.
+The session header, response, model/reasoning selectors, and composer adapt to
+phone screens. File/link chips and image previews stay available in the draft.
 
-![Studio Dark full mobile chat](docs/screenshots/mobile-chat.png)
+![Complete mobile chat](docs/screenshots/mobile-chat.png)
 
-![Mobile images and thinking](docs/screenshots/mobile-images.png)
+![Mobile image preview and inline file/link chips](docs/screenshots/mobile-composer.png)
 
 ## Session controls
 

@@ -129,3 +129,20 @@ data directory.
   private conversations, personal deployment addresses, or machine-specific paths.
 - Report what changed, what was verified, and any incomplete setup steps. Push
   or deploy only within the user's authorized scope.
+
+## Optional shared agent browser
+
+Only install this separately when the user asks for the full browser feature.
+Read [preview/README.md](preview/README.md), then run
+`node scripts/install-preview.mjs` on each authorized serving/agent machine.
+It installs pinned optional dependencies and Chromium, registers the companion
+with `pi install`. Installed Pi packages advertise their own Pi Web plugins;
+do not add a second plugin link. Enable Studio Preview in native plugin settings.
+The ordinary theme still needs no dependency install.
+
+Verify `studio-preview` in the gateway manifest, the native Preview workspace
+panel, and `web_preview` discovery in a new Pi session. The backend may require
+Pi Web’s normal reload/restart; schedule that when sessions are idle rather than
+interrupting active work. Do not claim backend activation based only on the
+installer output. Preserve existing packages, sessions, and provider settings.
+Use `node preview/test.mjs` for isolated browser/tool validation.

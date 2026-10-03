@@ -22,7 +22,8 @@ export function decorateActivity(root) {
     const card = root.querySelector('.tool-card');
     const title = root.querySelector('.tool-title');
     if (!execution || !card || !title) return;
-    const active = ['pending', 'running'].includes(execution.status);
+    const chat = root.host.getRootNode()?.host;
+    const active = ['pending', 'running'].includes(execution.status) && chat?.dataset.studioSessionLive !== 'false' && root.host.closest('[data-studio-turn-live]')?.dataset.studioTurnLive !== 'false';
     card.dataset.studioActive = String(active);
     let icon = title.querySelector('.studio-tool-icon');
     if (!icon) { icon = document.createElement('span');icon.className = 'studio-tool-icon';icon.setAttribute('aria-hidden', 'true');title.append(icon); }
@@ -70,7 +71,7 @@ export function decorateActivity(root) {
     const thinking = status?.isStreaming && last?.role === 'assistant' && last.parts?.at(-1)?.type === 'thinking';
     const label = host.isSendingPrompt ? 'Sending message' : status?.isCompacting ? 'Compacting conversation' : status?.isBashRunning ? 'Running command' : thinking ? 'Thinking' : status?.isStreaming ? 'Working' : '';
     let indicator = root.querySelector('.studio-inline-activity');
-    if (!label || (label === "Thinking" && root.querySelector("summary[data-studio-thinking]"))) { indicator?.remove(); return; }
+    if (root.querySelector('.studio-work-summary[data-studio-live="true"]') || !label || (label === "Thinking" && root.querySelector("summary[data-studio-thinking]"))) { indicator?.remove(); return; }
     if (!indicator) {
       indicator = document.createElement('div');indicator.className = 'studio-inline-activity';indicator.setAttribute('role', 'status');
       const spinner = document.createElement('span');spinner.className = 'studio-inline-spinner';spinner.setAttribute('aria-hidden', 'true');
