@@ -38,6 +38,33 @@ export function appearanceCss(s) {
     :host(app-navigation-panel)${s} header strong { grid-column: 1 / -1; font-size: 11px; letter-spacing: .06em; color: #a8a8b2; }
     ${s} .header-actions { min-width: 0; gap: 6px; }
     ${s} .header-actions machine-switcher { min-width: 0; }
+    ${s} .chat[data-studio-session-start] { display: flex; flex-direction: column; }
+    ${s} .studio-session-start { box-sizing: border-box; width: min(100%, 620px); margin: auto; padding: 44px 12px 32px; text-align: center; animation: studio-details-enter 240ms ease-out both; }
+    ${s} .studio-start-mark { display: grid; place-items: center; width: 88px; height: 88px; margin: 0 auto 24px; border: 1px solid #9bbaff1c; border-radius: 28px; background: radial-gradient(ellipse at top, #628dff20, #628dff03 75%); box-shadow: 0 0 64px #628dff0a; }
+    ${s} .studio-start-mark svg { width: 42px; height: 42px; fill: none; stroke: #a7c0ff; stroke-width: 1.5; stroke-linejoin: round; }
+    ${s} .studio-start-eyebrow { margin: 0 0 10px; color: #94a6ca; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; }
+    ${s} .studio-session-start h2 { margin: 0; color: #ededf4; font-size: clamp(26px, 3vw, 36px); font-weight: 600; letter-spacing: -.035em; line-height: 1.25; }
+    ${s} .studio-start-intro { margin: 16px 0 30px; color: #9c9ca8; font-size: 15px; line-height: 1.8; }
+    ${s} .studio-start-suggestions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; text-align: left; }
+    ${s} .studio-start-suggestions button { display: flex; align-items: center; gap: 12px; min-width: 0; padding: 17px 15px; border: 1px solid #ffffff0d; border-radius: 14px; background: #ffffff02; color: #c8c8d3; text-align: left; cursor: pointer; transition: background 160ms ease, border-color 160ms ease; }
+    ${s} .studio-start-suggestions button:hover:enabled { background: #628dff09; border-color: #628dff40; }
+    ${s} .studio-start-suggestions button:focus-visible { outline: 2px solid var(--pi-accent); outline-offset: 3px; }
+    ${s} .studio-start-suggestions button:disabled { opacity: .45; cursor: default; }
+    ${s} .studio-start-suggestions svg { flex: 0 0 21px; width: 21px; height: 21px; fill: none; stroke: #91a8da; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+    ${s} .studio-start-suggestions strong { display: block; color: #dedee7; font-size: 13px; font-weight: 550; }
+    ${s} .studio-start-suggestions small { display: block; margin-top: 3px; color: #92929e; font-size: 11px; line-height: 1.5; }
+    ${s} .studio-start-arrow { margin-left: auto; color: #777d8e; font-size: 16px; }
+    ${s} .studio-start-hint { margin: 22px 0 0; color: #82828e; font-size: 11px; }
+    @media (max-width: 760px) {
+      ${s} .studio-session-start { padding: 28px 0 24px; }
+      ${s} .studio-start-mark { width: 64px; height: 64px; border-radius: 21px; margin-bottom: 20px; }
+      ${s} .studio-start-mark svg { width: 34px; height: 34px; }
+      ${s} .studio-start-intro { margin: 12px 0 24px; font-size: 14px; }
+      ${s} .studio-start-suggestions button { padding: 15px 10px; gap: 8px; }
+      ${s} .studio-start-suggestions small, ${s} .studio-start-arrow { display: none; }
+      ${s} .studio-start-suggestions strong { font-size: 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) { ${s} .studio-session-start { animation: none; } ${s} .studio-start-suggestions button { transition: none; } }
     ${s} .chat { padding: 28px clamp(16px, 4vw, 52px) 24px; line-height: 1.7; }
     ${s} .msg { max-width: 800px; margin: 0 auto 36px; font-size: 16px; }
     :host(formatted-text)${s} { font-size: inherit; min-width: 0; }

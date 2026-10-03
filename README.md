@@ -148,6 +148,14 @@ phone screens.
 
 ![Mobile images and thinking](docs/screenshots/mobile-images.png)
 
+## New sessions
+
+An empty session opens with a calm welcome screen and four starting points:
+explore the project, fix a problem, build a feature, or review changes. Selecting
+a suggestion fills the composer using Pi Web’s native draft editor. It never
+sends automatically or overwrites a draft. The welcome disappears as soon as
+messages or active work appear, and adapts to phone screens.
+
 ## Session controls
 
 Hover a session or focus its row to reveal the pin and check controls. Pin/Unpin

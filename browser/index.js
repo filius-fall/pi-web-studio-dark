@@ -1,3 +1,4 @@
+import { decorateSessionStart, clearSessionStart } from './session-start.js';
 import { createMobilePresentation } from "./mobile.js";
 import { decorateReading } from "./reading.js";
 import { decorateEventGroups, clearEventGroups } from "./event-groups.js";
@@ -94,7 +95,7 @@ function installChatContrast(signal) {
   const mobilePresentation = createMobilePresentation();
   const themeObserver = new MutationObserver(() => {
     composerLayout.sync();
-    for (const root of roots.keys()) { decorateActivity(root);decorateMessageNavigation(root);sessionManagement.decorate(root);decorateModels(root); }
+    for (const root of roots.keys()) { decorateActivity(root);decorateSessionStart(root);decorateMessageNavigation(root);sessionManagement.decorate(root);decorateModels(root); }
   });
   themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-pi-web-theme"] });
   let disposed = false;
@@ -198,6 +199,7 @@ function installChatContrast(signal) {
             watcher.disconnect();
             clearMessageNavigation(observed);
             clearEventGroups(observed);
+            clearSessionStart(observed);
             sessionManagement.clear(observed);
             mobilePresentation.clear(observed);
             observed.removeEventListener("click", rememberTools, true);
@@ -219,7 +221,7 @@ function installChatContrast(signal) {
         }
       }
       syncThinking(root);
-      decorateActivity(root);
+      decorateActivity(root);decorateSessionStart(root);
       decorateMessageNavigation(root);
       const contextRoot = document.querySelector("pi-web-app")?.shadowRoot?.querySelector("app-context-bar")?.shadowRoot;
       if (contextRoot) mobilePresentation.decorate(contextRoot);
@@ -235,7 +237,7 @@ function installChatContrast(signal) {
     mobilePresentation.decorate(root);
     composerLayout.decorate(document.querySelector("pi-web-app")?.shadowRoot ?? root);
     syncThinking(root);
-    decorateActivity(root);
+    decorateActivity(root);decorateSessionStart(root);
     decorateMessageNavigation(root);
   }
   observe(document);
@@ -291,6 +293,7 @@ function installChatContrast(signal) {
       clearActivity(root);
       clearMessageNavigation(root);
       clearEventGroups(root);
+      clearSessionStart(root);
       root.removeEventListener("click", rememberTools, true);
       for (const summary of root.querySelectorAll("[data-studio-reasoning]")) {
         summary.removeAttribute("data-studio-thinking");
